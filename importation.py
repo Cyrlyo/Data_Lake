@@ -51,9 +51,14 @@ def importhtml(url: str, path_dir: str):
     print()
     
     print("coucou2")
-    open(os.path.join(path_dir, "allCountries.zip"), "wb").write(response.content)
+    f= open(os.path.join(path_dir, "allCountries.zip"), "wb").write(response.content)
     print("coucou3")
 
+    for chunk in response.iter_content(chunk_size = 512 * 1024) :
+        if chunk :
+                f.write(chunk)
+                f.flush()
+                os.fsync(f.fileno())
 
 def unZip(file_name: list):
     """_summary_
