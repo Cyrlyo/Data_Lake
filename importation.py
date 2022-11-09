@@ -80,6 +80,7 @@ def createFile(folder_name: str, parent_dir: str):
     
 
 def importhtml(url: str, path_dir: str):
+    # OBSELETE
     """_summary_
 
     Args:
