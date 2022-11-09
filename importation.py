@@ -5,6 +5,47 @@ import lxml
 import requests
 import zipfile
 import os, sys, glob
+import mechanize
+import time
+
+
+def dataDownloader(url: str):
+    
+    br = mechanize.Browser()
+    br.open(url)
+    
+    file_name =["allCountries.zip", "readme.txt"]
+    
+    myfiles = []
+    
+    for link in br.links():
+        for t in file_name:
+            if t in str(link):
+                myfiles.append(link)
+
+    return myfiles, br
+
+def downloadlink(link, br):
+    
+    print(f"\nDownloading {link.text}... Please wait")
+    os.chdir("./Data/Raw")
+    f = open(link.text, "w")
+    br.retrieve(link.base_url + link.url, filename=link.text)[0]
+    f.write(br.response().read())
+    print(link.text," has been downloaded")
+    os.chdir("../../")
+    print(os.getcwd())
+
+def mainDL(url: str):
+
+    files, br = dataDownloader(url)
+
+    for link in files:
+        time.sleep(1)
+        try:
+            downloadlink(link, br)
+        except:
+            pass
 
 def importData(url: str):
     """_summary_
@@ -48,17 +89,20 @@ def importhtml(url: str, path_dir: str):
     
     print("coucou1")
     response = requests.get(url, allow_redirects=True, stream=True)
-    print()
+    print("response")
+    print(response)
     
+    print()
+    print(response.headers.get('content-type'))
     print("coucou2")
-    f= open(os.path.join(path_dir, "allCountries.zip"), "wb").write(response.content)
+    open(os.path.join(path_dir, "allCountries.zip"), "wb").write(response.content)
     print("coucou3")
 
-    for chunk in response.iter_content(chunk_size = 512 * 1024) :
-        if chunk :
-                f.write(chunk)
-                f.flush()
-                os.fsync(f.fileno())
+    # for chunk in response.iter_content(chunk_size = 512 * 1024) :
+    #     if chunk :
+    #             f.write(chunk)
+    #             f.flush()
+    #             os.fsync(f.fileno())
 
 def unZip(file_name: list):
     """_summary_
@@ -84,6 +128,9 @@ if __name__ == "__main__":
     # test = importData("https://www.kaggle.com/datasets/shmalex/instagram-dataset?select=instagram_locations.csv")
     
     createFile("Raw", "Data")
-    importhtml("http://download.geonames.org/export/dump/allCountries.zip", "./Data/Raw")
-    unZip(["allCountries.zip"])
+    # importhtml("http://download.geonames.org/export/dump/allCountries.zip", "./Data/Raw")
+    mainDL("http://download.geonames.org/export/dump")
+
+    # unZip(["allCountries.zip"])
+    
     
