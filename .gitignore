@@ -1,2 +1,6 @@
 .git
 datalake_venv
+*.zip
+*.csv
+*.xlsx
+Data
