@@ -77,33 +77,7 @@ def createFile(folder_name: str, parent_dir: str):
         print(f"'{folder_name}' has been created\nPath: {path}")
     except:
         print("Folder already exists")
-    
 
-def importhtml(url: str, path_dir: str):
-    # OBSELETE
-    """_summary_
-
-    Args:
-        url (str): URL of the wanted file to download.
-        dir (str): path directory of where you're want to download the file
-    """
-    
-    print("coucou1")
-    response = requests.get(url, allow_redirects=True, stream=True)
-    print("response")
-    print(response)
-    
-    print()
-    print(response.headers.get('content-type'))
-    print("coucou2")
-    open(os.path.join(path_dir, "allCountries.zip"), "wb").write(response.content)
-    print("coucou3")
-
-    # for chunk in response.iter_content(chunk_size = 512 * 1024) :
-    #     if chunk :
-    #             f.write(chunk)
-    #             f.flush()
-    #             os.fsync(f.fileno())
 
 def unZip(file_name: list):
     """_summary_
