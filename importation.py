@@ -93,7 +93,7 @@ def createFile(folder_name: str, parent_dir: str):
     path = os.path.join(os.path.join(current_dir, parent_dir), folder_name)
     try: 
         os.mkdir(path)
-        print(f"'{folder_name}' has been created\nPath: {path}")
+        print(f"{folder_name} has been created\nPath: {path}")
     except:
         print("Folder already exists")
 
