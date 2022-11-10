@@ -27,7 +27,7 @@ def dataDownloader(url: str) -> Tuple[list, Browser]:
 
     return myfiles, br
 
-def downloadLink(link, br):
+def downloadLink(link, br) -> None:
     
     print(f"\nDownloading {link.text}... Please wait")
     os.chdir("./Data/Raw")
@@ -38,7 +38,12 @@ def downloadLink(link, br):
     os.chdir("../../")
     print(f"Current directory: {os.getcwd()}")
 
-def mainDL(url: str):
+def mainDL(url: str) -> None:
+    """_summary_
+
+    Args:
+        url (str): _description_
+    """
 
     files, br = dataDownloader(url)
 
