@@ -126,15 +126,8 @@ def deplaceFiles(file_name: str, new_folder_path: str) -> None:
         shutil.move(os.path.join(os.getcwd(), file_name), os.path.join(new_folder_path, file_name))
 
     except:
-        folder_name = ""
-        for letter in new_folder_path[::-1]:
-            if letter == "/":
-                break
-            else:
-                folder_name += letter
-
-        # os.mkdir(folder_name[::-1])
         os.mkdir(new_folder_path)
+        shutil.move(os.path.join(os.getcwd(), file_name), os.path.join(new_folder_path, file_name))
 
 def deletingFiles(file_name: str) -> None:
     """_summary_
@@ -149,14 +142,14 @@ def deletingFiles(file_name: str) -> None:
 
 if __name__ == "__main__":
     
-    # createFile("Data", os.getcwd())
-    # createFile("Raw", "Data")
+    createFile("Data", os.getcwd())
+    createFile("Raw", "Data")
     
     os.chdir("./Data/Raw")
-    # mainDL("http://download.geonames.org/export/dump")
-    # unZip(["allCountries.zip"])
+    mainDL("http://download.geonames.org/export/dump")
+    unZip(["allCountries.zip"])
     
-    # deletingFiles("allCountries.zip")
+    deletingFiles("allCountries.zip")
     deplaceFiles("readme.txt", "../Documentation")
     
     os.chdir("../../")
