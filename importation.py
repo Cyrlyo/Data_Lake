@@ -7,9 +7,11 @@ import zipfile
 import os, sys, glob
 import mechanize
 import time
+from mechanize import Browser
+from typing import Tuple
+from pandas import DataFrame
 
-
-def dataDownloader(url: str):
+def dataDownloader(url: str) -> Tuple[list, Browser]:
     
     br = mechanize.Browser()
     br.open(url)
@@ -47,7 +49,7 @@ def mainDL(url: str):
         except:
             pass
 
-def importData(url: str):
+def importData(url: str) -> DataFrame:
     """_summary_
 
     Args:
