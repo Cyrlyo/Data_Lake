@@ -113,5 +113,3 @@ if __name__ == "__main__":
     createFile("Raw", "Data")
     mainDL("http://download.geonames.org/export/dump")
     unZip(["allCountries.zip"])
-    
-    
