@@ -10,8 +10,17 @@ import time
 from mechanize import Browser
 from typing import Tuple
 from pandas import DataFrame
+import shutil
 
 def dataDownloader(url: str) -> Tuple[list, Browser]:
+    """_summary_
+
+    Args:
+        url (str): _description_
+
+    Returns:
+        Tuple[list, Browser]: _description_
+    """
     
     br = mechanize.Browser()
     br.open(url)
@@ -28,15 +37,18 @@ def dataDownloader(url: str) -> Tuple[list, Browser]:
     return myfiles, br
 
 def downloadLink(link, br) -> None:
+    """_summary_
+
+    Args:
+        link (_type_): _description_
+        br (_type_): _description_
+    """
     
     print(f"\nDownloading {link.text}... Please wait")
-    os.chdir("./Data/Raw")
     f = open(link.text, "w")
     br.retrieve(link.base_url + link.url, filename=link.text)[0]
     f.close()
     print(link.text," has been downloaded")
-    os.chdir("../../")
-    print(f"Current directory: {os.getcwd()}")
 
 def mainDL(url: str) -> None:
     """_summary_
@@ -92,8 +104,6 @@ def unZip(file_name: list):
     Args:
         file_name (list): file_name: a list of string of files' name with it extension we're looking for unzip.
     """
-    os.chdir("./Data/Raw")
-    
     files_name = os.listdir()
     extension = [".zip", ".tar.gz"]
     
@@ -104,12 +114,49 @@ def unZip(file_name: list):
                 with zipfile.ZipFile(os.path.join(os.getcwd(), file), 'r') as zip_ref:
                     zip_ref.extractall(".")
                     print("Unzipping done")
+
+def deplaceFiles(file_name: str, new_folder_path: str) -> None:
+    """_summary_
+
+    Args:
+        file_name (str): _description_
+        new_folder_path (str): _description_
+    """
+    try:
+        shutil.move(os.path.join(os.getcwd(), file_name), os.path.join(new_folder_path, file_name))
+
+    except:
+        folder_name = ""
+        for letter in new_folder_path[::-1]:
+            if letter == "/":
+                break
+            else:
+                folder_name += letter
+
+        # os.mkdir(folder_name[::-1])
+        os.mkdir(new_folder_path)
+
+def deletingFiles(file_name: str) -> None:
+    """_summary_
+
+    Args:
+        file_name (str): _description_
+    """
     
-    os.chdir("../../")
+    print(f"Deleting {file_name}")
+    os.remove(file_name)
+    
 
 if __name__ == "__main__":
     
-    createFile("Data", os.getcwd())
-    createFile("Raw", "Data")
-    mainDL("http://download.geonames.org/export/dump")
-    unZip(["allCountries.zip"])
+    # createFile("Data", os.getcwd())
+    # createFile("Raw", "Data")
+    
+    os.chdir("./Data/Raw")
+    # mainDL("http://download.geonames.org/export/dump")
+    # unZip(["allCountries.zip"])
+    
+    # deletingFiles("allCountries.zip")
+    deplaceFiles("readme.txt", "../Documentation")
+    
+    os.chdir("../../")
