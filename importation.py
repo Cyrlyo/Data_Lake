@@ -33,10 +33,10 @@ def downloadLink(link, br):
     os.chdir("./Data/Raw")
     f = open(link.text, "w")
     br.retrieve(link.base_url + link.url, filename=link.text)[0]
-    f.write(br.response().read())
+    f.close()
     print(link.text," has been downloaded")
     os.chdir("../../")
-    print(os.getcwd())
+    print(f"Current directory: {os.getcwd()}")
 
 def mainDL(url: str):
 
@@ -87,17 +87,20 @@ def unZip(file_name: list):
     Args:
         file_name (list): file_name: a list of string of files' name with it extension we're looking for unzip.
     """
+    os.chdir("./Data/Raw")
+    
     files_name = os.listdir()
     extension = [".zip", ".tar.gz"]
     
     for file in files_name:
         if file[-4:] in extension:
-            print(f"\nUnzipping: {file}")
+            print(f"\nUnzipping {file}")
             if file in file_name:
                 with zipfile.ZipFile(os.path.join(os.getcwd(), file), 'r') as zip_ref:
                     zip_ref.extractall(".")
-                    print("coucou2")
-
+                    print("Unzipping done")
+    
+    os.chdir("../../")
 
 if __name__ == "__main__":
     
