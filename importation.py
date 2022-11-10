@@ -111,7 +111,7 @@ def unZip(file_name: list):
     Args:
         file_name (list): file_name: a list of string of files' name with it extension we're looking for unzip.
     """
-    os.chdir("Data/Raw")
+    # os.chdir("Data/Raw")
     files_name = os.listdir()
     extension = [".zip", ".tar.gz"]
     
@@ -127,11 +127,11 @@ def unZip(file_name: list):
 if __name__ == "__main__":
     
     # test = importData("https://www.kaggle.com/datasets/shmalex/instagram-dataset?select=instagram_locations.csv")
-    
+    createFile("Data", os.getcwd())
     createFile("Raw", "Data")
     # importhtml("http://download.geonames.org/export/dump/allCountries.zip", "./Data/Raw")
     mainDL("http://download.geonames.org/export/dump")
 
-    # unZip(["allCountries.zip"])
+    unZip(["allCountries.zip"])
     
     
