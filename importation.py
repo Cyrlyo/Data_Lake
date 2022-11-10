@@ -25,7 +25,7 @@ def dataDownloader(url: str):
 
     return myfiles, br
 
-def downloadlink(link, br):
+def downloadLink(link, br):
     
     print(f"\nDownloading {link.text}... Please wait")
     os.chdir("./Data/Raw")
@@ -43,7 +43,7 @@ def mainDL(url: str):
     for link in files:
         time.sleep(1)
         try:
-            downloadlink(link, br)
+            downloadLink(link, br)
         except:
             pass
 
@@ -117,10 +117,10 @@ def unZip(file_name: list):
     
     for file in files_name:
         if file[-4:] in extension:
-            print(file)
+            print(f"\nUnzipping: {file}")
             if file in file_name:
                 with zipfile.ZipFile(os.path.join(os.getcwd(), file), 'r') as zip_ref:
-                    zip_ref.extractall("./UnZipTest")
+                    zip_ref.extractall(".")
                     print("coucou2")
 
 
