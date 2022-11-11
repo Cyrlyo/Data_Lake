@@ -15,7 +15,7 @@ def unZipper(file_name: str, path: str = None, end_dir: str = None ):
     if path is not None:
         os.chdir(path)
     
-    print("Unzipping...")
+    print("\nUnzipping...")
     if end_dir is not None:
         with zipfile.ZipFile(os.path.join(os.getcwd(), file_name), 'r') as zipref:
             zipref.extractall(end_dir)
