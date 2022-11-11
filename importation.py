@@ -153,8 +153,3 @@ def main():
     deplaceFiles("readme.txt", "../Documentation")
     
     os.chdir("../../")
-    
-
-if __name__ == "__main__":
-    
-    main()

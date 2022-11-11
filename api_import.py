@@ -4,17 +4,6 @@ import os, subprocess
 from importation import unZip, deletingFiles
 from utils import unZipper
 
-DATASET_NAME = "shmalex/instagram-dataset"
-SOURCE_1 = "instagram_locations.csv"
-SOURCE_2 = "instagram_profiles.csv"
-SOURCES = [SOURCE_1, SOURCE_2]
-
-try:
-    API = KaggleApi()
-    API.authenticate()
-except:
-    print("\nMake sur that you're kaggle.json file (containing username + api key) is stores on $HOME/.kaggle")
-
 
 def apiDownload(api: KaggleApi, dataset_name: str, source: str, folder: str):
     """_summary_
@@ -45,11 +34,7 @@ def prepFile(file_name: str, file_extension: str, path: str, end_dir: str):
 def main(api: KaggleApi, dataset: str, sources: list):
     
     for source in sources:
-        print(f"Downloading {source}... Please wait")
+        print(f"\nDownloading {source}... Please wait")
         apiDownload(api, dataset, source, "./Data/Raw")
-        prepFile(source, ".zip", "./Data/Raw", SOURCE_1[:-4])
+        prepFile(source, ".zip", "./Data/Raw", source[:-4])
         print("Done")
-
-if __name__ == "__main__":
-    
-    main(API, DATASET_NAME, SOURCES)
