@@ -1,18 +1,18 @@
 import kaggle
 from kaggle.api.kaggle_api_extended import KaggleApi
 import os, subprocess
-
-KAGGLE_CONFIG_DIR = os.path.join(os.path.expandvars('$HOME'), '.kaggle')
-cmd = f"chmod 600 {KAGGLE_CONFIG_DIR}/kaggle.json"
-output = subprocess.check_output(cmd.split(" "))
-output = output.decode(encoding='UTF-8')
-print(output)
-
+from importation import unZip, deletingFiles
 
 print("coucou1")
 api = KaggleApi()
 api.authenticate()
 print("coucou2")
 api.dataset_download_file("shmalex/instagram-dataset",
-                          file_name="instagram_locations.csv")
+                          file_name="instagram_locations.csv",
+                          path="./Data/Raw")
 print("coucou3")
+
+unZip("./Data/Raw/instagram_locations.csv.zip")
+print("coucou4")
+deletingFiles("./Data/Raw/instagram_locations.csv.zip")
+print("coucou5")

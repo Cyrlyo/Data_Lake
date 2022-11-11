@@ -5,3 +5,4 @@ datalake_venv
 *.xlsx
 Data
 kaggle.json
+__pycache__
