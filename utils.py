@@ -1,5 +1,4 @@
 import os, zipfile
-from importation import __name__
 
 def unZipper(file_name: str, path: str = None, end_dir: str = None ):
     """_summary_

@@ -19,9 +19,9 @@ def apiDownload(api: KaggleApi, dataset_name: str, source: str, folder: str):
     """_summary_
 
     Args:
-        dataset_name (str): _description_
-        source (str): _description_
-        folder (str): _description_
+        dataset_name (str): name of the dataset on kaggle
+        source (str): name of the file on kaggle
+        folder (str): path of the folder where you want to download the file
     """
     
     api.dataset_download_file(dataset_name,
@@ -32,10 +32,10 @@ def prepFile(file_name: str, file_extension: str, path: str, end_dir: str):
     """_summary_
 
     Args:
-        file_name (str): _description_
-        file_extension (str): _description_
-        path (str): _description_
-        end_dir (str): _description_
+        file_name (str): name of the file to prepare
+        file_extension (str): .zip or other zipped extensions
+        path (str): path where the file is stored
+        end_dir (str): path where the unzipped file should be stored
     """
 
     unZipper(file_name + file_extension, path, end_dir)
