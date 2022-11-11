@@ -1,5 +1,5 @@
-from Data_import.importation import poi_import
-from Data_import.api_import import api_import
+from import_data.importation import poi_import
+from import_data.api_import import api_import
 from kaggle.api import KaggleApi
 
 DATASET_NAME = "shmalex/instagram-dataset"
