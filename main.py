@@ -13,7 +13,7 @@ try:
     API = KaggleApi()
     API.authenticate()
 except:
-    print("\nMake sure that you're kaggle.json file (containing username + api key) is stores on ${HOME}/.kaggle")
+    print("\nMake sure that you're kaggle.json file (containing username + api key) is stores on $HOME/.kaggle")
 
 poi_import(DATASET_NAME_2, SOURCE_3)
 api_import(API, DATASET_NAME, SOURCES)
