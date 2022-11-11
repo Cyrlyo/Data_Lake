@@ -112,9 +112,10 @@ def unZip(file_name: list):
             print(f"\nUnzipping {file}")
             if file in file_name:
                 with zipfile.ZipFile(os.path.join(os.getcwd(), file), 'r') as zip_ref:
-                    zip_ref.extractall(".")
+                    zip_ref.extractall(f"{file_name[0][:-4]}")
                     print("Unzipping done")
 
+    os.chdir("../")
 def deplaceFiles(file_name: str, new_folder_path: str) -> None:
     """_summary_
 
@@ -135,7 +136,7 @@ def deletingFiles(file_name: str) -> None:
     Args:
         file_name (str): _description_
     """
-    
+    print(os.getcwd())
     print(f"Deleting {file_name}")
     os.remove(file_name)
     
@@ -149,6 +150,7 @@ if __name__ == "__main__":
     mainDL("http://download.geonames.org/export/dump")
     unZip(["allCountries.zip"])
     
+    os.chdir("./Raw")
     deletingFiles("allCountries.zip")
     deplaceFiles("readme.txt", "../Documentation")
     
