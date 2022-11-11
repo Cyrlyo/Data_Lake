@@ -1,8 +1,6 @@
-import kaggle
 from kaggle.api.kaggle_api_extended import KaggleApi
-import os, subprocess
-from importation import unZip, deletingFiles
-from utils import unZipper
+import os
+from utils import unZipper, deletingFiles
 
 
 def apiDownload(api: KaggleApi, dataset_name: str, source: str, folder: str):
@@ -31,7 +29,7 @@ def prepFile(file_name: str, file_extension: str, path: str, end_dir: str):
     unZipper(file_name + file_extension, path, end_dir)
     deletingFiles(os.path.join(path, file_name + file_extension))
 
-def main(api: KaggleApi, dataset: str, sources: list):
+def api_import(api: KaggleApi, dataset: str, sources: list):
     
     for source in sources:
         print(f"\nDownloading {source}... Please wait")

@@ -1,13 +1,11 @@
 import pandas as pd
-import numpy as np
-import zipfile
 import os
 import mechanize
 import time
 from mechanize import Browser
 from typing import Tuple
 from pandas import DataFrame
-from utils import deletingFiles, deplaceFiles
+from utils import deletingFiles, deplaceFiles, createFile, unZip
 from os.path import join
 
 def dataDownloader(url: str) -> Tuple[list, Browser]:
@@ -77,44 +75,9 @@ def importData(url: str) -> DataFrame:
     data = pd.read_html(url)
     
     return data
-
-def createFile(folder_name: str, parent_dir: str):
-    """_summary_
-
-    Args:
-        folder_name (str): Name of the new folder
-        parent_dir (str): if the parent directory isn't the current file. If they are identical please pass 'os.getwd()'
-    """
-    print()
-    current_dir = os.getcwd()
-    print(f"You're current directory is: {current_dir}")
-    path = join(join(current_dir, parent_dir), folder_name)
-    try: 
-        os.mkdir(path)
-        print(f"{folder_name} has been created\nPath: {path}")
-    except:
-        print("Folder already exists")
-
-
-def unZip(file_name: list):
-    """_summary_
-
-    Args:
-        file_name (list): file_name: a list of string of files' name with it extension we're looking for unzip.
-    """
-    files_name = os.listdir()
-    extension = [".zip", ".tar.gz"]
-    
-    for file in files_name:
-        if file[-4:] in extension:
-            print(f"\nUnzipping {file}")
-            if file in file_name:
-                with zipfile.ZipFile(join(os.getcwd(), file), 'r') as zip_ref:
-                    zip_ref.extractall(f"{file_name[0][:-4]}")
-                    print("Unzipping done")
     
 
-def main(dataset_name: str, source: str):
+def poi_import(dataset_name: str, source: str):
     """_summary_
 
     Args:
