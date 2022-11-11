@@ -1,4 +1,5 @@
 import os, zipfile
+from importation import __name__
 
 def unZipper(file_name: str, path: str = None, end_dir: str = None ):
     """_summary_
@@ -16,11 +17,11 @@ def unZipper(file_name: str, path: str = None, end_dir: str = None ):
     
     print("Unzipping...")
     if end_dir is not None:
-        with zipfile.ZipFile(file_name, 'r') as zipref:
-            zipref.extractall(path=end_dir)
+        with zipfile.ZipFile(os.path.join(os.getcwd(), file_name), 'r') as zipref:
+            zipref.extractall(end_dir)
         
     else:
-        with zipfile.ZipFile(file_name, 'r') as zipref:
+        with zipfile.ZipFile(os.path.join(os.getcwd(), file_name), 'r') as zipref:
             zipref.extractall()
     print(f"{file_name} succesfully unzipped")
     
