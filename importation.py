@@ -1,8 +1,5 @@
 import pandas as pd
 import numpy as np
-import random
-import lxml
-import requests
 import zipfile
 import os, sys, glob
 import mechanize
@@ -11,6 +8,7 @@ from mechanize import Browser
 from typing import Tuple
 from pandas import DataFrame
 import shutil
+from os.path import join
 
 def dataDownloader(url: str) -> Tuple[list, Browser]:
     """_summary_
@@ -90,7 +88,7 @@ def createFile(folder_name: str, parent_dir: str):
     print()
     current_dir = os.getcwd()
     print(f"You're current directory is: {current_dir}")
-    path = os.path.join(os.path.join(current_dir, parent_dir), folder_name)
+    path = join(join(current_dir, parent_dir), folder_name)
     try: 
         os.mkdir(path)
         print(f"{folder_name} has been created\nPath: {path}")
@@ -111,7 +109,7 @@ def unZip(file_name: list):
         if file[-4:] in extension:
             print(f"\nUnzipping {file}")
             if file in file_name:
-                with zipfile.ZipFile(os.path.join(os.getcwd(), file), 'r') as zip_ref:
+                with zipfile.ZipFile(join(os.getcwd(), file), 'r') as zip_ref:
                     zip_ref.extractall(f"{file_name[0][:-4]}")
                     print("Unzipping done")
 
@@ -124,11 +122,11 @@ def deplaceFiles(file_name: str, new_folder_path: str) -> None:
         new_folder_path (str): _description_
     """
     try:
-        shutil.move(os.path.join(os.getcwd(), file_name), os.path.join(new_folder_path, file_name))
+        shutil.move(join(os.getcwd(), file_name), join(new_folder_path, file_name))
 
     except:
         os.mkdir(new_folder_path)
-        shutil.move(os.path.join(os.getcwd(), file_name), os.path.join(new_folder_path, file_name))
+        shutil.move(join(os.getcwd(), file_name), join(new_folder_path, file_name))
 
 def deletingFiles(file_name: str) -> None:
     """_summary_
@@ -140,16 +138,20 @@ def deletingFiles(file_name: str) -> None:
     os.remove(file_name)
     
 
-def main():
-    
+def main(dataset_name: str, source: str):
+    """_summary_
+
+    Args:
+        source (str): _description_
+    """
     createFile("Data", os.getcwd())
     createFile("Raw", "Data")
     
     os.chdir("./Data/Raw")
-    mainDL("http://download.geonames.org/export/dump")
-    unZip(["allCountries.zip"])
+    mainDL(dataset_name)
+    unZip([source])
     
-    deletingFiles("allCountries.zip")
+    deletingFiles(source)
     deplaceFiles("readme.txt", "../Documentation")
     
     os.chdir("../../")
