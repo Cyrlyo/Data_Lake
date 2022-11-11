@@ -27,6 +27,7 @@ def prepFile(file_name: str, file_extension: str, path: str, end_dir: str):
     """
 
     unZipper(file_name + file_extension, path, end_dir)
+    print(f"\nDeleting {file_name}")
     deletingFiles(os.path.join(path, file_name + file_extension))
 
 def api_import(api: KaggleApi, dataset: str, sources: list):

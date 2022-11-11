@@ -42,14 +42,15 @@ def deplaceFiles(file_name: str, new_folder_path: str) -> None:
         os.mkdir(new_folder_path)
         shutil.move(join(os.getcwd(), file_name), join(new_folder_path, file_name))
 
-def deletingFiles(file_name: str) -> None:
+def deletingFiles(path: str) -> None:
     """_summary_
 
     Args:
-        file_name (str): _description_
+        path (str): path of the file to delete, containing the file
+        name & the extension.
+        Exemple: /root/Users/youre_file.zip
     """
-    print(f"Deleting {file_name}")
-    os.remove(file_name)
+    os.remove(path)
     
 def createFile(folder_name: str, parent_dir: str):
     """_summary_
