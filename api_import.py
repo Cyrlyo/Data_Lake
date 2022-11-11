@@ -7,6 +7,7 @@ from utils import unZipper
 DATASET_NAME = "shmalex/instagram-dataset"
 SOURCE_1 = "instagram_locations.csv"
 SOURCE_2 = "instagram_profiles.csv"
+SOURCES = [SOURCE_1, SOURCE_2]
 
 try:
     API = KaggleApi()
@@ -41,10 +42,14 @@ def prepFile(file_name: str, file_extension: str, path: str, end_dir: str):
     unZipper(file_name + file_extension, path, end_dir)
     deletingFiles(os.path.join(path, file_name + file_extension))
 
+def main(api: KaggleApi, dataset: str, sources: list):
+    
+    for source in sources:
+        print(f"Downloading {source}... Please wait")
+        apiDownload(api, dataset, source, "./Data/Raw")
+        prepFile(source, ".zip", "./Data/Raw", SOURCE_1[:-4])
+        print("Done")
+
 if __name__ == "__main__":
     
-    apiDownload(API, DATASET_NAME, SOURCE_1, "./Data/Raw")
-    prepFile(SOURCE_1, ".zip", "./Data/Raw", SOURCE_1[:-4])
-    
-    apiDownload(API, DATASET_NAME, SOURCE_2, "./Data/Raw")
-    prepFile(SOURCE_2, ".zip", "./Data/Raw", SOURCE_2[:-4])
+    main(API, DATASET_NAME, SOURCES)
