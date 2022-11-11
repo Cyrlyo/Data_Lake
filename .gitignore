@@ -4,3 +4,4 @@ datalake_venv
 *.csv
 *.xlsx
 Data
+kaggle.json
