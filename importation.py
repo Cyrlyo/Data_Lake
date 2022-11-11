@@ -1,13 +1,13 @@
 import pandas as pd
 import numpy as np
 import zipfile
-import os, sys, glob
+import os
 import mechanize
 import time
 from mechanize import Browser
 from typing import Tuple
 from pandas import DataFrame
-import shutil
+from utils import deletingFiles, deplaceFiles
 from os.path import join
 
 def dataDownloader(url: str) -> Tuple[list, Browser]:
@@ -112,30 +112,6 @@ def unZip(file_name: list):
                 with zipfile.ZipFile(join(os.getcwd(), file), 'r') as zip_ref:
                     zip_ref.extractall(f"{file_name[0][:-4]}")
                     print("Unzipping done")
-
-    
-def deplaceFiles(file_name: str, new_folder_path: str) -> None:
-    """_summary_
-
-    Args:
-        file_name (str): _description_
-        new_folder_path (str): _description_
-    """
-    try:
-        shutil.move(join(os.getcwd(), file_name), join(new_folder_path, file_name))
-
-    except:
-        os.mkdir(new_folder_path)
-        shutil.move(join(os.getcwd(), file_name), join(new_folder_path, file_name))
-
-def deletingFiles(file_name: str) -> None:
-    """_summary_
-
-    Args:
-        file_name (str): _description_
-    """
-    print(f"Deleting {file_name}")
-    os.remove(file_name)
     
 
 def main(dataset_name: str, source: str):
