@@ -1,0 +1,17 @@
+from importation import main as poi_import
+from api_import import main as api_import
+from kaggle.api import KaggleApi
+
+DATASET_NAME = "shmalex/instagram-dataset"
+SOURCE_1 = "instagram_locations.csv"
+SOURCE_2 = "instagram_profiles.csv"
+SOURCES = [SOURCE_1, SOURCE_2]
+
+try:
+    API = KaggleApi()
+    API.authenticate()
+except:
+    print("\nMake sur that you're kaggle.json file (containing username + api key) is stores on $HOME/.kaggle")
+
+poi_import()
+api_import(API, DATASET_NAME, SOURCES)
