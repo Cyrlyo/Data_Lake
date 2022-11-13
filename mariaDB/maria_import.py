@@ -1,13 +1,14 @@
 import mariadb
 import yaml
 from yaml.loader import SafeLoader
+import sys
 
 try:
     with open("./mariaDB/credentials.yaml", "r") as creds:
         credentials = yaml.load(creds, Loader=SafeLoader)
 
 except:
-    print("Creating credentials.yaml files. Please enter the following informations  \n/!\ Don't share thoses informations /!\ ")
+    print("\nCreating credentials.yaml files. Please enter the following informations\n/!\ Don't share those informations /!\ ")
     user = input("Username: ")
     password = input("Password: ")
     host = input("host (by default localhost): ")
@@ -17,13 +18,16 @@ except:
     with open("./mariaDB/credentials.yaml", "w") as creds:
         yaml.dump(credentials, creds)
     
-
-connexion = mariadb.connect(
-    user = credentials['user'],
-    password = credentials["password"],
-    host = credentials["host"],
-    port = credentials["port"]
-)
+try:
+    connexion = mariadb.connect(
+        user = credentials['user'],
+        password = credentials["password"],
+        host = credentials["host"],
+        port = credentials["port"]
+    )
+except mariadb.Error as error:
+    print(f"\nError connecting to the database: {error}")
+    sys.exit(1)
 
 cursor = connexion.cursor()
 cursor.execute("SHOW DATABASES")
