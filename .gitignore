@@ -7,3 +7,4 @@ Data
 kaggle.json
 __pycache__
 db_venv
+credentials.yaml
