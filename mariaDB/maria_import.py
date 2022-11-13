@@ -4,6 +4,7 @@ from yaml.loader import SafeLoader
 import sys
 from typing import Dict
 from mariadb.connections import Connection
+from mariadb.cursors import Cursor
 
 def gettingCredentials() -> Dict:
     
@@ -41,9 +42,8 @@ def connectToDatabase(credentials: dict) -> Connection:
 
     return connexion
 
-def testingConnexion(connexion: Connection):
+def listingDatabase(cursor: Cursor) -> None:
     
-    cursor = connexion.cursor()
     print("\nListing existing databases: ")
     cursor.execute("SHOW DATABASES")
 
@@ -52,9 +52,28 @@ def testingConnexion(connexion: Connection):
     for database in data_base_list:
         print(f"- {database[0]}")
 
+def createDatabase(cursor: Cursor, database_name: str) -> None:
+    
+    cursor.execute("CREATE DATABASE " + database_name)
+    print(f"\n{database_name} has been created")
+    
+def dropDatabase(cursor: Cursor, database_name: str):
+    
+    confirm = input(f"\nAre you sure to delete {database_name} enter [Y or N]: ")
+    if confirm == "Y":
+        cursor.execute("DROP DATABASE " + database_name)
+        print(f"{database_name} has been deleted")
+    else:
+        print(f"Drop {database_name} database has been canceled")
 
 if __name__ == "__main__":
     
     credentials = gettingCredentials()
     connexion = connectToDatabase(credentials)
-    testingConnexion(connexion)
+    
+    cursor = connexion.cursor()
+    
+    listingDatabase(cursor)
+    createDatabase(cursor, "python_created_test")
+    dropDatabase(cursor, "python_created_test")
+    # TODO: Mettre les fonction génériques dans un script 'utils' ou 'utils_db'
