@@ -54,15 +54,21 @@ def listingDatabase(cursor: Cursor) -> None:
 
 def createDatabase(cursor: Cursor, database_name: str) -> None:
     
-    cursor.execute("CREATE DATABASE " + database_name)
-    print(f"\n{database_name} has been created")
+    try:
+        cursor.execute("CREATE DATABASE " + database_name)
+        print(f"\n{database_name} has been created")
+    except mariadb.Error as error:
+        print(f"Error: {error}")
     
 def dropDatabase(cursor: Cursor, database_name: str):
     
     confirm = input(f"\nAre you sure to delete {database_name} enter [Y or N]: ")
     if confirm == "Y":
-        cursor.execute("DROP DATABASE " + database_name)
-        print(f"{database_name} has been deleted")
+        try:
+            cursor.execute("DROP DATABASE " + database_name)
+            print(f"{database_name} has been deleted")
+        except mariadb.Error as error:
+            print(f"Error: {error}")
     else:
         print(f"Drop {database_name} database has been canceled")
 
@@ -77,3 +83,4 @@ if __name__ == "__main__":
     createDatabase(cursor, "python_created_test")
     dropDatabase(cursor, "python_created_test")
     # TODO: Mettre les fonction génériques dans un script 'utils' ou 'utils_db'
+    #TODO: Add docstrings & documentation
