@@ -1,27 +1,34 @@
 import mariadb
 import yaml
+from yaml.loader import SafeLoader
 
+try:
+    with open("./mariaDB/credentials.yaml", "r") as creds:
+        credentials = yaml.load(creds, Loader=SafeLoader)
 
-print("coucou0")
+except:
+    print("Creating credentials.yaml files. Please enter the following informations  \n/!\ Don't share thoses informations /!\ ")
+    user = input("Username: ")
+    password = input("Password: ")
+    host = input("host (by default localhost): ")
+    port = int(input("port (by default 3306): "))
+    
+    credentials = {"user": user, "password": password, "host": host, "port":port}
+    with open("./mariaDB/credentials.yaml", "w") as creds:
+        yaml.dump(credentials, creds)
+    
+
 connexion = mariadb.connect(
-    user = "root",
-    password = "root",
-    host = "localhost",
-    port = 3306
+    user = credentials['user'],
+    password = credentials["password"],
+    host = credentials["host"],
+    port = credentials["port"]
 )
-print("coucou1")
-print(connexion)
 
-print("coucou3")
 cursor = connexion.cursor()
-print("coucour4")
-print(cursor)
-
-print("coucou5")
 cursor.execute("SHOW DATABASES")
-print("coucou6")
 
 data_base_list = cursor.fetchall()
   
 for database in data_base_list:
-  print(database)
+    print(database)
