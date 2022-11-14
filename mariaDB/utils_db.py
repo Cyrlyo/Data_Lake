@@ -56,10 +56,11 @@ def listingDatabase(cursor: Cursor) -> None:
 def createDatabase(cursor: Cursor, database_name: str) -> None:
     # TODO: mettre un statement if exists delete or use avec argparse
     try:
-        cursor.execute("CREATE DATABASE " + database_name)
+        print("CREATE DATABASE " + database_name + " character set utf8mb4 collate utf8mb4_bin")
+        cursor.execute("CREATE DATABASE " + database_name + " CHARACTER SET utf8 COLLATE utf8_general_ci")
         print(f"\n{database_name} has been created")
     except Error as error:
-        print(f"\nError: {error}")
+        print(f"\n{error}")
     
 def dropDatabase(cursor: Cursor, database_name: str):
     
