@@ -5,6 +5,7 @@ import sys
 from typing import Dict
 from mariadb.connections import Connection
 from mariadb.cursors import Cursor
+from mariadb import Error
 
 def gettingCredentials() -> Dict:
     
@@ -35,7 +36,7 @@ def connectToDatabase(credentials: dict) -> Connection:
             host = credentials["host"],
             port = credentials["port"]
         )
-    except mariadb.Error as error:
+    except Error as error:
         print(f"\nError connecting to the database: {error}")
         sys.exit(1)
     print("Done")
@@ -53,11 +54,11 @@ def listingDatabase(cursor: Cursor) -> None:
         print(f"- {database[0]}")
 
 def createDatabase(cursor: Cursor, database_name: str) -> None:
-    
+    # TODO: mettre un statement if exists delete or use avec argparse
     try:
         cursor.execute("CREATE DATABASE " + database_name)
         print(f"\n{database_name} has been created")
-    except mariadb.Error as error:
+    except Error as error:
         print(f"\nError: {error}")
     
 def dropDatabase(cursor: Cursor, database_name: str):
@@ -67,7 +68,7 @@ def dropDatabase(cursor: Cursor, database_name: str):
         try:
             cursor.execute("DROP DATABASE " + database_name)
             print(f"{database_name} has been deleted")
-        except mariadb.Error as error:
+        except Error as error:
             print(f"Error: {error}")
     else:
         print(f"Drop {database_name} database has been canceled")
@@ -76,7 +77,7 @@ def useWorkplace(cursor: Cursor, database_name: str):
     
     try:
         cursor.execute("USE " + database_name)
-    except mariadb.Error as error:
+    except Error as error:
         print(f"\nError: {error}")
 
 
