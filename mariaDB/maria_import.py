@@ -4,7 +4,7 @@ import os
 from os.path import join
 from mariadb.cursors import Cursor
 from mariadb.connections import Connection
-from utils_db import gettingCredentials, connectToDatabase, listingDatabase, \
+from mariaDB.utils_db import gettingCredentials, connectToDatabase, listingDatabase, \
     createDatabase, dropDatabase, useWorkplace
 
 def createTable(connexion: Connection, table_name: str) -> None:
