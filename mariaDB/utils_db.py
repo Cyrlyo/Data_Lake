@@ -8,6 +8,11 @@ from mariadb.cursors import Cursor
 from mariadb import Error
 
 def gettingCredentials() -> Dict:
+    """_summary_
+
+    Returns:
+        Dict: _description_
+    """
     
     try:
         with open("./mariaDB/credentials.yaml", "r") as creds:
@@ -27,6 +32,14 @@ def gettingCredentials() -> Dict:
     return credentials
     
 def connectToDatabase(credentials: dict) -> Connection:
+    """_summary_
+
+    Args:
+        credentials (dict): _description_
+
+    Returns:
+        Connection: _description_
+    """
     
     print("\nConnecting to the database...")
     try:
@@ -44,6 +57,11 @@ def connectToDatabase(credentials: dict) -> Connection:
     return connexion
 
 def listingDatabase(cursor: Cursor) -> None:
+    """_summary_
+
+    Args:
+        cursor (Cursor): _description_
+    """
     
     print("\nListing existing databases: ")
     cursor.execute("SHOW DATABASES")
@@ -54,6 +72,12 @@ def listingDatabase(cursor: Cursor) -> None:
         print(f"- {database[0]}")
 
 def createDatabase(cursor: Cursor, database_name: str) -> None:
+    """_summary_
+
+    Args:
+        cursor (Cursor): _description_
+        database_name (str): _description_
+    """
     # TODO: mettre un statement if exists delete or use avec argparse
     try:
         cursor.execute("CREATE DATABASE " + database_name + " CHARACTER SET utf8 COLLATE utf8_general_ci")
@@ -62,6 +86,12 @@ def createDatabase(cursor: Cursor, database_name: str) -> None:
         print(f"\n{error}")
     
 def dropDatabase(cursor: Cursor, database_name: str):
+    """
+
+    Args:
+        cursor (Cursor): _description_
+        database_name (str): _description_
+    """
     
     confirm = input(f"\nAre you sure to delete {database_name} enter [Y or N]: ")
     if confirm == "Y":
@@ -74,6 +104,12 @@ def dropDatabase(cursor: Cursor, database_name: str):
         print(f"Drop {database_name} database has been canceled")
 
 def useWorkplace(cursor: Cursor, database_name: str):
+    """_summary_
+
+    Args:
+        cursor (Cursor): _description_
+        database_name (str): _description_
+    """
     
     try:
         cursor.execute("USE " + database_name)
