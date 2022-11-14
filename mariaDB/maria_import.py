@@ -19,6 +19,7 @@ def createTable(connexion: Connection):
         print(f"Error: {error}")
 
 def importData(cursor: Cursor):
+    # We should have 12350210 rows
     try:
         #TODO: faire fonction pour path correct
         path = os.getcwd()
