@@ -75,12 +75,6 @@ def importToMariaDB(database_name: str, table_name: str, data_path: str) -> None
     createTable(connexion, table_name)
     importData(connexion, cursor, data_path, table_name)
     
-    cursor.execute(f"SELECT * FROM {table_name} LIMIT 5")
-    results = cursor.fetchall()
-    
-    for i in results:
-        print(i)
-    
     cursor.close()
     connexion.close()
 
