@@ -8,7 +8,7 @@ from pandas import DataFrame
 from utils import deletingFiles, deplaceFiles, createFile, unZip
 from os.path import join
 
-def dataDownloader(url: str) -> Tuple[list, Browser]:
+def dataDownloader(url: str, file_name: list) -> Tuple[list, Browser]:
     """_summary_
 
     Args:
@@ -20,9 +20,6 @@ def dataDownloader(url: str) -> Tuple[list, Browser]:
     
     br = mechanize.Browser()
     br.open(url)
-    
-    file_name =["allCountries.zip", "readme.txt"]
-    # TODO: a bouger / supprimer
     
     myfiles = []
     
@@ -47,14 +44,14 @@ def downloadLink(link, br) -> None:
     f.close()
     print(link.text," has been downloaded")
 
-def mainDL(url: str) -> None:
+def mainDL(url: str, file_name: list) -> None:
     """_summary_
 
     Args:
         url (str): _description_
     """
 
-    files, br = dataDownloader(url)
+    files, br = dataDownloader(url, file_name)
 
     for link in files:
         time.sleep(1)
@@ -78,17 +75,19 @@ def importData(url: str) -> DataFrame:
     return data
     
 
-def poi_import(dataset_name: str, source: str):
+def poi_import(dataset_name: str, source: str, files_name) -> None:
     """_summary_
 
     Args:
+        dataset_name (str): _description_
         source (str): _description_
+        files_name (_type_): _description_
     """
     createFile("Data", os.getcwd())
     createFile("Raw", "Data")
     
     os.chdir("./Data/Raw")
-    mainDL(dataset_name)
+    mainDL(dataset_name, files_name)
     unZip([source])
     
     deletingFiles(source)
