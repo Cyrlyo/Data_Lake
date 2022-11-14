@@ -20,21 +20,19 @@ def createTable(connexion: Connection, table_name: str):
     
     try:
         cursor.execute(createtable_query)
-        # cursor.execute("ALTER TABLE test ADD PRIMARY KEY(geonameid)")
     except mariadb.Error as error:
         print(f"Error: {error}")
 
-def importData(cursor: Cursor, data_path: str):
+def importData(cursor: Cursor, data_path: str, table_name: str):
     # We should have 12350210 rows
     try:
-        #TODO: faire fonction pour path correct
         path = os.getcwd()
         all_path = os.path.join(path, data_path)
         all_path = all_path.replace(os.sep, "/")
         all_path = all_path.replace("/.", "")
         
         print("\nImporting data... Please wait")
-        cursor.execute(f"LOAD DATA LOCAL INFILE '{all_path}' INTO TABLE test FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n'")
+        cursor.execute(f"LOAD DATA LOCAL INFILE '{all_path}' INTO TABLE {table_name} FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n'")
         print("Done")
     except mariadb.Error as error:
         print(f"Error: {error}")
@@ -50,19 +48,17 @@ if __name__ == "__main__" :
     cursor = connexion.cursor()
     
     listingDatabase(cursor)
-    createDatabase(cursor, "python_created_test")
-    useWorkplace(cursor, "python_created_test")
+    createDatabase(cursor, "point_of_interest")
+    useWorkplace(cursor, "point_of_interest")
     
-    createTable(connexion, "test")
-    importData(cursor, "./Data/Raw/allCountries/allCountries.txt")
+    createTable(connexion, "allCountries")
+    importData(cursor, "./Data/Raw/allCountries/allCountries.txt", "allCountries")
     
-    cursor.execute("SELECT * FROM test LIMIT 10")
+    cursor.execute("SELECT * FROM allCountries LIMIT 10")
     results = cursor.fetchall()
     
     for i in results:
         print(i)
-    
-    # dropDatabase(cursor, "python_created_test")
     
     # elasticsearch : indexation surtout textuelle (browser like)
     # Spark gérer facilement des cluster de données facilement 
