@@ -1,7 +1,7 @@
 from import_data.importation import poi_import
 from import_data.api_import import api_import
 from kaggle.api import KaggleApi
-
+from mariaDB.maria_import import importToMariaDB
 
 DATASET_NAME = "shmalex/instagram-dataset"
 SOURCE_1 = "instagram_locations.csv"
@@ -20,3 +20,5 @@ except:
 
 poi_import(DATASET_NAME_2, SOURCE_3)
 api_import(API, DATASET_NAME, SOURCES)
+
+importToMariaDB("point_of_interest", "allCountries", "./Data/Raw/allCountries/allCountries.txt")
