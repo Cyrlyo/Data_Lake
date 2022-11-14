@@ -32,7 +32,7 @@ def importData(cursor: Cursor, data_path: str, table_name: str):
         all_path = all_path.replace("/.", "")
         
         print("\nImporting data... Please wait")
-        cursor.execute(f"LOAD DATA LOCAL INFILE '{all_path}' INTO TABLE {table_name} FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n'")
+        # cursor.execute(f"LOAD DATA LOCAL INFILE '{all_path}' INTO TABLE {table_name} FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n'")
         print("Done")
     except mariadb.Error as error:
         print(f"Error: {error}")
@@ -59,6 +59,9 @@ if __name__ == "__main__" :
     
     for i in results:
         print(i)
+    
+    cursor.close()
+    connexion.close()
     
     # elasticsearch : indexation surtout textuelle (browser like)
     # Spark gérer facilement des cluster de données facilement 
