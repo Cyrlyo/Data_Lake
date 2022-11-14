@@ -46,7 +46,7 @@ def importData(connexion: str, cursor: Cursor, data_path: str, table_name: str) 
         all_path = all_path.replace("/.", "")
         
         print("\nImporting data... Please wait")
-        # cursor.execute(f"LOAD DATA LOCAL INFILE '{all_path}' INTO TABLE {table_name} FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n'")
+        cursor.execute(f"LOAD DATA LOCAL INFILE '{all_path}' INTO TABLE {table_name} FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n'")
         print("Done")
     except mariadb.Error as error:
         print(f"Error: {error}")
