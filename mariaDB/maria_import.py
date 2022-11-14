@@ -23,7 +23,7 @@ def createTable(connexion: Connection, table_name: str):
     except mariadb.Error as error:
         print(f"Error: {error}")
 
-def importData(cursor: Cursor, data_path: str, table_name: str):
+def importData(connexion: str, cursor: Cursor, data_path: str, table_name: str):
     # We should have 12350210 rows
     try:
         path = os.getcwd()
@@ -40,21 +40,21 @@ def importData(cursor: Cursor, data_path: str, table_name: str):
     connexion.commit()
     cursor.closed
 
-if __name__ == "__main__" :
-    
+def importToMariaDB(database_name: str, table_name: str, data_path: str):
+
     credentials = gettingCredentials()
     connexion = connectToDatabase(credentials)
     
     cursor = connexion.cursor()
     
     listingDatabase(cursor)
-    createDatabase(cursor, "point_of_interest")
-    useWorkplace(cursor, "point_of_interest")
+    createDatabase(cursor, database_name)
+    useWorkplace(cursor, database_name)
     
-    createTable(connexion, "allCountries")
-    importData(cursor, "./Data/Raw/allCountries/allCountries.txt", "allCountries")
+    createTable(connexion, table_name)
+    importData(connexion, cursor, data_path, table_name)
     
-    cursor.execute("SELECT * FROM allCountries LIMIT 10")
+    cursor.execute(f"SELECT * FROM {table_name} LIMIT 5")
     results = cursor.fetchall()
     
     for i in results:
@@ -62,6 +62,10 @@ if __name__ == "__main__" :
     
     cursor.close()
     connexion.close()
+
+if __name__ == "__main__" :
+    
+    importToMariaDB("point_of_interest", "allCountries", "./Data/Raw/allCountries/allCountries.txt")
     
     # elasticsearch : indexation surtout textuelle (browser like)
     # Spark gérer facilement des cluster de données facilement 
