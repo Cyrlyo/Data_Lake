@@ -10,6 +10,8 @@ SOURCES = [SOURCE_1, SOURCE_2]
 DATASET_NAME_2 = "http://download.geonames.org/export/dump"
 SOURCE_3 = "allCountries.zip"
 
+# TODO: voir TODO importation.py
+
 try:
     API = KaggleApi()
     API.authenticate()

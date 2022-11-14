@@ -22,6 +22,7 @@ def dataDownloader(url: str) -> Tuple[list, Browser]:
     br.open(url)
     
     file_name =["allCountries.zip", "readme.txt"]
+    # TODO: a bouger / supprimer
     
     myfiles = []
     

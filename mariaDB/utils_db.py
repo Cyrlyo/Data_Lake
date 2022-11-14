@@ -58,7 +58,7 @@ def createDatabase(cursor: Cursor, database_name: str) -> None:
         cursor.execute("CREATE DATABASE " + database_name)
         print(f"\n{database_name} has been created")
     except mariadb.Error as error:
-        print(f"Error: {error}")
+        print(f"\nError: {error}")
     
 def dropDatabase(cursor: Cursor, database_name: str):
     
@@ -72,5 +72,12 @@ def dropDatabase(cursor: Cursor, database_name: str):
     else:
         print(f"Drop {database_name} database has been canceled")
 
-    # TODO: Mettre les fonction génériques dans un script 'utils' ou 'utils_db'
+def useWorkplace(cursor: Cursor, database_name: str):
+    
+    try:
+        cursor.execute("USE " + database_name)
+    except mariadb.Error as error:
+        print(f"\nError: {error}")
+
+
     #TODO: Add docstrings & documentation

@@ -1,7 +1,8 @@
 import mariadb
 from utils_db import gettingCredentials, connectToDatabase, listingDatabase, \
-    createDatabase, dropDatabase
-    
+    createDatabase, dropDatabase, useWorkplace
+
+
 
 if __name__ == "__main__" :
     
@@ -12,4 +13,6 @@ if __name__ == "__main__" :
     
     listingDatabase(cursor)
     createDatabase(cursor, "python_created_test")
-    dropDatabase(cursor, "python_created_test")
+    useWorkplace(cursor, "python_created_test")
+    
+    # dropDatabase(cursor, "python_created_test")
