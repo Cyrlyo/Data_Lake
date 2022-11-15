@@ -81,9 +81,3 @@ def importToMariaDB(database_name: str, table_name: str, data_path: str) -> None
 if __name__ == "__main__" :
     
     importToMariaDB("point_of_interest", "allCountries", "./Data/Raw/allCountries/allCountries.txt")
-    
-    # elasticsearch : indexation surtout textuelle (browser like)
-    # Spark gérer facilement des cluster de données facilement 
-    # Tester des If truc OR machin pour les switch avec argparse (cf. init_all ou just import on mariaDB)
-    # check : https://datahub.io/core/geo-countries on pourrait créer une base de données pour ça et essayer d'afficher le lieu avec 
-    # les coordonnées GPS
