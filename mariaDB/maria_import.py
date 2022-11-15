@@ -38,7 +38,6 @@ def importData(connexion: str, cursor: Cursor, data_path: str, table_name: str) 
         data_path (str): _description_
         table_name (str): _description_
     """
-    # We should have 12350210 rows
     try:
         path = os.getcwd()
         all_path = os.path.join(path, data_path)
