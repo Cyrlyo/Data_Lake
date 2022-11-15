@@ -10,4 +10,4 @@ def importPosts(dataset_name: str, source: str, files_name: list):
     deletingFiles(source)
     os.chdir("../../")
 
-importPosts("http://d3smaster.fr", "posts_reduced.zip", ["posts_reduced.zip"])
+# importPosts("http://d3smaster.fr", "posts_reduced.zip", ["posts_reduced.zip"])
