@@ -17,7 +17,7 @@ def createTable(connexion: Connection, table_name: str) -> None:
     
     cursor = connexion.cursor()
     cursor.execute("DROP TABLE IF EXISTS test")
-    #TODO: Do a F-string and add table_name as argument and print(importing data)
+
     createtable_query = f"CREATE TABLE {table_name}(geonameid BIGINT NOT NULL UNIQUE PRIMARY KEY,\
         name VARCHAR(200) COLLATE utf8_general_ci, asciiname VARCHAR(200), alternatenames VARCHAR(10000),\
             latitude FLOAT, longitude FLOAT, feature_class CHAR(1), feature_code VARCHAR(10), country_code VARCHAR(255),\
@@ -29,14 +29,14 @@ def createTable(connexion: Connection, table_name: str) -> None:
     except mariadb.Error as error:
         print(f"Error: {error}")
 
-def importData(connexion: str, cursor: Cursor, data_path: str, table_name: str) -> None:
+def importData(connexion: Connection, cursor: Cursor, data_path: str, table_name: str) -> None:
     """_summary_
 
     Args:
-        connexion (str): _description_
-        cursor (Cursor): _description_
-        data_path (str): _description_
-        table_name (str): _description_
+        connexion (Connection): Connection object to the database
+        cursor (Cursor): MariaDB Cursor object
+        data_path (str): path to the data to import in MariaDB (here ./Data/Raw/allCountries/allCountries.zip)
+        table_name (str): table's name
     """
     try:
         path = os.getcwd()
@@ -57,9 +57,10 @@ def importToMariaDB(database_name: str, table_name: str, data_path: str) -> None
     """_summary_
 
     Args:
-        database_name (str): _description_
-        table_name (str): _description_
-        data_path (str): _description_
+        database_name (str): name of the database (will be created please enter a valid name or the existing data 
+        will be deleted)
+        table_name (str): name given to the futur created table 
+        data_path (str): path of the data to import
     """
 
     credentials = gettingCredentials()

@@ -8,10 +8,12 @@ from mariadb.cursors import Cursor
 from mariadb import Error
 
 def gettingCredentials() -> Dict:
-    """_summary_
+    """
+    Read and import credentials store in credentials.yaml.
+    Don't share your password. Add credentials.yaml in .gitignore.
 
     Returns:
-        Dict: _description_
+        Dict: contains you're MariaDB profil credentials
     """
     
     try:
@@ -32,13 +34,19 @@ def gettingCredentials() -> Dict:
     return credentials
     
 def connectToDatabase(credentials: dict) -> Connection:
-    """_summary_
+    """
+    Connect to MariaDB. 
 
     Args:
-        credentials (dict): _description_
+        credentials (dict): Credentials of you're local MariaDB profil. 
+            DON'T SHARE YOUR PASSWORD!
+            By default : 
+                - user : "root"
+                - host : "localhost" or "127.0.0.1"
+                - port : "3306"
 
     Returns:
-        Connection: _description_
+        Connection: MariaDB Connection
     """
     
     print("\nConnecting to the database...")
@@ -57,10 +65,11 @@ def connectToDatabase(credentials: dict) -> Connection:
     return connexion
 
 def listingDatabase(cursor: Cursor) -> None:
-    """_summary_
+    """
+    Listing existing MariaDB databases.
 
     Args:
-        cursor (Cursor): _description_
+        cursor (Cursor): MariaDB Cursor
     """
     
     print("\nListing existing databases: ")
@@ -72,11 +81,12 @@ def listingDatabase(cursor: Cursor) -> None:
         print(f"- {database[0]}")
 
 def createDatabase(cursor: Cursor, database_name: str) -> None:
-    """_summary_
+    """
+    We set by default UTF-8 encoding to correctly parse accents.
 
     Args:
-        cursor (Cursor): _description_
-        database_name (str): _description_
+        cursor (Cursor): MariaDB Cursor
+        database_name (str): Database's name to create
     """
     # TODO: mettre un statement if exists delete or use avec argparse
     try:
@@ -89,8 +99,8 @@ def dropDatabase(cursor: Cursor, database_name: str):
     """
 
     Args:
-        cursor (Cursor): _description_
-        database_name (str): _description_
+        cursor (Cursor): MariaDB Cursos
+        database_name (str): database's name to delete
     """
     
     confirm = input(f"\nAre you sure to delete {database_name} enter [Y or N]: ")
@@ -104,17 +114,15 @@ def dropDatabase(cursor: Cursor, database_name: str):
         print(f"Drop {database_name} database has been canceled")
 
 def useWorkplace(cursor: Cursor, database_name: str):
-    """_summary_
+    """
+    Select a MariaDB database on which we'll work.
 
     Args:
-        cursor (Cursor): _description_
-        database_name (str): _description_
+        cursor (Cursor): MariaDB Cursor
+        database_name (str): database name on which we'll work
     """
     
     try:
         cursor.execute("USE " + database_name)
     except Error as error:
         print(f"\nError: {error}")
-
-
-    #TODO: Add docstrings & documentation
