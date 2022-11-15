@@ -1,6 +1,6 @@
 from kaggle.api.kaggle_api_extended import KaggleApi
 import os
-from utils import unZipper, deletingFiles
+from import_data.utils import unZipper, deletingFiles
 
 
 def apiDownload(api: KaggleApi, dataset_name: str, source: str, folder: str):
