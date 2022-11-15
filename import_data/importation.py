@@ -5,7 +5,10 @@ import time
 from mechanize import Browser
 from typing import Tuple
 from pandas import DataFrame
-from import_data.utils import deletingFiles, deplaceFiles, createFile, unZip
+try:
+    from import_data.utils import deletingFiles, deplaceFiles, createFile, unZip
+except:
+    from utils import deletingFiles, deplaceFiles, createFile, unZip
 from os.path import join
 
 def dataDownloader(url: str, file_name: list) -> Tuple[list, Browser]:
