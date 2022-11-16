@@ -26,7 +26,7 @@ if __name__ == "__main__":
     
     query_dict = collectSQLQuery("./query/load_data")
     
-    table_name = SOURCE_3.replace(".zip", "")
+    table_name_3 = SOURCE_3.replace(".zip", "")
 
     
     if init_manually or download:
@@ -41,4 +41,4 @@ if __name__ == "__main__":
         importPosts(DATASET_NAME_3, SOURCE_4, [SOURCE_4])
 
     if init_manually or maria_import or database_import:
-        importToMariaDB("point_of_interest", table_name, "./Data/Raw/allCountries/allCountries.txt", query_dict[table_name])
+        importToMariaDB("point_of_interest", table_name, "./Data/Raw/allCountries/allCountries.txt", query_dict[table_name_3])
