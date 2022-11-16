@@ -42,6 +42,6 @@ def apiImport(api: KaggleApi, dataset: str, sources: list):
     for source in sources:
         print(f"\nDownloading {source}... Please wait")
         apiDownload(api, dataset, source, "./Data/Raw")
-        print(f"{source} has been donwloaded")
+        print(f"{source} has been downloaded")
         prepFile(source, ".zip", "./Data/Raw", source[:-4])
         print("Done")

@@ -45,5 +45,5 @@ if __name__ == "__main__":
         apiImport(API, DATASET_NAME, SOURCES)
         importPosts(DATASET_NAME_3, SOURCE_4, [SOURCE_4])
 
-    if init_manually or maria_import or mongo_import or database_import:
+    if init_manually or maria_import or database_import:
         importToMariaDB("point_of_interest", "allCountries", "./Data/Raw/allCountries/allCountries.txt")
