@@ -126,3 +126,14 @@ def useWorkplace(cursor: Cursor, database_name: str):
         cursor.execute("USE " + database_name)
     except Error as error:
         print(f"\nError: {error}")
+
+def collectColumnNames(path: str) -> list[str]:
+    
+    with open(path, encoding="utf8", newline="\n") as file:
+        first_line = file.readline()
+    
+    first_line = first_line.replace('"', "")
+    first_line = first_line.replace("\n", "")
+    first_line = first_line.split("\t")
+
+    return first_line
