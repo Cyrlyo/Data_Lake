@@ -31,9 +31,17 @@ def prepFile(file_name: str, file_extension: str, path: str, end_dir: str):
     deletingFiles(os.path.join(path, file_name + file_extension))
 
 def apiImport(api: KaggleApi, dataset: str, sources: list):
+    """_summary_
+
+    Args:
+        api (KaggleApi): _description_
+        dataset (str): _description_
+        sources (list): _description_
+    """
     
     for source in sources:
         print(f"\nDownloading {source}... Please wait")
         apiDownload(api, dataset, source, "./Data/Raw")
+        print(f"{source} has been donwloaded")
         prepFile(source, ".zip", "./Data/Raw", source[:-4])
         print("Done")
