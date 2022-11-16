@@ -16,7 +16,7 @@ DATASET_NAME_3 = "http://d3smaster.fr"
 SOURCE_4 = "posts_reduced.zip"
 
 def parse_arguements() -> bool:
-    
+    #TODO: Maybe move to a utils.py
     parser = argparse.ArgumentParser()
     parser.add_argument("-a", "--init_manually", action="store_false", help="Download data & import them on databaes")
     parser.add_argument("-d", "--download", action="store_true", help="Only download data")
