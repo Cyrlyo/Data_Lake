@@ -15,7 +15,10 @@ FILES_NAME = ["allCountries.zip", "readme.txt"]
 DATASET_NAME_3 = "http://d3smaster.fr"
 SOURCE_4 = "posts_reduced.zip"
 
-
+#TODO: Create folder "Query" and query.sql files with all queries\
+# then .split(";") to have a list of queries
+# Or make a dict with the query as value use os.listdir() to iterate on it and\ 
+# use it to dict's keys
 
 if __name__ == "__main__":
 
