@@ -5,7 +5,10 @@ import time
 from mechanize import Browser
 from typing import Tuple
 from pandas import DataFrame
-from utils import deletingFiles, deplaceFiles, createFile, unZip
+try:
+    from import_data.utils import deletingFiles, deplaceFiles, createFile, unZip
+except:
+    from utils import deletingFiles, deplaceFiles, createFile, unZip
 from os.path import join
 
 def dataDownloader(url: str, file_name: list) -> Tuple[list, Browser]:
@@ -75,7 +78,7 @@ def importData(url: str) -> DataFrame:
     return data
     
 
-def poi_import(dataset_name: str, source: str, files_name) -> None:
+def poiImport(dataset_name: str, source: str, files_name: list) -> None:
     """_summary_
 
     Args:
