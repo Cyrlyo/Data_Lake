@@ -1,11 +1,9 @@
 import mariadb
-import pandas as pd
 import os
-from os.path import join
 from mariadb.cursors import Cursor
 from mariadb.connections import Connection
 from mariaDB.utils_db import gettingCredentials, connectToDatabase, listingDatabase, \
-    createDatabase, dropDatabase, useWorkplace
+    createDatabase, useWorkplace
 
 def createTable(connexion: Connection, table_name: str) -> None:
     """_summary_
@@ -17,7 +15,7 @@ def createTable(connexion: Connection, table_name: str) -> None:
 # TODO: move createtable query out, creatable have to become a generic function
 # Maybe we should use "%s" %table_name format?
     cursor = connexion.cursor()
-    cursor.execute("DROP TABLE IF EXISTS test")
+    cursor.execute("DROP TABLE IF EXISTS %S" % table_name)
 
     createtable_query = f"CREATE TABLE {table_name}(geonameid BIGINT NOT NULL UNIQUE PRIMARY KEY,\
         name VARCHAR(200) COLLATE utf8_general_ci, asciiname VARCHAR(200), alternatenames VARCHAR(10000),\
@@ -29,6 +27,9 @@ def createTable(connexion: Connection, table_name: str) -> None:
         cursor.execute(createtable_query)
     except mariadb.Error as error:
         print(f"Error: {error}")
+
+        cursor.close()
+
 
 def importData(connexion: Connection, cursor: Cursor, data_path: str, table_name: str) -> None:
     """_summary_
@@ -46,7 +47,6 @@ def importData(connexion: Connection, cursor: Cursor, data_path: str, table_name
         all_path = all_path.replace("/.", "")
         
         print("\nImporting data... Please wait")
-        #TODO: add \t & \n as arguments?
         cursor.execute(f"LOAD DATA LOCAL INFILE '{all_path}' INTO TABLE {table_name} FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n'")
         print("Done")
     except mariadb.Error as error:
