@@ -15,6 +15,7 @@ def createTable(connexion: Connection, table_name: str) -> None:
         table_name (str): _description_
     """
 # TODO: move createtable query out, creatable have to become a generic function
+# Maybe we should use "%s" %table_name format?
     cursor = connexion.cursor()
     cursor.execute("DROP TABLE IF EXISTS test")
 
