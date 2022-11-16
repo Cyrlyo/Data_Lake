@@ -14,7 +14,7 @@ def createTable(connexion: Connection, table_name: str) -> None:
         connexion (Connection): _description_
         table_name (str): _description_
     """
-    
+# TODO: move createtable query out, creatable have to become a generic function
     cursor = connexion.cursor()
     cursor.execute("DROP TABLE IF EXISTS test")
 
@@ -45,6 +45,7 @@ def importData(connexion: Connection, cursor: Cursor, data_path: str, table_name
         all_path = all_path.replace("/.", "")
         
         print("\nImporting data... Please wait")
+        #TODO: add \t & \n as arguments?
         cursor.execute(f"LOAD DATA LOCAL INFILE '{all_path}' INTO TABLE {table_name} FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n'")
         print("Done")
     except mariadb.Error as error:
@@ -62,7 +63,8 @@ def importToMariaDB(database_name: str, table_name: str, data_path: str) -> None
         table_name (str): name given to the futur created table 
         data_path (str): path of the data to import
     """
-
+    #TODO: Rename this function for allCountriesImportMariadb or something like this
+    #TODO: deplace the query of createTable here
     credentials = gettingCredentials()
     connexion = connectToDatabase(credentials)
     
