@@ -3,7 +3,7 @@ import os
 from typing import List
 
 def parse_arguements() -> bool:
-    #TODO: Maybe move to a utils.py
+    
     parser = argparse.ArgumentParser()
     parser.add_argument("-a", "--init_manually", action="store_false", help="Download data & import them on databaes")
     parser.add_argument("-d", "--download", action="store_true", help="Only download data")
@@ -16,7 +16,7 @@ def parse_arguements() -> bool:
     return args.init_manually, args.download, args.maria_import, args.mongo_import, \
         args.database_import
 
-def collectSQLQuery(path: str) -> List[str]:
+def collectSQLQuery(path: str) -> dict:
     """_summary_
 
     Args:
@@ -30,6 +30,6 @@ def collectSQLQuery(path: str) -> List[str]:
     
     query_dict = {}
     for file in files:
-        query_dict[str(file).replace(".sql", "")] = open(os.path.join(path, file), "r").read()
+        query_dict[str(file).replace(".sql", "")] = open(os.path.join(path, file), "r").read().replace("\n", "")
         
     return query_dict
