@@ -78,6 +78,13 @@ def importToMariaDB(database_name: str, table_name: str, data_path: str) -> None
     cursor.close()
     connexion.close()
 
-if __name__ == "__main__" :
+def collectColumnNames(path: str) -> list[str]:
     
-    importToMariaDB("point_of_interest", "allCountries", "./Data/Raw/allCountries/allCountries.txt")
+    with open(path, encoding="utf8", newline="\n") as file:
+        first_line = file.readline()
+    
+    first_line = first_line.replace('"', "")
+    first_line = first_line.replace("\n", "")
+    first_line = first_line.split("\t")
+
+    return first_line
