@@ -24,7 +24,7 @@ if __name__ == "__main__":
 
     (init_manually, download, maria_import, mongo_import, database_import) = parse_arguements()
     
-    query_dict = collectSQLQuery("./query")
+    query_dict = collectSQLQuery("./query/load_data")
     
     table_name = SOURCE_3.replace(".zip", "")
 
