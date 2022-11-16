@@ -137,3 +137,20 @@ def collectColumnNames(path: str) -> list[str]:
     first_line = first_line.split("\t")
 
     return first_line
+
+def createTable(connexion: Connection, table_name: str, createtable_query: str) -> None:
+    """_summary_
+    If the table already exists the current one will be deleted and replace by the new one.
+    Args:
+        connexion (Connection): _description_
+        table_name (str): _description_
+    """
+    cursor = connexion.cursor()
+    cursor.execute("DROP TABLE IF EXISTS %s" % table_name)
+
+    try:
+        cursor.execute(createtable_query)
+    except mariadb.Error as error:
+        print(f"Error: {error}")
+
+        cursor.close()

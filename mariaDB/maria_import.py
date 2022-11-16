@@ -3,24 +3,7 @@ import os
 from mariadb.cursors import Cursor
 from mariadb.connections import Connection
 from mariaDB.utils_db import gettingCredentials, connectToDatabase, listingDatabase, \
-    createDatabase, useWorkplace
-
-def createTable(connexion: Connection, table_name: str, createtable_query: str) -> None:
-    """_summary_
-
-    Args:
-        connexion (Connection): _description_
-        table_name (str): _description_
-    """
-    cursor = connexion.cursor()
-    cursor.execute("DROP TABLE IF EXISTS %s" % table_name)
-
-    try:
-        cursor.execute(createtable_query)
-    except mariadb.Error as error:
-        print(f"Error: {error}")
-
-        cursor.close()
+    createDatabase, useWorkplace, createTable
 
 
 def importData(connexion: Connection, cursor: Cursor, data_path: str, table_name: str) -> None:
