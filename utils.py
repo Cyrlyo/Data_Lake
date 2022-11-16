@@ -1,4 +1,6 @@
 import argparse
+import os
+from typing import List
 
 def parse_arguements() -> bool:
     #TODO: Maybe move to a utils.py
@@ -13,3 +15,21 @@ def parse_arguements() -> bool:
     
     return args.init_manually, args.download, args.maria_import, args.mongo_import, \
         args.database_import
+
+def collectSQLQuery(path: str) -> List[str]:
+    """_summary_
+
+    Args:
+        path (str): _description_
+
+    Returns:
+        List[str]: _description_
+    """
+    
+    files = os.listdir(path)
+    
+    query_dict = {}
+    for file in files:
+        query_dict[str(file).replace(".sql", "")] = open(os.path.join(path, file), "r").read()
+        
+    return query_dict
