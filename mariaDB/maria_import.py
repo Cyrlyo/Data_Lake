@@ -15,7 +15,7 @@ def createTable(connexion: Connection, table_name: str) -> None:
 # TODO: move createtable query out, creatable have to become a generic function
 # Maybe we should use "%s" %table_name format?
     cursor = connexion.cursor()
-    cursor.execute("DROP TABLE IF EXISTS %S" % table_name)
+    cursor.execute("DROP TABLE IF EXISTS %s" % table_name)
 
     createtable_query = f"CREATE TABLE {table_name}(geonameid BIGINT NOT NULL UNIQUE PRIMARY KEY,\
         name VARCHAR(200) COLLATE utf8_general_ci, asciiname VARCHAR(200), alternatenames VARCHAR(10000),\
@@ -64,7 +64,7 @@ def importToMariaDB(database_name: str, table_name: str, data_path: str) -> None
         table_name (str): name given to the futur created table 
         data_path (str): path of the data to import
     """
-    #TODO: Rename this function for allCountriesImportMariadb or something like this
+    #TODO: Rename this function for allCountriesImportMariaDB or something like this
     #TODO: deplace the query of createTable here
     credentials = gettingCredentials()
     connexion = connectToDatabase(credentials)
