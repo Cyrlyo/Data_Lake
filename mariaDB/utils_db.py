@@ -149,6 +149,7 @@ def createTable(connexion: Connection, table_name: str, createtable_query: str) 
     cursor.execute("DROP TABLE IF EXISTS %s" % table_name)
 
     try:
+        print("Creating table %s (if already existing has been deleted and recreated)" % table_name)
         cursor.execute(createtable_query)
     except mariadb.Error as error:
         print(f"Error: {error}")

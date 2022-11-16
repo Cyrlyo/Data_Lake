@@ -30,7 +30,7 @@ def importData(connexion: Connection, cursor: Cursor, data_path: str, table_name
     connexion.commit()
     cursor.closed
 
-def importToMariaDB(database_name: str, table_name: str, data_path: str) -> None:
+def importToMariaDB(database_name: str, table_name: str, data_path: str, createtable_query: str) -> None:
     """_summary_
 
     Args:
@@ -45,12 +45,6 @@ def importToMariaDB(database_name: str, table_name: str, data_path: str) -> None
     connexion = connectToDatabase(credentials)
     
     cursor = connexion.cursor()
-    
-    createtable_query = f"CREATE TABLE {table_name}(geonameid BIGINT NOT NULL UNIQUE PRIMARY KEY,\
-    name VARCHAR(200) COLLATE utf8_general_ci, asciiname VARCHAR(200), alternatenames VARCHAR(10000),\
-    latitude FLOAT, longitude FLOAT, feature_class CHAR(1), feature_code VARCHAR(10), country_code VARCHAR(255),\
-    cc2 VARCHAR(255), admin1_code VARCHAR(20), admin2_code VARCHAR(80), admin3_code VARCHAR(20),\
-    admin4_code VARCHAR(20), population BIGINT, elevation FLOAT, dem INT, timezone VARCHAR(40), modification_date DATE)"
     
     listingDatabase(cursor)
     createDatabase(cursor, database_name)

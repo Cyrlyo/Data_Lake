@@ -33,6 +33,13 @@ if __name__ == "__main__":
 
     (init_manually, download, maria_import, mongo_import, database_import) = parse_arguements()
     
+    table_name = SOURCE_3.replace(".zip", "")
+    createtable_query = f"CREATE TABLE {table_name}(geonameid BIGINT NOT NULL UNIQUE PRIMARY KEY,\
+    name VARCHAR(200) COLLATE utf8_general_ci, asciiname VARCHAR(200), alternatenames VARCHAR(10000),\
+    latitude FLOAT, longitude FLOAT, feature_class CHAR(1), feature_code VARCHAR(10), country_code VARCHAR(255),\
+    cc2 VARCHAR(255), admin1_code VARCHAR(20), admin2_code VARCHAR(80), admin3_code VARCHAR(20),\
+    admin4_code VARCHAR(20), population BIGINT, elevation FLOAT, dem INT, timezone VARCHAR(40), modification_date DATE)"
+    
     
     if init_manually or download:
         try:
@@ -46,4 +53,4 @@ if __name__ == "__main__":
         importPosts(DATASET_NAME_3, SOURCE_4, [SOURCE_4])
 
     if init_manually or maria_import or database_import:
-        importToMariaDB("point_of_interest", "allCountries", "./Data/Raw/allCountries/allCountries.txt")
+        importToMariaDB("point_of_interest", table_name, "./Data/Raw/allCountries/allCountries.txt", createtable_query)
