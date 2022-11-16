@@ -78,7 +78,7 @@ def importData(url: str) -> DataFrame:
     return data
     
 
-def poi_import(dataset_name: str, source: str, files_name: list) -> None:
+def poiImport(dataset_name: str, source: str, files_name: list) -> None:
     """_summary_
 
     Args:

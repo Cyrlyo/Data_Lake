@@ -30,7 +30,7 @@ def prepFile(file_name: str, file_extension: str, path: str, end_dir: str):
     print(f"\nDeleting {file_name}")
     deletingFiles(os.path.join(path, file_name + file_extension))
 
-def api_import(api: KaggleApi, dataset: str, sources: list):
+def apiImport(api: KaggleApi, dataset: str, sources: list):
     
     for source in sources:
         print(f"\nDownloading {source}... Please wait")

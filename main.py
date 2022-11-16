@@ -1,5 +1,5 @@
-from import_data.importation import poi_import
-from import_data.api_import import api_import
+from import_data.importation import poiImport
+from import_data.api_import import apiImport
 from kaggle.api import KaggleApi
 from mariaDB.maria_import import importToMariaDB
 from import_data.import_posts import importPosts
@@ -20,8 +20,8 @@ try:
 except:
     print("\nMake sure that you're kaggle.json file (containing username + api key) is stored in $HOME/.kaggle")
 
-poi_import(DATASET_NAME_2, SOURCE_3, FILES_NAME)
-api_import(API, DATASET_NAME, SOURCES)
+poiImport(DATASET_NAME_2, SOURCE_3, FILES_NAME)
+apiImport(API, DATASET_NAME, SOURCES)
 importPosts(DATASET_NAME_3, SOURCE_4, [SOURCE_4])
 
 importToMariaDB("point_of_interest", "allCountries", "./Data/Raw/allCountries/allCountries.txt")
