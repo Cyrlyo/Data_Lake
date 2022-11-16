@@ -41,4 +41,4 @@ if __name__ == "__main__":
         importPosts(DATASET_NAME_3, SOURCE_4, [SOURCE_4])
 
     if init_manually or maria_import or database_import:
-        importToMariaDB("point_of_interest", table_name, "./Data/Raw/allCountries/allCountries.txt", query_dict[table_name_3])
+        importToMariaDB("point_of_interest", table_name_3, "./Data/Raw/allCountries/allCountries.txt", query_dict[table_name_3])
