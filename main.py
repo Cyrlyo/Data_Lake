@@ -14,8 +14,6 @@ FILES_NAME = ["allCountries.zip", "readme.txt"]
 DATASET_NAME_3 = "http://d3smaster.fr"
 SOURCE_4 = "posts_reduced.zip"
 
-# TODO: voir TODO importation.py
-
 try:
     API = KaggleApi()
     API.authenticate()
