@@ -13,7 +13,7 @@ DATASET_NAME_2 = "http://download.geonames.org/export/dump"
 SOURCE_3 = "allCountries.zip"
 FILES_NAME = ["allCountries.zip", "readme.txt"]
 DATASET_NAME_3 = "http://d3smaster.fr"
-SOURCE_4 = "posts_reduced.zip"
+SOURCE_4 = "instagram_posts_reduced.zip"
 
 #TODO: Create folder "Query" and query.sql files with all queries\
 # then .split(";") to have a list of queries
