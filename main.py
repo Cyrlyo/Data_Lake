@@ -5,6 +5,7 @@ from mariaDB.maria_import import importToMariaDB
 from import_data.import_posts import importPosts
 from utils import parse_arguements, collectSQLQuery
 from mongoDB.mongo_import import formatInstagram, mongoImportLoadData, mongoPythonLoadData
+import time
 
 DATASET_NAME = "shmalex/instagram-dataset"
 SOURCE_1 = "instagram_locations.csv"
@@ -34,6 +35,7 @@ if __name__ == "__main__":
     
     table_name_3 = SOURCE_3.replace(".zip", "")
 
+    start_time = time.time()
     
     if init_manually or download:
         try:
@@ -57,3 +59,7 @@ if __name__ == "__main__":
             mongoImportLoadData("./Data/Formated", "instagram", "localhost", 27017)
         else:
             mongoPythonLoadData("./Data/Formated", "instagram", "localhost", 27017)
+    
+    delta_time = time.time() - start_time
+    print(f"Execution time: {time.strftime('%H:%M:%S', time.gmtime(delta_time))}")
+    
