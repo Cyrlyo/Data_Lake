@@ -10,11 +10,12 @@ def parse_arguements() -> bool:
     parser.add_argument("-i", "--maria_import", action="store_true", help="Only import datas on MariaDB database")
     parser.add_argument("-m", "--mongo_import", action="store_true", help="Only import data on MongoDB database")
     parser.add_argument("-o", "--database_import", action="store_true", help="Import on MariaDB & MongoDB")
+    parser.add_argument("-f", '--format_data', action="store_true", help="Format data (csv to json)")
     
     args = parser.parse_args()
     
     return args.init_manually, args.download, args.maria_import, args.mongo_import, \
-        args.database_import
+        args.database_import, args.format_data
 
 def collectSQLQuery(path: str) -> dict:
     """_summary_

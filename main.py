@@ -26,7 +26,7 @@ SOURCE_4 = "instagram_posts_reduced.zip"
 
 if __name__ == "__main__":
 
-    (init_manually, download, maria_import, mongo_import, database_import) = parse_arguements()
+    (init_manually, download, maria_import, mongo_import, database_import, format_data) = parse_arguements()
     
     query_dict = collectSQLQuery("./query/load_data")
     
@@ -43,6 +43,8 @@ if __name__ == "__main__":
         poiImport(DATASET_NAME_2, SOURCE_3, FILES_NAME)
         apiImport(API, DATASET_NAME, SOURCES)
         importPosts(DATASET_NAME_3, SOURCE_4, [SOURCE_4])
+    
+    if init_manually or format_data:
         formatInstagram("./Data/Raw", "./Data/Formated")
 
     if init_manually or maria_import or database_import:
