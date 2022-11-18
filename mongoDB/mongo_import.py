@@ -7,6 +7,12 @@ from os.path import join
 
 
 def formatInstagram(current_data_path: str, target_data_path: str):
+    """_summary_
+
+    Args:
+        current_data_path (str): _description_
+        target_data_path (str): _description_
+    """
     
     listed = os.listdir(current_data_path)
 
@@ -21,6 +27,16 @@ def formatInstagram(current_data_path: str, target_data_path: str):
             csvToJson(full_temp_path, full_end_path)
 
 def mongoImportLoadData(data_path: str, database_name: str, host: str, port: int):
+    """_summary_
+
+    Args:
+        data_path (str): _description_
+        database_name (str): _description_
+        host (str): _description_
+        port (int): _description_
+    """
+    client, db = connectToMongo(host, port, database_name)
+    print(f"\nExisting database:\n{client.list_database_names()}")
     
     dir_list = os.listdir(data_path)
     
@@ -37,8 +53,17 @@ def mongoImportLoadData(data_path: str, database_name: str, host: str, port: int
             print("Done")
 
 def mongoPythonLoadData(data_path: str, database_name: str, host: str, port: int):
+    """_summary_
+
+    Args:
+        data_path (str): _description_
+        database_name (str): _description_
+        host (str): _description_
+        port (int): _description_
+    """
     
     client, db = connectToMongo(host, port, database_name)
+    print(f"\nExisting database:\n{client.list_database_names()}")
     
     dir_list = os.listdir(data_path)
     
@@ -54,3 +79,4 @@ def mongoPythonLoadData(data_path: str, database_name: str, host: str, port: int
             
             print(f"\nImporting '{colletion_name}...'")
             mongoPythonLoad(final_path, collection)
+            print("Done")
