@@ -76,7 +76,10 @@ def mongoPythonLoadData(data_path: str, database_name: str, host: str, port: int
             final_path = join(join(data_path, dir), file)
             
             collection = db[colletion_name]
-            
+            try:
+                collection.delete_many({})
+            except:
+                pass
             print(f"\nImporting '{colletion_name}...'")
             mongoPythonLoad(final_path, collection)
             print("Done")
