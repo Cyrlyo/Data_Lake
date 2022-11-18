@@ -11,7 +11,9 @@ def csvToJson(csv_path_file: str, json_path_file: str):
         
         for row in csv_reader:
             json_array.append(row)
-    print("Extracting json... please wait\nIt can take time")
+    print("\nExtracting json... please wait\nIt can take time")
+    
     with open(json_path_file, "w", encoding="utf-8") as json_file:
         json_string = json.dumps(json_array, ensure_ascii=False)
         json_file.write(json_string)
+        
