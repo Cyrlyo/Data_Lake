@@ -21,6 +21,9 @@ SOURCE_4 = "instagram_posts_reduced.zip"
 # Or make a dict with the query as value use os.listdir() to iterate on it and\ 
 # use it to dict's keys
 
+#TODO: Add "./Data/Raw" & "./Data/Formated" as environment variables? And as arguments in
+# poiimport & apiImport?
+
 if __name__ == "__main__":
 
     (init_manually, download, maria_import, mongo_import, database_import) = parse_arguements()
