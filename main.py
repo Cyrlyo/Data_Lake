@@ -4,6 +4,7 @@ from kaggle.api import KaggleApi
 from mariaDB.maria_import import importToMariaDB
 from import_data.import_posts import importPosts
 from utils import parse_arguements, collectSQLQuery
+from mongoDB.mongo_import import formatInstagram
 
 DATASET_NAME = "shmalex/instagram-dataset"
 SOURCE_1 = "instagram_locations.csv"
@@ -39,6 +40,10 @@ if __name__ == "__main__":
         poiImport(DATASET_NAME_2, SOURCE_3, FILES_NAME)
         apiImport(API, DATASET_NAME, SOURCES)
         importPosts(DATASET_NAME_3, SOURCE_4, [SOURCE_4])
+        formatInstagram("./Data/Raw", "./Data/Formated")
 
     if init_manually or maria_import or database_import:
         importToMariaDB("point_of_interest", table_name_3, "./Data/Raw/allCountries/allCountries.txt", query_dict[table_name_3])
+    
+    if init_manually or mongo_import or database_import:
+        pass
