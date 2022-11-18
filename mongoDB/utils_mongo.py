@@ -66,7 +66,7 @@ def connectToMongo(host: str, port: int, database_name: str):
     
     return client, db
 
-def loadMongoDataPython(data_path: str, collection):
+def mongoPythonLoad(data_path: str, collection):
     """_summary_
     USE ONLY IF NECESSARY! IT TAKES A LOT OF TIME! MORE THAN 30MIN FOR 
     ONLY ONE DOCUMENT!
@@ -83,7 +83,7 @@ def loadMongoDataPython(data_path: str, collection):
     for doc, tq in zip(file_data, tqdm(range(len(file_data)))):
         collection.insert_one(doc)
 
-def loadDataMongoImport(database_name: str, collection_name: str, host: str, port: int, file_path: str):
+def mongoQueryLoad(database_name: str, collection_name: str, host: str, port: int, file_path: str):
     """_summary_
     NEED MONGOIMPORT INSTALLED ON YOUR DEVICE§
     

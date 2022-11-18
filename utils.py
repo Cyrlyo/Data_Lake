@@ -11,11 +11,14 @@ def parse_arguements() -> bool:
     parser.add_argument("-m", "--mongo_import", action="store_true", help="Only import data on MongoDB database")
     parser.add_argument("-o", "--database_import", action="store_true", help="Import on MariaDB & MongoDB")
     parser.add_argument("-f", '--format_data', action="store_true", help="Format data (csv to json)")
+    parser.add_argument("-p", "--python_loader", action="store_true", help="Use python loader for \
+        MongoDB datas. USE ONLY IF NECESSARY! IT'S VERY LONG! About 30 min to 1 hour \
+            per document!")
     
     args = parser.parse_args()
     
     return args.init_manually, args.download, args.maria_import, args.mongo_import, \
-        args.database_import, args.format_data
+        args.database_import, args.format_data, args.python_loader
 
 def collectSQLQuery(path: str) -> dict:
     """_summary_

@@ -4,7 +4,7 @@ from kaggle.api import KaggleApi
 from mariaDB.maria_import import importToMariaDB
 from import_data.import_posts import importPosts
 from utils import parse_arguements, collectSQLQuery
-from mongoDB.mongo_import import formatInstagram
+from mongoDB.mongo_import import formatInstagram, mongoImportLoadData, mongoPythonLoadData
 
 DATASET_NAME = "shmalex/instagram-dataset"
 SOURCE_1 = "instagram_locations.csv"
@@ -24,9 +24,11 @@ SOURCE_4 = "instagram_posts_reduced.zip"
 #TODO: Add "./Data/Raw" & "./Data/Formated" as environment variables? And as arguments in
 # poiimport & apiImport?
 
+#TODO: We'll probably need to move everything about downloading, preparing & importing data 
+# in a function to after have space to have query elasticsearch & kibana queries & visualization
 if __name__ == "__main__":
 
-    (init_manually, download, maria_import, mongo_import, database_import, format_data) = parse_arguements()
+    (init_manually, download, maria_import, mongo_import, database_import, format_data, python_loader) = parse_arguements()
     
     query_dict = collectSQLQuery("./query/load_data")
     
@@ -51,4 +53,7 @@ if __name__ == "__main__":
         importToMariaDB("point_of_interest", table_name_3, "./Data/Raw/allCountries/allCountries.txt", query_dict[table_name_3])
     
     if init_manually or mongo_import or database_import:
-        pass
+        if not python_loader:
+            mongoImportLoadData("./Data/Formated", "instagram", "localhost", 27017)
+        else:
+            mongoPythonLoadData("./Data/Formated", "instagram", "localhost", 27017)
