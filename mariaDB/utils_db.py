@@ -90,7 +90,7 @@ def createDatabase(cursor: Cursor, database_name: str) -> None:
     """
     # TODO: mettre un statement if exists delete or use avec argparse
     try:
-        cursor.execute("CREATE DATABASE " + database_name + " CHARACTER SET utf8 COLLATE utf8_general_ci")
+        cursor.execute("CREATE DATABASE %s CHARACTER SET utf8 COLLATE utf8_general_ci" % database_name)
         print(f"\n{database_name} has been created")
     except Error as error:
         print(f"\n{error}")
@@ -126,3 +126,32 @@ def useWorkplace(cursor: Cursor, database_name: str):
         cursor.execute("USE " + database_name)
     except Error as error:
         print(f"\nError: {error}")
+
+def collectColumnNames(path: str) -> list[str]:
+    
+    with open(path, encoding="utf8", newline="\n") as file:
+        first_line = file.readline()
+    
+    first_line = first_line.replace('"', "")
+    first_line = first_line.replace("\n", "")
+    first_line = first_line.split("\t")
+
+    return first_line
+
+def createTable(connexion: Connection, table_name: str, createtable_query: str) -> None:
+    """_summary_
+    If the table already exists the current one will be deleted and replace by the new one.
+    Args:
+        connexion (Connection): _description_
+        table_name (str): _description_
+    """
+    cursor = connexion.cursor()
+    cursor.execute("DROP TABLE IF EXISTS %s" % table_name)
+
+    try:
+        print("Creating table %s (if already existing has been deleted and recreated)" % table_name)
+        cursor.execute(createtable_query)
+    except mariadb.Error as error:
+        print(f"Error: {error}")
+
+        cursor.close()

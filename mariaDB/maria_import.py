@@ -1,33 +1,10 @@
 import mariadb
-import pandas as pd
 import os
-from os.path import join
 from mariadb.cursors import Cursor
 from mariadb.connections import Connection
 from mariaDB.utils_db import gettingCredentials, connectToDatabase, listingDatabase, \
-    createDatabase, dropDatabase, useWorkplace
+    createDatabase, useWorkplace, createTable
 
-def createTable(connexion: Connection, table_name: str) -> None:
-    """_summary_
-
-    Args:
-        connexion (Connection): _description_
-        table_name (str): _description_
-    """
-    
-    cursor = connexion.cursor()
-    cursor.execute("DROP TABLE IF EXISTS test")
-
-    createtable_query = f"CREATE TABLE {table_name}(geonameid BIGINT NOT NULL UNIQUE PRIMARY KEY,\
-        name VARCHAR(200) COLLATE utf8_general_ci, asciiname VARCHAR(200), alternatenames VARCHAR(10000),\
-            latitude FLOAT, longitude FLOAT, feature_class CHAR(1), feature_code VARCHAR(10), country_code VARCHAR(255),\
-                cc2 VARCHAR(255), admin1_code VARCHAR(20), admin2_code VARCHAR(80), admin3_code VARCHAR(20),\
-                    admin4_code VARCHAR(20), population BIGINT, elevation FLOAT, dem INT, timezone VARCHAR(40), modification_date DATE)"
-    
-    try:
-        cursor.execute(createtable_query)
-    except mariadb.Error as error:
-        print(f"Error: {error}")
 
 def importData(connexion: Connection, cursor: Cursor, data_path: str, table_name: str) -> None:
     """_summary_
@@ -53,7 +30,7 @@ def importData(connexion: Connection, cursor: Cursor, data_path: str, table_name
     connexion.commit()
     cursor.closed
 
-def importToMariaDB(database_name: str, table_name: str, data_path: str) -> None:
+def importToMariaDB(database_name: str, table_name: str, data_path: str, createtable_query: str) -> None:
     """_summary_
 
     Args:
@@ -62,7 +39,8 @@ def importToMariaDB(database_name: str, table_name: str, data_path: str) -> None
         table_name (str): name given to the futur created table 
         data_path (str): path of the data to import
     """
-
+    #TODO: Rename this function for allCountriesImportMariaDB or something like this
+    #TODO: deplace the query of createTable here
     credentials = gettingCredentials()
     connexion = connectToDatabase(credentials)
     
@@ -72,12 +50,8 @@ def importToMariaDB(database_name: str, table_name: str, data_path: str) -> None
     createDatabase(cursor, database_name)
     useWorkplace(cursor, database_name)
     
-    createTable(connexion, table_name)
+    createTable(connexion, table_name, createtable_query)
     importData(connexion, cursor, data_path, table_name)
     
     cursor.close()
     connexion.close()
-
-if __name__ == "__main__" :
-    
-    importToMariaDB("point_of_interest", "allCountries", "./Data/Raw/allCountries/allCountries.txt")
