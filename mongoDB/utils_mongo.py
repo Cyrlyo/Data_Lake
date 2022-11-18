@@ -10,6 +10,9 @@ def csvToJson(csv_path_file: str, json_path_file: str):
         csv_path_file (str): _description_
         json_path_file (str): _description_
     """
+    result, createPath = pathChecker(json_path_file)
+    if not result:
+        os.makedirs(createPath)
     
     json_array = []
     
@@ -18,15 +21,13 @@ def csvToJson(csv_path_file: str, json_path_file: str):
         
         for row in csv_reader:
             json_array.append(row)
-    print("\nExtracting json... please wait\nIt can take time")
-    
-    result, createPath = pathChecker(json_path_file)
-    if not result:
-        os.makedirs(createPath)
-    
+    print("Extracting json... please wait\nIt can take time.")
+
     with open(json_path_file, "w", encoding="utf-8") as json_file:
         json_string = json.dumps(json_array, ensure_ascii=False)
         json_file.write(json_string)
+    
+    print("Done")
 
 def pathChecker(path: str) -> bool:
     """_summary_
@@ -43,6 +44,6 @@ def pathChecker(path: str) -> bool:
     splited_path = Path(path).parts
     formated_path = os.path.join(*splited_path[: -1])
     result = os.path.exists(formated_path)
-    print(f"\n{formated_path} {result_dict[result]}")
+    print(f"\n'{formated_path}' {result_dict[result]}")
     
     return result, formated_path
