@@ -3,6 +3,7 @@ import json
 import os
 from pathlib import Path
 from pymongo import MongoClient
+from tqdm import tqdm
 
 def csvToJson(csv_path_file: str, json_path_file: str):
     """_summary_
@@ -49,7 +50,7 @@ def pathChecker(path: str) -> bool:
     
     return result, formated_path
 
-def connectToMongo(host: str, port: int) -> MongoClient:
+def connectToMongo(host: str, port: int, database_name: str):
     """_summary_
 
     Args:
@@ -61,5 +62,35 @@ def connectToMongo(host: str, port: int) -> MongoClient:
     """
     
     client = MongoClient(host, port)
+    db = client[database_name]
     
-    return client
+    return client, db
+
+def loadMongoDataPython(data_path: str, collection):
+    """_summary_
+    USE ONLY IF NECESSARY! IT TAKES A LOT OF TIME! MORE THAN 30MIN FOR 
+    ONLY ONE DOCUMENT!
+    Args:
+        data_path (str): _description_
+        collection (PyMongo Collection Object)! _description_
+    """
+    
+    with open(data_path, encoding="utf-8") as file:
+        file_data = json.load(file)
+        
+    for doc, tq in zip(file_data, tqdm(range(len(file_data)))):
+        collection.insert_one(doc)
+
+def loadDataMongoShell(database_name: str, collection_name: str, host: str, port: int, file_path: str):
+    """_summary_
+    NEED MONGOIMPORT INSTALLED ON YOUR DEVICE§
+    
+    Args:
+        database_name (str): _description_
+        host (str): by default localhost i.e. 127.0.0.1
+        port (int): by default 27017
+        file_path (str): _description_
+    """
+    
+    os.system(f'mongoimport --host {host} -d {database_name} --port {port}\
+        --collection {collection_name} --file {file_path} --jsonArray ')
