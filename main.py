@@ -4,6 +4,8 @@ from kaggle.api import KaggleApi
 from mariaDB.maria_import import importToMariaDB
 from import_data.import_posts import importPosts
 from utils import parse_arguements, collectSQLQuery
+from mongoDB.mongo_import import formatInstagram, mongoImportLoadData, mongoPythonLoadData
+import time
 
 DATASET_NAME = "shmalex/instagram-dataset"
 SOURCE_1 = "instagram_locations.csv"
@@ -13,21 +15,27 @@ DATASET_NAME_2 = "http://download.geonames.org/export/dump"
 SOURCE_3 = "allCountries.zip"
 FILES_NAME = ["allCountries.zip", "readme.txt"]
 DATASET_NAME_3 = "http://d3smaster.fr"
-SOURCE_4 = "posts_reduced.zip"
+SOURCE_4 = "instagram_posts_reduced.zip"
 
 #TODO: Create folder "Query" and query.sql files with all queries\
 # then .split(";") to have a list of queries
 # Or make a dict with the query as value use os.listdir() to iterate on it and\ 
 # use it to dict's keys
 
+#TODO: Add "./Data/Raw" & "./Data/Formated" as environment variables? And as arguments in
+# poiimport & apiImport?
+
+#TODO: We'll probably need to move everything about downloading, preparing & importing data 
+# in a function to after have space to have query elasticsearch & kibana queries & visualization
 if __name__ == "__main__":
 
-    (init_manually, download, maria_import, mongo_import, database_import) = parse_arguements()
+    (init_manually, download, maria_import, mongo_import, database_import, format_data, python_loader) = parse_arguements()
     
     query_dict = collectSQLQuery("./query/load_data")
     
     table_name_3 = SOURCE_3.replace(".zip", "")
 
+    start_time = time.time()
     
     if init_manually or download:
         try:
@@ -39,6 +47,19 @@ if __name__ == "__main__":
         poiImport(DATASET_NAME_2, SOURCE_3, FILES_NAME)
         apiImport(API, DATASET_NAME, SOURCES)
         importPosts(DATASET_NAME_3, SOURCE_4, [SOURCE_4])
+    
+    if init_manually or format_data:
+        formatInstagram("./Data/Raw", "./Data/Formated")
 
     if init_manually or maria_import or database_import:
         importToMariaDB("point_of_interest", table_name_3, "./Data/Raw/allCountries/allCountries.txt", query_dict[table_name_3])
+    
+    if init_manually or mongo_import or database_import:
+        if not python_loader:
+            mongoImportLoadData("./Data/Formated", "instagram", "localhost", 27017)
+        else:
+            mongoPythonLoadData("./Data/Formated", "instagram", "localhost", 27017)
+    
+    delta_time = time.time() - start_time
+    print(f"Execution time: {time.strftime('%H:%M:%S', time.gmtime(delta_time))}")
+    

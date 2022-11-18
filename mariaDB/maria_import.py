@@ -2,7 +2,7 @@ import mariadb
 import os
 from mariadb.cursors import Cursor
 from mariadb.connections import Connection
-from mariaDB.utils_db import gettingCredentials, connectToDatabase, listingDatabase, \
+from mariaDB.utils_maria import gettingCredentials, connectToDatabase, listingDatabase, \
     createDatabase, useWorkplace, createTable
 
 
