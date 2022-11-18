@@ -19,4 +19,16 @@ def formatInstagram(current_data_path: str, target_data_path: str):
 
             csvToJson(full_temp_path, full_end_path)
 
-# formatInstagram("./Data/Raw", "./Data/Formated")
+def loadDataMongoImport(database_name: str, collection_name: str, host: str, port: int, file_path: str):
+    """_summary_
+    NEED MONGOIMPORT INSTALLED ON YOUR DEVICE§
+    
+    Args:
+        database_name (str): _description_
+        host (str): by default localhost i.e. 127.0.0.1
+        port (int): by default 27017
+        file_path (str): _description_
+    """
+    
+    os.system(f'mongoimport --host {host} -d {database_name} --port {port}\
+        --collection {collection_name} --file {file_path} --jsonArray ')
