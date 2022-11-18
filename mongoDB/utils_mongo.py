@@ -2,6 +2,7 @@ import csv
 import json
 import os
 from pathlib import Path
+from pymongo import MongoClient
 
 def csvToJson(csv_path_file: str, json_path_file: str):
     """_summary_
@@ -47,3 +48,18 @@ def pathChecker(path: str) -> bool:
     print(f"\n'{formated_path}' {result_dict[result]}")
     
     return result, formated_path
+
+def connectToMongo(host: str, port: int) -> MongoClient:
+    """_summary_
+
+    Args:
+        host (str): _description_
+        port (int): _description_
+
+    Returns:
+        MongoClient: _description_
+    """
+    
+    client = MongoClient(host, port)
+    
+    return client
