@@ -55,6 +55,13 @@ def locationsPreparation(locations):
     strToDate(locations, "cts")
 
 def dataPreparation(host: str, port: int, database_name: str):
+    """_summary_
+    It takes me 1 and half hour to prepare all the datas.
+    Args:
+        host (str): _description_
+        port (int): _description_
+        database_name (str): _description_
+    """
     
     client, db = connectToMongo(host, port, database_name)
     posts = db["posts_reduced"]
