@@ -122,3 +122,7 @@ def countEmptyString(collection, variable: str):
     results = collection.aggregate([{"$match": {variable: {"$eq": ""}}}, {"$group": {"_id": "null", "count": {"$sum": 1}}}])
     for result in results:
         print(f"Number of null string in '{variable}': {result[list(result.keys())[-1]]}")
+
+def strToDate(collection, variable: str):
+    
+    collection.update_many({variable: {"$type": "string", "$ne": ""}}, [{"$set": {variable: {"$convert": {"input": "$%s"% variable, "to": "date"}}}}])
