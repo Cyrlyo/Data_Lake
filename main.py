@@ -5,6 +5,7 @@ from mariaDB.maria_import import importToMariaDB
 from import_data.import_posts import importPosts
 from utils import parse_arguements, collectSQLQuery
 from mongoDB.mongo_import import formatInstagram, mongoImportLoadData, mongoPythonLoadData
+from mongoDB.preparation import dataPreparation
 import time
 
 DATASET_NAME = "shmalex/instagram-dataset"
@@ -16,6 +17,10 @@ SOURCE_3 = "allCountries.zip"
 FILES_NAME = ["allCountries.zip", "readme.txt"]
 DATASET_NAME_3 = "http://d3smaster.fr"
 SOURCE_4 = "instagram_posts_reduced.zip"
+HOST = "localhost"
+MONGO_PORT = 27017
+MONGO_DATABASE_NAME = "instagram"
+
 
 #TODO: Create folder "Query" and query.sql files with all queries\
 # then .split(";") to have a list of queries
@@ -29,7 +34,7 @@ SOURCE_4 = "instagram_posts_reduced.zip"
 # in a function to after have space to have query elasticsearch & kibana queries & visualization
 if __name__ == "__main__":
 
-    (init_manually, download, maria_import, mongo_import, database_import, format_data, python_loader) = parse_arguements()
+    (init_manually, download, maria_import, mongo_import, database_import, format_data, python_loader, data_prep) = parse_arguements()
     
     query_dict = collectSQLQuery("./query/load_data")
     
@@ -60,6 +65,9 @@ if __name__ == "__main__":
         else:
             mongoPythonLoadData("./Data/Formated", "instagram", "localhost", 27017)
     
+    if init_manually or data_prep:
+        dataPreparation("localhost", 27017, "instagram")
+        
     delta_time = time.time() - start_time
     print(f"Execution time: {time.strftime('%H:%M:%S', time.gmtime(delta_time))}")
     

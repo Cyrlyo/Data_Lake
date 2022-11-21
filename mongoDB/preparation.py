@@ -3,10 +3,7 @@ try:
 except:
     from utils_mongo import connectToMongo, strToDouble, doubleToInt, deleteEmptyString, countEmptyString, strToInt, strToBool, strToDate
     
-client, db = connectToMongo("localhost", 27017, "instagram")
-posts = db["posts_reduced"]
-locations = db["locations"]
-profiles = db["profiles"]
+
 
 # TODO: delete empty id string 
 # convert str to int / double
@@ -21,7 +18,7 @@ def postsPreparation(posts):
         
         strToDouble(posts, str(variable))
         doubleToInt(posts, str(variable))
-        countEmptyString(posts, "profile_id")
+        countEmptyString(posts, variable)
         deleteEmptyString(posts, str(variable))
     
     strToInt(posts, "post_type")
@@ -56,3 +53,14 @@ def locationsPreparation(locations):
     strToDouble(locations, "lng")
     
     strToDate(locations, "cts")
+
+def dataPreparation(host: str, port: int, database_name: str):
+    
+    client, db = connectToMongo(host, port, database_name)
+    posts = db["posts_reduced"]
+    locations = db["locations"]
+    profiles = db["profiles"]
+    
+    profilesPreparation(profiles)
+    postsPreparation(posts)
+    locationsPreparation(locations)
