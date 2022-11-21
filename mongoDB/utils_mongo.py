@@ -104,3 +104,13 @@ def strToDouble(collection, variable: str):
 def doubleToInt(collection, variable: str):
     
     collection.update_many({variable: {"$type": "double"}}, [{"$set": {variable: {"$convert": {"input": "$%s"% variable, "to": "long"}}}}])
+    
+def deleteEmptyString(collection, variable: str):
+    
+    collection.delete_many({variable: {"$type": "string", "$eq":""}})
+
+def countEmptyString(collection, variable: str):
+    
+    results = collection.aggregate([{"$match": {variable: {"$eq": ""}}}, {"$group": {"_id": "null", "count": {"$sum": 1}}}])
+    for result in results:
+        print(f'Number of null string in {variable}: {result["count"]}')

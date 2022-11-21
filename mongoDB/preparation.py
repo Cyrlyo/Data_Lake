@@ -1,7 +1,7 @@
 try:
-    from mongoDB.utils_mongo import connectToMongo, strToDouble, doubleToInt
+    from mongoDB.utils_mongo import connectToMongo, strToDouble, doubleToInt, deleteEmptyString, countEmptyString
 except:
-    from utils_mongo import connectToMongo, strToDouble, doubleToInt
+    from utils_mongo import connectToMongo, strToDouble, doubleToInt, deleteEmptyString, countEmptyString
     
 client, db = connectToMongo("localhost", 27017, "instagram")
 posts = db["posts_reduced"]
@@ -10,6 +10,7 @@ profiles = db["profiles"]
 
 # TODO: delete empty id string 
 # convert str to int / double
+# make location_id & profile_id as _id
 # merge collections
 
 
@@ -19,7 +20,5 @@ if False:
     strToDouble(posts, "profile_id")
     doubleToInt(posts, "profile_id")
 
-
-def deleteEmptyString(collection, variable: str):
-    
-    collection.remove({variable: {"$type": "string", "$eq":""}})
+countEmptyString(posts, "profile_id")
+# deleteEmptyString(posts, "profile_id")
