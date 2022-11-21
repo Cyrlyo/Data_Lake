@@ -96,3 +96,11 @@ def mongoQueryLoad(database_name: str, collection_name: str, host: str, port: in
     
     os.system(f'mongoimport --host {host} -d {database_name} --port {port}\
         --collection {collection_name} --file {file_path} --jsonArray ')
+
+def strToDouble(collection, variable: str):
+    
+    collection.update_many({variable: {"$type": "string", "$ne":""}}, [{"$set": {variable: {"$toDouble": "$%s"% variable}}}])
+
+def doubleToInt(collection, variable: str):
+    
+    collection.update_many({variable: {"$type": "double"}}, [{"$set": {variable: {"$convert": {"input": "$%s"% variable, "to": "long"}}}}])
