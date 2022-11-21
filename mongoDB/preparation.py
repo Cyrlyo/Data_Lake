@@ -28,20 +28,6 @@ def postsPreparation(posts):
     strToDate(posts, "cts")
     deleteEmptyString(posts, "post_type")
     deleteEmptyString(posts, "cts")
-    
-    # strToDouble(posts, "location_id")
-    # doubleToInt(posts, "location_id")
-    
-    # strToDouble(posts, "profile_id")
-    # doubleToInt(posts, "profile_id")
-
-    # strToDouble(posts, "number_comments")
-    # doubleToInt(posts, "number_comments")
-    
-    # strToDouble(posts, "numbr_likes")
-    # doubleToInt(posts, "numbr_likes")
-    
-    
 
 def profilesPreparation(profiles):
     
@@ -58,17 +44,6 @@ def profilesPreparation(profiles):
     strToDate(profiles, "cts")
     countEmptyString(profiles, "cts")
     deleteEmptyString(profiles, "cts")
-    
-
-    # strToInt(profiles, "profile_id")
-    # countEmptyString(profiles, "profile_id")
-    # deleteEmptyString(profiles, "profile_id")
-
-    # strToInt(profiles, "following")
-    # strToInt(profiles, "followers")
-    # strToInt(profiles, "n_posts")
-
-    
 
 def locationsPreparation(locations):
 
@@ -81,9 +56,3 @@ def locationsPreparation(locations):
     strToDouble(locations, "lng")
     
     strToDate(locations, "cts")
-
-
-# countEmptyString(profiles, "is_business_account")
-# countEmptyString(profiles, "following")
-# countEmptyString(profiles, "followers")
-# countEmptyString(profiles, "n_posts")
