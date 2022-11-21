@@ -85,8 +85,8 @@ def mongoPythonLoad(data_path: str, collection):
 
 def mongoQueryLoad(database_name: str, collection_name: str, host: str, port: int, file_path: str):
     """_summary_
-    NEED MONGOIMPORT INSTALLED ON YOUR DEVICE§
-    
+    NEED MONGOIMPORT INSTALLED ON YOUR DEVICE!
+    If collections already exist they'll be droped and recreated.    
     Args:
         database_name (str): _description_
         host (str): by default localhost i.e. 127.0.0.1

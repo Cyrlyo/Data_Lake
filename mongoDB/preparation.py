@@ -21,6 +21,7 @@ def postsPreparation(posts):
         
         strToDouble(posts, str(variable))
         doubleToInt(posts, str(variable))
+        countEmptyString(posts, "profile_id")
         deleteEmptyString(posts, str(variable))
     
     strToInt(posts, "post_type")
@@ -42,26 +43,43 @@ def postsPreparation(posts):
     
     
 
-if False:
-    countEmptyString(posts, "profile_id")
-    deleteEmptyString(posts, "profile_id")
+def profilesPreparation(profiles):
     
-    strToInt(profiles, "profile_id")
-    countEmptyString(profiles, "profile_id")
-    deleteEmptyString(profiles, "profile_id")
+    str_to_int_list = ["profile_id", "following", "followers", "n_posts"]
+    
+    for variable in str_to_int_list:
+        strToInt(profiles, str(variable))
+        countEmptyString(profiles, str(variable))
+        deleteEmptyString(profiles, str(variable))
 
     strToBool(profiles, "is_business_account")
-    strToInt(profiles, "following")
-    strToInt(profiles, "followers")
-    strToInt(profiles, "n_posts")
+    countEmptyString(profiles, "is_business_account")
+    deleteEmptyString(profiles, "is_business_account")
     strToDate(profiles, "cts")
+    countEmptyString(profiles, "cts")
+    deleteEmptyString(profiles, "cts")
+    
 
-if False:
+    # strToInt(profiles, "profile_id")
+    # countEmptyString(profiles, "profile_id")
+    # deleteEmptyString(profiles, "profile_id")
+
+    # strToInt(profiles, "following")
+    # strToInt(profiles, "followers")
+    # strToInt(profiles, "n_posts")
+
+    
+
+def locationsPreparation(locations):
+
     strToInt(locations, "id")
+    
     strToBool(locations, "aj_exact_city_match")
     strToBool(locations, "aj_exact_country_match")
+    
     strToDouble(locations, "lat")
     strToDouble(locations, "lng")
+    
     strToDate(locations, "cts")
 
 
