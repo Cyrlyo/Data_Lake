@@ -95,7 +95,7 @@ def mongoQueryLoad(database_name: str, collection_name: str, host: str, port: in
     """
     
     os.system(f'mongoimport --host {host} -d {database_name} --port {port}\
-        --collection {collection_name} --file {file_path} --jsonArray ')
+        --collection {collection_name} --file {file_path} --jsonArray --drop')
 
 def strToDouble(collection, variable: str):
     

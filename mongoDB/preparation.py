@@ -13,18 +13,34 @@ profiles = db["profiles"]
 # make location_id & profile_id as _id
 # merge collections
 
-#TODO: make function for each collections
-if False:
-    strToDouble(posts, "location_id")
-    doubleToInt(posts, "location_id")
-    strToDouble(posts, "profile_id")
-    doubleToInt(posts, "profile_id")
+def postsPreparation(posts):
+    
+    str_to_int_list = ["location_id", "profile_id", "number_comments", "numbr_likes"]
+    
+    for variable in str_to_int_list:
+        
+        strToDouble(posts, str(variable))
+        doubleToInt(posts, str(variable))
+        deleteEmptyString(posts, str(variable))
+    
     strToInt(posts, "post_type")
-    strToDouble(posts, "numbr_likes")
-    doubleToInt(posts, "numbr_likes")
-    strToDouble(posts, "number_comments")
-    doubleToInt(posts, "number_comments")
     strToDate(posts, "cts")
+    deleteEmptyString(posts, "post_type")
+    deleteEmptyString(posts, "cts")
+    
+    # strToDouble(posts, "location_id")
+    # doubleToInt(posts, "location_id")
+    
+    # strToDouble(posts, "profile_id")
+    # doubleToInt(posts, "profile_id")
+
+    # strToDouble(posts, "number_comments")
+    # doubleToInt(posts, "number_comments")
+    
+    # strToDouble(posts, "numbr_likes")
+    # doubleToInt(posts, "numbr_likes")
+    
+    
 
 if False:
     countEmptyString(posts, "profile_id")
