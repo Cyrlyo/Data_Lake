@@ -1,7 +1,7 @@
 try:
-    from mongoDB.utils_mongo import connectToMongo, strToDouble, doubleToInt, deleteEmptyString, countEmptyString
+    from mongoDB.utils_mongo import connectToMongo, strToDouble, doubleToInt, deleteEmptyString, countEmptyString, strToInt, strToBool
 except:
-    from utils_mongo import connectToMongo, strToDouble, doubleToInt, deleteEmptyString, countEmptyString
+    from utils_mongo import connectToMongo, strToDouble, doubleToInt, deleteEmptyString, countEmptyString, strToInt, strToBool
     
 client, db = connectToMongo("localhost", 27017, "instagram")
 posts = db["posts_reduced"]
@@ -20,5 +20,16 @@ if False:
     strToDouble(posts, "profile_id")
     doubleToInt(posts, "profile_id")
 
-countEmptyString(posts, "profile_id")
-# deleteEmptyString(posts, "profile_id")
+    countEmptyString(posts, "profile_id")
+    deleteEmptyString(posts, "profile_id")
+    
+    strToInt(profiles, "profile_id")
+    countEmptyString(profiles, "profile_id")
+    deleteEmptyString(profiles, "profile_id")
+
+strToBool(profiles, "is_business_account")
+
+# countEmptyString(profiles, "is_business_account")
+# countEmptyString(profiles, "following")
+# countEmptyString(profiles, "followers")
+# countEmptyString(profiles, "n_posts")
