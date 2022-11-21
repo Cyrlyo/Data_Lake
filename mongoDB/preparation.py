@@ -61,6 +61,12 @@ def dataPreparation(host: str, port: int, database_name: str):
     locations = db["locations"]
     profiles = db["profiles"]
     
+    print("\nprofiles preparation... Please wait")
     profilesPreparation(profiles)
+    print("done")
+    print("\nposts preparation... Please wait")
     postsPreparation(posts)
+    print("done")
+    print("\nlocations preparation... Please wait")
     locationsPreparation(locations)
+    print("done")
