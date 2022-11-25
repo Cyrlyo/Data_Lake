@@ -126,3 +126,8 @@ def countEmptyString(collection, variable: str):
 def strToDate(collection, variable: str):
     
     collection.update_many({variable: {"$type": "string", "$ne": ""}}, [{"$set": {variable: {"$convert": {"input": "$%s"% variable, "to": "date"}}}}])
+
+def merge(collection_receive, collection_give: str, receive_field: str, give_file: str, new_field_name: str):
+    
+    collection_receive.aggregate([{"$lookup": {"from":"%s"% collection_give, "localField":"%s"% receive_field,\
+        "foreignField":"%s"% give_file, "as":"%s"% new_field_name}}])

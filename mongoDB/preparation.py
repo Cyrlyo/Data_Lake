@@ -58,6 +58,10 @@ def locationsPreparation(locations, quick_prep: bool):
 
         strToDate(locations, "cts")
 
+def mergeCollections():
+    
+    pass
+
 def dataPreparation(host: str, port: int, database_name: str, quick_prep: bool):
     """_summary_
     It takes me 1 and half hour to prepare all the datas.
