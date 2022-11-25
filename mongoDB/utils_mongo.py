@@ -131,4 +131,4 @@ def merge(collection_receive, collection_give: str, receive_field: str, give_fil
     
     collection_receive.aggregate([{"$lookup": {"from":"%s"% collection_give, "localField":"%s"% receive_field,\
         "foreignField":"%s"% give_file, "as":"%s"% new_field_name}}, {"$unwind": "$%s"% new_field_name},\
-            {"$merge": {"into": {"db": "%s"% database_name, "coll": "%s"% collection_name}}}])
+            {"$merge": {"into": {"db": "%s"% database_name, "coll": "%s"% collection_name}, "on":{ "%s"% give_file}}}])

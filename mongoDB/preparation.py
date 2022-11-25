@@ -25,10 +25,10 @@ def postsPreparation(posts, quick_prep:bool):
         countEmptyString(posts, variable)
     
     if quick_prep:
-        strToInt(posts, "post_type")
-        strToDate(posts, "cts")
         deleteEmptyString(posts, "post_type")
         deleteEmptyString(posts, "cts")
+        strToInt(posts, "post_type")
+        strToDate(posts, "cts")
 
 def profilesPreparation(profiles, quick_prep: bool):
     
@@ -40,12 +40,12 @@ def profilesPreparation(profiles, quick_prep: bool):
         countEmptyString(profiles, str(variable))
 
     if quick_prep:
+        deleteEmptyString(profiles, "is_business_account")
         strToBool(profiles, "is_business_account")
         countEmptyString(profiles, "is_business_account")
-        deleteEmptyString(profiles, "is_business_account")
+        deleteEmptyString(profiles, "cts")
         strToDate(profiles, "cts")
         countEmptyString(profiles, "cts")
-        deleteEmptyString(profiles, "cts")
 
 def locationsPreparation(locations, quick_prep: bool):
 
