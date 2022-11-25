@@ -15,11 +15,13 @@ def parse_arguements() -> bool:
         MongoDB datas. USE ONLY IF NECESSARY! IT'S VERY LONG! About 30 min to 1 hour \
             per document!")
     parser.add_argument("--data_prep", action="store_true", help="Prepare instagram data on MongoDB")
+    parser.add_argument("--quick_prep", action="store_false", help="Only prepare some data (full takes 1h to run)")
     
     args = parser.parse_args()
     
     return args.init_manually, args.download, args.maria_import, args.mongo_import, \
-        args.database_import, args.format_data, args.python_loader, args.data_prep
+        args.database_import, args.format_data, args.python_loader, args.data_prep, \
+            args.quick_prep
 
 def collectSQLQuery(path: str) -> dict:
     """_summary_
