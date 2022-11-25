@@ -1,7 +1,9 @@
 try:
-    from mongoDB.utils_mongo import connectToMongo, strToDouble, doubleToInt, deleteEmptyString, countEmptyString, strToInt, strToBool, strToDate
+    from mongoDB.utils_mongo import connectToMongo, strToDouble, doubleToInt, deleteEmptyString, countEmptyString, strToInt, strToBool, strToDate,\
+        merge
 except:
-    from utils_mongo import connectToMongo, strToDouble, doubleToInt, deleteEmptyString, countEmptyString, strToInt, strToBool, strToDate
+    from utils_mongo import connectToMongo, strToDouble, doubleToInt, deleteEmptyString, countEmptyString, strToInt, strToBool, strToDate,\
+        merge
     
 
 
@@ -58,11 +60,12 @@ def locationsPreparation(locations, quick_prep: bool):
 
         strToDate(locations, "cts")
 
-def mergeCollections():
+def mergeCollections(posts, locations, profile):
     
-    pass
+    merge(posts, profile, "profile_id", "profile_id", "profile")
+    merge(posts, locations, "location_id", "id", "location")
 
-def dataPreparation(host: str, port: int, database_name: str, quick_prep: bool):
+def dataPreparation(host: str, port: int, database_name: str, quick_prep: bool, only_merge: bool):
     """_summary_
     It takes me 1 and half hour to prepare all the datas.
     Args:
@@ -76,12 +79,15 @@ def dataPreparation(host: str, port: int, database_name: str, quick_prep: bool):
     locations = db["locations"]
     profiles = db["profiles"]
     
-    print("\nprofiles preparation... Please wait")
-    profilesPreparation(profiles, quick_prep)
-    print("done")
-    print("\nposts preparation... Please wait")
-    postsPreparation(posts, quick_prep)
-    print("done")
-    print("\nlocations preparation... Please wait")
-    locationsPreparation(locations, quick_prep)
-    print("done")
+    if only_merge:
+        print("\nprofiles preparation... Please wait")
+        profilesPreparation(profiles, quick_prep)
+        print("done")
+        print("\nposts preparation... Please wait")
+        postsPreparation(posts, quick_prep)
+        print("done")
+        print("\nlocations preparation... Please wait")
+        locationsPreparation(locations, quick_prep)
+        print("done")
+    
+    mergeCollections(posts, locations, profiles)

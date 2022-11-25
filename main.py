@@ -34,7 +34,9 @@ MONGO_DATABASE_NAME = "instagram"
 # in a function to after have space to have query elasticsearch & kibana queries & visualization
 if __name__ == "__main__":
 
-    (init_manually, download, maria_import, mongo_import, database_import, format_data, python_loader, data_prep, quick_prep) = parse_arguements()
+    (init_manually, download, maria_import, mongo_import,\
+        database_import, format_data, python_loader, data_prep,\
+            quick_prep, only_merge) = parse_arguements()
     
     query_dict = collectSQLQuery("./query/load_data")
     
@@ -66,7 +68,7 @@ if __name__ == "__main__":
             mongoPythonLoadData("./Data/Formated", "instagram", "localhost", 27017)
     
     if init_manually or data_prep:
-        dataPreparation("localhost", 27017, "instagram", quick_prep)
+        dataPreparation("localhost", 27017, "instagram", quick_prep, only_merge)
         
     delta_time = time.time() - start_time
     print(f"Execution time: {time.strftime('%H:%M:%S', time.gmtime(delta_time))}")

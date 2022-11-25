@@ -16,12 +16,13 @@ def parse_arguements() -> bool:
             per document!")
     parser.add_argument("--data_prep", action="store_true", help="Prepare instagram data on MongoDB")
     parser.add_argument("--quick_prep", action="store_false", help="Only prepare some data (full takes 1h to run)")
+    parser.add_argument("--only_merge", action="store_false", help="Only merge collections as data preparation")
     
     args = parser.parse_args()
     
     return args.init_manually, args.download, args.maria_import, args.mongo_import, \
         args.database_import, args.format_data, args.python_loader, args.data_prep, \
-            args.quick_prep
+            args.quick_prep, args.only_merge
 
 def collectSQLQuery(path: str) -> dict:
     """_summary_
