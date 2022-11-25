@@ -60,18 +60,23 @@ def locationsPreparation(locations, quick_prep: bool):
 
         strToDate(locations, "cts")
 
-def mergeCollections(posts, locations, profile):
+def mergeCollections(posts, locations, profile, database_name: str, collection_name: str):
     
-    merge(posts, profile, "profile_id", "profile_id", "profile")
-    merge(posts, locations, "location_id", "id", "location")
+    print("\nMerging collection...")
+    merge(posts, profile, "profile_id", "profile_id", "profile", database_name, collection_name)
+    merge(posts, locations, "location_id", "id", "location", database_name, collection_name)
+    print("Done")
 
-def dataPreparation(host: str, port: int, database_name: str, quick_prep: bool, only_merge: bool):
+def dataPreparation(host: str, port: int, database_name: str, collection_name: str, quick_prep: bool, only_merge: bool):
     """_summary_
-    It takes me 1 and half hour to prepare all the datas.
+
     Args:
         host (str): _description_
         port (int): _description_
         database_name (str): _description_
+        collection_name (str): _description_
+        quick_prep (bool): _description_
+        only_merge (bool): _description_
     """
     
     client, db = connectToMongo(host, port, database_name)
@@ -89,5 +94,5 @@ def dataPreparation(host: str, port: int, database_name: str, quick_prep: bool, 
         print("\nlocations preparation... Please wait")
         locationsPreparation(locations, quick_prep)
         print("done")
-    
-    mergeCollections(posts, locations, profiles)
+
+    mergeCollections(posts, locations, profiles, database_name, collection_name)

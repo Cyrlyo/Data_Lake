@@ -68,7 +68,7 @@ if __name__ == "__main__":
             mongoPythonLoadData("./Data/Formated", "instagram", "localhost", 27017)
     
     if init_manually or data_prep:
-        dataPreparation("localhost", 27017, "instagram", quick_prep, only_merge)
+        dataPreparation("localhost", 27017, "instagram", "posts_details", quick_prep, only_merge)
         
     delta_time = time.time() - start_time
     print(f"Execution time: {time.strftime('%H:%M:%S', time.gmtime(delta_time))}")
