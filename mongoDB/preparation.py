@@ -13,6 +13,9 @@ except:
 # merge collections
 # TODO: make switch full preparation vs half prep
 
+# TODO: add allowDiskUse = True in aggregate ! 
+# It should reduce the time takes by query
+
 def postsPreparation(posts, quick_prep:bool):
     
     str_to_int_list = ["location_id", "profile_id", "number_comments", "numbr_likes"]
