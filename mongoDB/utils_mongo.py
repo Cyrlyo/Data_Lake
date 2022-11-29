@@ -151,3 +151,5 @@ def outCollections(collection, profiles: str, locations: str, collection_name: s
     {'$out': collection_name}], allowDiskUse=True)
 
 #TODO: try outCollections function
+#TODO: add aggregation stage keeping only none empty array (in profile & location) we should gain at least
+# 1 millions documents
