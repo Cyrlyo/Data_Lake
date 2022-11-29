@@ -17,7 +17,9 @@ except:
 # It should reduce the time takes by query
 
 def postsPreparation(posts, quick_prep:bool):
-    
+    #TODO: add $sample in the aggregation query to reduce number of posts! Only for the first and make a condition
+    # to take only the good data type of the first data type changed
+    # this should reduce time for each query !
     str_to_int_list = ["location_id", "profile_id", "number_comments", "numbr_likes"]
     
     for variable in str_to_int_list:
