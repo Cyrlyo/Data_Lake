@@ -66,8 +66,8 @@ def locationsPreparation(locations, quick_prep: bool):
 def mergeCollections(posts, locations, profile, database_name: str, collection_name: str):
     
     print("\nMerging collection...")
-    merge(posts, profile, "profile_id", "profile_id", "profile", database_name, collection_name)
-    merge(posts, locations, "location_id", "id", "location", database_name, collection_name)
+    merge(posts, profile, "profile_id", "id", "profile", database_name, collection_name)
+    # merge(posts, locations, "location_id", "id", "location", database_name, collection_name)
     print("Done")
 
 def dataPreparation(host: str, port: int, database_name: str, collection_name: str, quick_prep: bool, only_merge: bool):
