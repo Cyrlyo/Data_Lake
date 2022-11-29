@@ -142,3 +142,12 @@ def mergeColl(collection, profiles: str, locations: str, collection_name: str, l
     collection.aggregate([{'$lookup': {'from': profiles, 'localField': localProfiles, 'foreignField': foreignProfiles, 'as': newProfileName}},
     {'$lookup': {'from': locations, 'localField': localLocation, 'foreignField': foreignLocation, 'as': newLocationName}},
     {'$merge': {'into': collection_name, 'whenMatched': 'replace', 'whenNotMatched': 'insert'}}], allowDiskUse=True)
+    
+def outCollections(collection, profiles: str, locations: str, collection_name: str, localProfiles: str, foreignProfiles: str,
+              newProfileName: str, localLocation: str, foreignLocation: str, newLocationName: str):
+    
+    collection.aggregate([{'$lookup': {'from': profiles, 'localField': localProfiles, 'foreignField': foreignProfiles, 'as': newProfileName}},
+    {'$lookup': {'from': locations, 'localField': localLocation, 'foreignField': foreignLocation, 'as': newLocationName}},
+    {'$out': collection_name}], allowDiskUse=True)
+
+#TODO: try outCollections function
