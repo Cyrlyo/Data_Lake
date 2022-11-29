@@ -134,4 +134,11 @@ def merge(collection_receive, collection_give: str, receive_field: str, give_fil
             {"$merge": {"into": {"db": "%s"% database_name, "coll": "%s"% collection_name}, "whenMatched": "replace",\
                 "whenNotMatched": "insert"}}], allowDiskUse=True)
 # TODO: remove $unwind, and "on"
-# TODO: add deleteDuplicates function (using js code found on github)
+# TODO: add deleteDuplicates function (using js code found on stackoverflow)
+
+def mergeColl(collection, profiles: str, locations: str, collection_name: str, localProfiles: str, foreignProfiles: str,
+              newProfileName: str, localLocation: str, foreignLocation: str, newLocationName: str):
+    
+    collection.aggregate([{'$lookup': {'from': profiles, 'localField': localProfiles, 'foreignField': foreignProfiles, 'as': newProfileName}},
+    {'$lookup': {'from': locations, 'localField': localLocation, 'foreignField': foreignLocation, 'as': newLocationName}},
+    {'$merge': {'into': collection_name, 'whenMatched': 'replace', 'whenNotMatched': 'insert'}}], allowDiskUse=True)
