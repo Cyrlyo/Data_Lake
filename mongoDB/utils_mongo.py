@@ -187,5 +187,6 @@ def outCollections(collection, profiles: str, locations: str, collection_name: s
 def checkExistingCollection(database, collection_name: str):
     try:
         database.validate_collection(collection_name)
+        print(f"{collection_name} collection exists")
     except errors.OperationFailure:
-        print("This collection doesn't exist")
+        print(f"{collection_name} collection doesn't exist")
