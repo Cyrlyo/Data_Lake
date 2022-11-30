@@ -162,15 +162,17 @@ def merge(collection_receive, collection_give: str, receive_field: str, give_fil
 def mergeColl(collection, profiles: str, locations: str, collection_name: str, localProfiles: str, foreignProfiles: str,
               newProfileName: str, localLocation: str, foreignLocation: str, newLocationName: str):
     
-    collection.aggregate([{"$sample": {"size":10}},\
-    {'$lookup': {'from': profiles, 'localField': localProfiles, 'foreignField': foreignProfiles, 'as': newProfileName}},
-    {'$lookup': {'from': locations, 'localField': localLocation, 'foreignField': foreignLocation, 'as': newLocationName}},
+    collection.aggregate([{"$sample": {"size":20}},\
+    {'$lookup': {'from': profiles, 'localField': localProfiles, 'foreignField': foreignProfiles, 'as': newProfileName}},\
+    {'$lookup': {'from': locations, 'localField': localLocation, 'foreignField': foreignLocation, 'as': newLocationName}},\
+    {"$match":{newProfileName: {"$exists":True}, newLocationName:{"$exists":True}}},\
+    {"$project":{f"{newProfileName}.description":0}},\
     {'$merge': {'into': collection_name, 'whenMatched': 'replace', 'whenNotMatched': 'insert'}}], allowDiskUse=True)
     
 def outCollections(collection, profiles: str, locations: str, collection_name: str, localProfiles: str, foreignProfiles: str,
               newProfileName: str, localLocation: str, foreignLocation: str, newLocationName: str):
     
-    collection.aggregate([{"$sample": {"size":10}},\
+    collection.aggregate([{"$sample": {"size":20}},\
     {'$lookup': {'from': profiles, 'localField': localProfiles, 'foreignField': foreignProfiles, 'as': newProfileName}},\
     {'$lookup': {'from': locations, 'localField': localLocation, 'foreignField': foreignLocation, 'as': newLocationName}},\
     {"$match":{newProfileName: {"$exists":True}, newLocationName:{"$exists":True}}},\
