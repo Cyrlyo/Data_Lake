@@ -36,6 +36,14 @@ def postsPreparation(posts, quick_prep:bool):
         strToDate(posts, "cts")
 
 def profilesPreparation(profiles, quick_prep: bool):
+    """Changing data type from str to int64, double or boolean.
+    Every data type covert takes around 10 minutes.
+
+    Args:
+        profiles (MongoCollection): Mongo Collection
+        quick_prep (bool): switch that convert data type only for
+            necessary variables
+    """
     
     str_to_int_list = ["profile_id", "following", "followers", "n_posts"]
     
@@ -65,7 +73,25 @@ def locationsPreparation(locations, quick_prep: bool):
 
         strToDate(locations, "cts")
 
-def dataPreparation(host: str, port: int, database_name: str, collection_name: str, quick_prep: bool, only_merge: bool):
+
+def changeDataType(posts, profiles, locations, quick_prep: bool):
+    
+    print("\nprofiles preparation... Please wait")
+    profilesPreparation(profiles, quick_prep)
+    print("done")
+    print("\nposts preparation... Please wait")
+    postsPreparation(posts, quick_prep)
+    print("done")
+    print("\nlocations preparation... Please wait")
+    locationsPreparation(locations, quick_prep)
+    print("done")
+
+    deleteDuplicates(profiles, "profile_id")
+    deleteDuplicates(locations, "id")
+    
+
+def dataPreparation(host: str, port: int, database_name: str, collection_name: str,\
+    quick_prep: bool, only_merge: bool, desac_merge: bool):
     """_summary_
 
     Args:
@@ -82,21 +108,13 @@ def dataPreparation(host: str, port: int, database_name: str, collection_name: s
     locations = db["locations"]
     profiles = db["profiles"]
     
-    if only_merge:
-        print("\nprofiles preparation... Please wait")
-        profilesPreparation(profiles, quick_prep)
-        print("done")
-        print("\nposts preparation... Please wait")
-        postsPreparation(posts, quick_prep)
-        print("done")
-        print("\nlocations preparation... Please wait")
-        locationsPreparation(locations, quick_prep)
-        print("done")
-
-        deleteDuplicates(profiles, "profile_id")
-        deleteDuplicates(locations, "id")
+#TODO: put following lines in a separate function
     
-    print("Merging... Please Wait")
-    # mergeColl(posts, "profiles", "locations", collection_name, "profile_id", "id", "profile", "location_id", "id", "location")
-    checkExistingCollection(db, "posts_details")
-    outCollections(posts, "profiles", "locations", collection_name, "profile_id", "id", "profile", "location_id", "id", "location")
+    if only_merge:
+        changeDataType(posts, profiles, locations, quick_prep)
+    
+    if desac_merge:
+        print("Merging... Please Wait")
+        # mergeColl(posts, "profiles", "locations", collection_name, "profile_id", "id", "profile", "location_id", "id", "location")
+        checkExistingCollection(db, "posts_details")
+        outCollections(posts, "profiles", "locations", collection_name, "profile_id", "id", "profile", "location_id", "id", "location")
