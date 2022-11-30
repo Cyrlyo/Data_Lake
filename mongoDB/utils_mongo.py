@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 from pymongo import errors
 from pymongo import MongoClient
+from pymongo.operations import IndexModel
 from tqdm import tqdm
 
 def csvToJson(csv_path_file: str, json_path_file: str):
@@ -114,11 +115,11 @@ def deleteDuplicates(collection, id_field: str):
     collection.delete_many({"_id": {"$in": response}})
 
 
-#TODO: add create index for profile_id and location_id 
+#TODO: Test this function
 def createIndex(collection, field_to_index: str):
     
-    # collection.create_index([(field_to_index)], "unique": True)
-    pass
+    index = IndexModel([(field_to_index, "ASCENDING")], unique=True)
+    collection.create_index(index)
 
 #TODO: change all update_many by aggregation with $convert
 def strToDouble(collection, variable: str):
@@ -173,7 +174,7 @@ def mergeColl(collection, profiles: str, locations: str, collection_name: str, l
 def outCollections(collection, profiles: str, locations: str, collection_name: str, localProfiles: str, foreignProfiles: str,
               newProfileName: str, localLocation: str, foreignLocation: str, newLocationName: str):
     
-    collection.aggregate([{"$sample": {"size":20}},\
+    collection.aggregate([{"$sample": {"size":100}},\
     {'$lookup': {'from': profiles, 'localField': localProfiles, 'foreignField': foreignProfiles, 'as': newProfileName}},\
     {'$lookup': {'from': locations, 'localField': localLocation, 'foreignField': foreignLocation, 'as': newLocationName}},\
     {"$match":{newProfileName: {"$exists":True}, newLocationName:{"$exists":True}}},\
