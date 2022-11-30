@@ -106,5 +106,5 @@ def dataPreparation(host: str, port: int, database_name: str, collection_name: s
     # mergeCollections(posts, "locations", "profiles", database_name, collection_name)
     print("Merging... Please Wait")
     # mergeColl(posts, "profiles", "locations", collection_name, "profile_id", "id", "profile", "location_id", "id", "location")
-    # outCollections(posts, "profiles", "locations", collection_name, "profile_id", "id", "profile", "location_id", "id", "location")
     checkExistingCollection(db, "posts_details")
+    outCollections(posts, "profiles", "locations", collection_name, "profile_id", "id", "profile", "location_id", "id", "location")

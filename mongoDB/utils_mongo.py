@@ -174,7 +174,7 @@ def mergeColl(collection, profiles: str, locations: str, collection_name: str, l
 def outCollections(collection, profiles: str, locations: str, collection_name: str, localProfiles: str, foreignProfiles: str,
               newProfileName: str, localLocation: str, foreignLocation: str, newLocationName: str):
     
-    collection.aggregate([{"$sample": {"size":100}},\
+    collection.aggregate([{"$sample": {"size":1500000}},\
     {'$lookup': {'from': profiles, 'localField': localProfiles, 'foreignField': foreignProfiles, 'as': newProfileName}},\
     {'$lookup': {'from': locations, 'localField': localLocation, 'foreignField': foreignLocation, 'as': newLocationName}},\
     {"$match":{newProfileName: {"$exists":True}, newLocationName:{"$exists":True}}},\
@@ -188,6 +188,7 @@ def outCollections(collection, profiles: str, locations: str, collection_name: s
 def checkExistingCollection(database, collection_name: str):
     try:
         database.validate_collection(collection_name)
-        print(f"{collection_name} collection exists")
-    except errors.OperationFailure:
-        print(f"{collection_name} collection doesn't exist")
+        print(f"\n{collection_name} collection exists\nDeleting")
+        # database[collection_name].drop()
+    except: 
+        print(f"\n{collection_name} collection doesn't exist")
