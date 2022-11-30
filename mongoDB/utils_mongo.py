@@ -97,6 +97,9 @@ def mongoQueryLoad(database_name: str, collection_name: str, host: str, port: in
     os.system(f'mongoimport --host {host} -d {database_name} --port {port}\
         --collection {collection_name} --file {file_path} --jsonArray --drop')
 
+#TODO: add create index for profile_id and location_id 
+
+
 #TODO: change all update_many by aggregation with $convert
 def strToDouble(collection, variable: str):
     
@@ -147,7 +150,7 @@ def mergeColl(collection, profiles: str, locations: str, collection_name: str, l
 def outCollections(collection, profiles: str, locations: str, collection_name: str, localProfiles: str, foreignProfiles: str,
               newProfileName: str, localLocation: str, foreignLocation: str, newLocationName: str):
     
-    collection.aggregate([{'$lookup': {'from': profiles, 'localField': localProfiles, 'foreignField': foreignProfiles, 'as': newProfileName}},
+    collection.aggregate([{"$sample": 150000},{'$lookup': {'from': profiles, 'localField': localProfiles, 'foreignField': foreignProfiles, 'as': newProfileName}},
     {'$lookup': {'from': locations, 'localField': localLocation, 'foreignField': foreignLocation, 'as': newLocationName}},
     {'$out': collection_name}], allowDiskUse=True)
 
