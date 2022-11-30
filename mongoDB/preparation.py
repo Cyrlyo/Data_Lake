@@ -1,9 +1,9 @@
 try:
     from mongoDB.utils_mongo import connectToMongo, strToDouble, doubleToInt, deleteEmptyString, countEmptyString, strToInt, strToBool, strToDate,\
-        merge, mergeColl, outCollections
+        merge, mergeColl, outCollections, deleteDuplicates
 except:
     from utils_mongo import connectToMongo, strToDouble, doubleToInt, deleteEmptyString, countEmptyString, strToInt, strToBool, strToDate,\
-        merge, mergeColl, outCollections
+        merge, mergeColl, outCollections, deleteDuplicates
     
 
 
@@ -100,7 +100,10 @@ def dataPreparation(host: str, port: int, database_name: str, collection_name: s
         locationsPreparation(locations, quick_prep)
         print("done")
 
+        deleteDuplicates(profiles, "profile_id")
+        deleteDuplicates(locations, "id")
+    
     # mergeCollections(posts, "locations", "profiles", database_name, collection_name)
     print("Merging... Please Wait")
-    mergeColl(posts, "profiles", "locations", collection_name, "profile_id", "id", "profile", "location_id", "id", "location")
-    # outCollections(posts, "profiles", "locations", collection_name, "profile_id", "id", "profile", "location_id", "id", "location")
+    # mergeColl(posts, "profiles", "locations", collection_name, "profile_id", "id", "profile", "location_id", "id", "location")
+    outCollections(posts, "profiles", "locations", collection_name, "profile_id", "id", "profile", "location_id", "id", "location")

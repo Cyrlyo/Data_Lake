@@ -97,8 +97,27 @@ def mongoQueryLoad(database_name: str, collection_name: str, host: str, port: in
     os.system(f'mongoimport --host {host} -d {database_name} --port {port}\
         --collection {collection_name} --file {file_path} --jsonArray --drop')
 
-#TODO: add create index for profile_id and location_id 
+def deleteDuplicates(collection, id_field: str):
+    cursor = collection.aggregate(
+    [
+        {"$group": {"_id": "$%s"%id_field, "unique_ids": {"$addToSet": "$_id"}, "count": {"$sum": 1}}},
+        {"$match": {"count": { "$gte": 2 }}}
+    ])
 
+    response = []
+    for doc in cursor:
+        del doc["unique_ids"][0]
+        for id in doc["unique_ids"]:
+            response.append(id)
+
+    collection.delete_many({"_id": {"$in": response}})
+
+
+#TODO: add create index for profile_id and location_id 
+def createIndex(collection, field_to_index: str):
+    
+    # collection.create_index([(field_to_index)], "unique": True)
+    pass
 
 #TODO: change all update_many by aggregation with $convert
 def strToDouble(collection, variable: str):
@@ -143,15 +162,18 @@ def merge(collection_receive, collection_give: str, receive_field: str, give_fil
 def mergeColl(collection, profiles: str, locations: str, collection_name: str, localProfiles: str, foreignProfiles: str,
               newProfileName: str, localLocation: str, foreignLocation: str, newLocationName: str):
     
-    collection.aggregate([{"$sample": {"size":10}}, {'$lookup': {'from': profiles, 'localField': localProfiles, 'foreignField': foreignProfiles, 'as': newProfileName}},
+    collection.aggregate([{"$sample": {"size":10}},\
+    {'$lookup': {'from': profiles, 'localField': localProfiles, 'foreignField': foreignProfiles, 'as': newProfileName}},
     {'$lookup': {'from': locations, 'localField': localLocation, 'foreignField': foreignLocation, 'as': newLocationName}},
     {'$merge': {'into': collection_name, 'whenMatched': 'replace', 'whenNotMatched': 'insert'}}], allowDiskUse=True)
     
 def outCollections(collection, profiles: str, locations: str, collection_name: str, localProfiles: str, foreignProfiles: str,
               newProfileName: str, localLocation: str, foreignLocation: str, newLocationName: str):
     
-    collection.aggregate([{"$sample": {"size":10}},{'$lookup': {'from': profiles, 'localField': localProfiles, 'foreignField': foreignProfiles, 'as': newProfileName}},
-    {'$lookup': {'from': locations, 'localField': localLocation, 'foreignField': foreignLocation, 'as': newLocationName}},
+    collection.aggregate([{"$sample": {"size":10}},\
+    {'$lookup': {'from': profiles, 'localField': localProfiles, 'foreignField': foreignProfiles, 'as': newProfileName}},\
+    {'$lookup': {'from': locations, 'localField': localLocation, 'foreignField': foreignLocation, 'as': newLocationName}},\
+    {"$match":{newProfileName: {"$exists":True}, newLocationName:{"$exists":True}}},\
     {'$out': collection_name}], allowDiskUse=True)
 
 #TODO: try outCollections function
