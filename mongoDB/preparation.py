@@ -1,9 +1,9 @@
 try:
     from mongoDB.utils_mongo import connectToMongo, strToDouble, doubleToInt, deleteEmptyString, countEmptyString, strToInt, strToBool, strToDate,\
-        mergeColl, outCollections, deleteDuplicates, checkExistingCollection
+        mergeColl, outCollections, deleteDuplicates, checkExistingCollection, createIndex
 except:
     from utils_mongo import connectToMongo, strToDouble, doubleToInt, deleteEmptyString, countEmptyString, strToInt, strToBool, strToDate,\
-        mergeColl, outCollections, deleteDuplicates, checkExistingCollection
+        mergeColl, outCollections, deleteDuplicates, checkExistingCollection, createIndex
     
 
 
@@ -11,7 +11,6 @@ except:
 # convert str to int / double
 # make location_id & profile_id as _id
 # merge collections
-# TODO: make switch full preparation vs half prep
 
 # TODO: add allowDiskUse = True in aggregate ! 
 # It should reduce the time takes by query
@@ -73,7 +72,7 @@ def locationsPreparation(locations, quick_prep: bool):
 
         strToDate(locations, "cts")
 
-
+#TODO: add sample to dataprep
 def changeDataType(posts, profiles, locations, quick_prep: bool):
     
     print("\nprofiles preparation... Please wait")
@@ -110,9 +109,14 @@ def dataPreparation(host: str, port: int, database_name: str, collection_name: s
     
     if only_merge:
         changeDataType(posts, profiles, locations, quick_prep)
+        deleteDuplicates(profiles, "id")
+        #TODO ne pas oublié que proifle_id a été changé par id
+        deleteDuplicates(locations, "id")
+        createIndex(profiles, "id")
+        createIndex(locations, "id")
     
     if desac_merge:
-        print("Merging... Please Wait")
-        # mergeColl(posts, "profiles", "locations", collection_name, "profile_id", "id", "profile", "location_id", "id", "location", sample)
+        print("\nMerging... Please Wait")
         checkExistingCollection(db, "posts_details")
+        # mergeColl(posts, "profiles", "locations", collection_name, "profile_id", "id", "profile", "location_id", "id", "location", sample)
         outCollections(posts, "profiles", "locations", collection_name, "profile_id", "id", "profile", "location_id", "id", "location", sample)
