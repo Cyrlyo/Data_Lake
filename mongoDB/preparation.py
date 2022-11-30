@@ -1,9 +1,9 @@
 try:
     from mongoDB.utils_mongo import connectToMongo, strToDouble, doubleToInt, deleteEmptyString, countEmptyString, strToInt, strToBool, strToDate,\
-        merge, mergeColl, outCollections, deleteDuplicates, checkExistingCollection
+        mergeColl, outCollections, deleteDuplicates, checkExistingCollection
 except:
     from utils_mongo import connectToMongo, strToDouble, doubleToInt, deleteEmptyString, countEmptyString, strToInt, strToBool, strToDate,\
-        merge, mergeColl, outCollections, deleteDuplicates, checkExistingCollection
+        mergeColl, outCollections, deleteDuplicates, checkExistingCollection
     
 
 
@@ -65,13 +65,6 @@ def locationsPreparation(locations, quick_prep: bool):
 
         strToDate(locations, "cts")
 
-def mergeCollections(posts, locations: str, profile: str, database_name: str, collection_name: str):
-    
-    print("\nMerging collection...")
-    merge(posts, profile, "profile_id", "id", "profile", database_name, collection_name)
-    merge(posts, locations, "location_id", "id", "location", database_name, collection_name)
-    print("Done")
-
 def dataPreparation(host: str, port: int, database_name: str, collection_name: str, quick_prep: bool, only_merge: bool):
     """_summary_
 
@@ -103,7 +96,6 @@ def dataPreparation(host: str, port: int, database_name: str, collection_name: s
         deleteDuplicates(profiles, "profile_id")
         deleteDuplicates(locations, "id")
     
-    # mergeCollections(posts, "locations", "profiles", database_name, collection_name)
     print("Merging... Please Wait")
     # mergeColl(posts, "profiles", "locations", collection_name, "profile_id", "id", "profile", "location_id", "id", "location")
     checkExistingCollection(db, "posts_details")
