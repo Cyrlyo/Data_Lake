@@ -2,6 +2,7 @@ import csv
 import json
 import os
 from pathlib import Path
+from pymongo import errors
 from pymongo import MongoClient
 from tqdm import tqdm
 
@@ -176,9 +177,15 @@ def outCollections(collection, profiles: str, locations: str, collection_name: s
     {'$lookup': {'from': profiles, 'localField': localProfiles, 'foreignField': foreignProfiles, 'as': newProfileName}},\
     {'$lookup': {'from': locations, 'localField': localLocation, 'foreignField': foreignLocation, 'as': newLocationName}},\
     {"$match":{newProfileName: {"$exists":True}, newLocationName:{"$exists":True}}},\
-    {"$project":{f"{newProfileName}.description":0}},\
+    {"$project":{f"{newProfileName}.description":0, "sid_profile":0, f"{newProfileName}.sid":0, f"{newProfileName}.description":0, f"{newLocationName}.zip":0}},\
     {'$out': collection_name}], allowDiskUse=True)
 
 #TODO: try outCollections function
 #TODO: add aggregation stage keeping only none empty array (in profile & location) we should gain at least
 # 1 millions documents
+
+def checkExistingCollection(database, collection_name: str):
+    try:
+        database.validate_collection(collection_name)
+    except errors.OperationFailure:
+        print("This collection doesn't exist")
