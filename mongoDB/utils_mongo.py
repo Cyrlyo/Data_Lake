@@ -174,7 +174,7 @@ def outCollections(collection, profiles: str, locations: str, collection_name: s
     {'$lookup': {'from': profiles, 'localField': localProfiles, 'foreignField': foreignProfiles, 'as': newProfileName}},\
     {'$lookup': {'from': locations, 'localField': localLocation, 'foreignField': foreignLocation, 'as': newLocationName}},\
     {"$match":{newProfileName: {"$exists":True}, newLocationName:{"$exists":True}}},\
-    {"$project":{f"{newLocationName}.description":0}},\
+    {"$project":{f"{newProfileName}.description":0}},\
     {'$out': collection_name}], allowDiskUse=True)
 
 #TODO: try outCollections function
