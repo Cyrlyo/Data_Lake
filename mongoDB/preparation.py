@@ -1,19 +1,18 @@
 try:
-    from mongoDB.utils_mongo import connectToMongo, strToDouble, doubleToInt, deleteEmptyString, countEmptyString, strToInt, strToBool, strToDate,\
+    from mongoDB.utils_mongo import connectToMongo, strToDouble, doubleToInt, deleteEmptyString,\
+        countEmptyString, strToInt, strToBool, strToDate,\
         mergeColl, outCollections, deleteDuplicates, checkExistingCollection, createIndex
 except:
-    from utils_mongo import connectToMongo, strToDouble, doubleToInt, deleteEmptyString, countEmptyString, strToInt, strToBool, strToDate,\
+    from utils_mongo import connectToMongo, strToDouble, doubleToInt, deleteEmptyString,\
+        countEmptyString, strToInt, strToBool, strToDate,\
         mergeColl, outCollections, deleteDuplicates, checkExistingCollection, createIndex
     
 
 
 # TODO: delete empty id string 
 # convert str to int / double
-# make location_id & profile_id as _id
+# create index on location.id & profile_id 
 # merge collections
-
-# TODO: add allowDiskUse = True in aggregate ! 
-# It should reduce the time takes by query
 
 def postsPreparation(posts, quick_prep:bool):
     #TODO: add $sample in the aggregation query to reduce number of posts! Only for the first and make a condition
