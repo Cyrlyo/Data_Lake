@@ -108,8 +108,6 @@ def dataPreparation(host: str, port: int, database_name: str, collection_name: s
     locations = db["locations"]
     profiles = db["profiles"]
     
-#TODO: put following lines in a separate function
-    
     if only_merge:
         changeDataType(posts, profiles, locations, quick_prep)
     
