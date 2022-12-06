@@ -1,18 +1,12 @@
 try:
     from mongoDB.utils_mongo import connectToMongo, strToDouble, doubleToInt, deleteEmptyString,\
         countEmptyString, strToInt, strToBool, strToDate,\
-        mergeColl, outCollections, deleteDuplicates, checkExistingCollection, createIndex
+        outCollections, deleteDuplicates, checkExistingCollection, createIndex, changeName
 except:
     from utils_mongo import connectToMongo, strToDouble, doubleToInt, deleteEmptyString,\
         countEmptyString, strToInt, strToBool, strToDate,\
-        mergeColl, outCollections, deleteDuplicates, checkExistingCollection, createIndex
-    
+        outCollections, deleteDuplicates, checkExistingCollection, createIndex, changeName
 
-
-# TODO: delete empty id string 
-# convert str to int / double
-# create index on location.id & profile_id 
-# merge collections
 
 def postsPreparation(posts, quick_prep:bool):
     #TODO: add $sample in the aggregation query to reduce number of posts! Only for the first and make a condition
@@ -26,6 +20,7 @@ def postsPreparation(posts, quick_prep:bool):
         strToDouble(posts, str(variable))
         doubleToInt(posts, str(variable))
         countEmptyString(posts, variable)
+        changeName(posts, "profile_id", "id")
     
     if quick_prep:
         deleteEmptyString(posts, "post_type")

@@ -114,8 +114,6 @@ def deleteDuplicates(collection, id_field: str):
 
     collection.delete_many({"_id": {"$in": response}})
 
-
-#TODO: Test this function
 def createIndex(collection, field_to_index: str):
     
     index = IndexModel([(field_to_index, "ASCENDING")], unique=True)
@@ -148,6 +146,10 @@ def countEmptyString(collection, variable: str):
     for result in results:
         print(f"Number of null string in '{variable}': {result[list(result.keys())[-1]]}")
 
+def changeName(collection, old_name: str, new_name: str):
+    
+    collection.update_many({}, {"$rename": {str(old_name), str(new_name)}})
+
 def strToDate(collection, variable: str):
     
     collection.update_many({variable: {"$type": "string", "$ne": ""}}, [{"$set": {variable: {"$convert": {"input": "$%s"% variable, "to": "date"}}}}])
@@ -173,10 +175,6 @@ def outCollections(collection, profiles: str, locations: str, collection_name: s
     {"$project":{f"{newProfileName}.description":0, "sid_profile":0, f"{newProfileName}.sid":0, f"{newProfileName}.description":0, f"{newLocationName}.zip":0, \
     f"{newLocationName}.phone":0, f"{newLocationName}.blurb":0}},\
     {'$out': collection_name}], allowDiskUse=True)
-
-#TODO: try outCollections function
-#TODO: add aggregation stage keeping only none empty array (in profile & location) we should gain at least
-# 1 millions documents
 
 def checkExistingCollection(database, collection_name: str):
     try:
