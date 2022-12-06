@@ -88,7 +88,6 @@ def createDatabase(cursor: Cursor, database_name: str) -> None:
         cursor (Cursor): MariaDB Cursor
         database_name (str): Database's name to create
     """
-    # TODO: mettre un statement if exists delete or use avec argparse
     try:
         cursor.execute("CREATE DATABASE %s CHARACTER SET utf8 COLLATE utf8_general_ci" % database_name)
         print(f"\n{database_name} has been created")
