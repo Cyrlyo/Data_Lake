@@ -20,7 +20,7 @@ def postsPreparation(posts, quick_prep:bool):
         strToDouble(posts, str(variable))
         doubleToInt(posts, str(variable))
         countEmptyString(posts, variable)
-        changeName(posts, "profile_id", "id")
+        
     
     if quick_prep:
         deleteEmptyString(posts, "post_type")
@@ -44,6 +44,7 @@ def profilesPreparation(profiles, quick_prep: bool):
         deleteEmptyString(profiles, str(variable))
         strToInt(profiles, str(variable))
         countEmptyString(profiles, str(variable))
+        changeName(profiles, "profile_id", "id")
 
     if quick_prep:
         deleteEmptyString(profiles, "is_business_account")

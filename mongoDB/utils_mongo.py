@@ -147,8 +147,7 @@ def countEmptyString(collection, variable: str):
         print(f"Number of null string in '{variable}': {result[list(result.keys())[-1]]}")
 
 def changeName(collection, old_name: str, new_name: str):
-    
-    collection.update_many({}, {"$rename": {str(old_name), str(new_name)}})
+    collection.update_many({}, {"$rename": {str(old_name): str(new_name)}})
 
 def strToDate(collection, variable: str):
     
