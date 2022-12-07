@@ -8,7 +8,10 @@ import shutil
 
 def deplacePostsDetailsReduced(current_data_path: str, target_data_path: str):
     
-    shutil.copytree(current_data_path, target_data_path)
+    try:
+        shutil.copytree(current_data_path, target_data_path)
+    except:
+        print("Folder already exists")
 
 def formatInstagram(current_data_path: str, target_data_path: str):
     """_summary_
