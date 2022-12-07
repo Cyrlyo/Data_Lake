@@ -4,7 +4,7 @@ from kaggle.api import KaggleApi
 from mariaDB.maria_import import importToMariaDB
 from import_data.import_posts import importPosts
 from utils import parse_arguements, collectSQLQuery
-from mongoDB.mongo_import import formatInstagram, mongoImportLoadData, mongoPythonLoadData
+from mongoDB.mongo_import import formatInstagram, mongoImportLoadData, mongoPythonLoadData, deplacePostsDetailsReduced
 from mongoDB.preparation import dataPreparation
 import time
 
@@ -60,6 +60,7 @@ if __name__ == "__main__":
     
     if init_manually or format_data:
         formatInstagram("./Data/Raw", "./Data/Formated")
+        deplacePostsDetailsReduced("./Data/Raw/posts_details_reduced", "./Data/Formated/posts_details_reduced")
 
     if init_manually or maria_import or database_import:
         importToMariaDB("point_of_interest", table_name_3, "./Data/Raw/allCountries/allCountries.txt", query_dict[table_name_3])
@@ -67,10 +68,8 @@ if __name__ == "__main__":
     if init_manually or mongo_import or database_import:
         if not python_loader:
             mongoImportLoadData("./Data/Formated", "instagram", "localhost", 27017)
-            mongoImportLoadData("./Data/Raw", "instagram", "localhost", 27017)
         else:
             mongoPythonLoadData("./Data/Formated", "instagram", "localhost", 27017)
-            mongoPythonLoadData("./Data/Raw", "instagram", "localhost", 27017)
     
     if init_manually or data_prep:
         dataPreparation("localhost", 27017, "instagram", "posts_details", quick_prep, only_merge, desac_merge, sample)
