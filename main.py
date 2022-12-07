@@ -67,10 +67,10 @@ if __name__ == "__main__":
     if init_manually or mongo_import or database_import:
         if not python_loader:
             mongoImportLoadData("./Data/Formated", "instagram", "localhost", 27017)
-            mongoImportLoadData("./Data/Raw", "posts_details_reduced", "localhost", 27017)
+            mongoImportLoadData("./Data/Raw", "instagram", "localhost", 27017)
         else:
             mongoPythonLoadData("./Data/Formated", "instagram", "localhost", 27017)
-            mongoPythonLoadData("./Data/Raw", "posts_details_reduced", "localhost", 27017)
+            mongoPythonLoadData("./Data/Raw", "instagram", "localhost", 27017)
     
     if init_manually or data_prep:
         dataPreparation("localhost", 27017, "instagram", "posts_details", quick_prep, only_merge, desac_merge, sample)
