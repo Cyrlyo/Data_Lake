@@ -20,6 +20,8 @@ SOURCE_4 = "instagram_posts_reduced.zip"
 HOST = "localhost"
 MONGO_PORT = 27017
 MONGO_DATABASE_NAME = "instagram"
+SOURCE_5 = "posts_details_reduced.zip"
+DATASET_NAME_4 = "posts-data-storage.online"
 
 
 #TODO: Create folder "Query" and query.sql files with all queries\
@@ -54,6 +56,7 @@ if __name__ == "__main__":
         poiImport(DATASET_NAME_2, SOURCE_3, FILES_NAME)
         apiImport(API, DATASET_NAME, SOURCES)
         importPosts(DATASET_NAME_3, SOURCE_4, [SOURCE_4])
+        importPosts(DATASET_NAME_4, SOURCE_5, [SOURCE_5])
     
     if init_manually or format_data:
         formatInstagram("./Data/Raw", "./Data/Formated")
