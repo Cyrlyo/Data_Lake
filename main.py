@@ -68,16 +68,16 @@ if __name__ == "__main__":
     
     if init_manually or mongo_import or database_import:
         if not python_loader:
-            mongoImportLoadData("./Data/Formated", "instagram", "localhost", 27017)
+            mongoImportLoadData("./Data/Formated", MONGO_DATABASE_NAME, HOST, MONGO_PORT)
         else:
-            mongoPythonLoadData("./Data/Formated", "instagram", "localhost", 27017)
+            mongoPythonLoadData("./Data/Formated", MONGO_DATABASE_NAME, HOST, MONGO_PORT)
     
     if demo:
         if init_manually or data_prep:
-            dataPreparation("localhost", 27017, "instagram", "posts_details", quick_prep, only_merge, enable_merge, sample)
+            dataPreparation(HOST, MONGO_PORT, MONGO_DATABASE_NAME, "posts_details", quick_prep, only_merge, enable_merge, sample)
     
     if init_manually or elk:
-        elkImport([HOST, MONGO_PORT, MONGO_DATABASE_NAME], "posts_details_reduced", "point_of_interest", "allcountries")
+        elkImport([HOST, MONGO_PORT, MONGO_DATABASE_NAME], "posts_details_reduced", "point_of_interest", table_name_3.lower())
     
     delta_time = time.time() - start_time
     print(f"Execution time: {time.strftime('%H:%M:%S', time.gmtime(delta_time))}")
