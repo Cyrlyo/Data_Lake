@@ -13,9 +13,6 @@ def postsPreparation(posts, quick_prep:bool):
     # to take only the good data type of the first data type changed
     # this should reduce time for each query !
     
-    posts.aggregate([{"$sample":{"size":5000000}}, {"$project":{"sid":1}}, {"$convert":{"$sid":"int"}}])
-    deleteStringType(posts, "sid")
-    
     str_to_int_list = ["location_id", "profile_id", "number_comments", "numbr_likes"]
     
     for variable in str_to_int_list:
@@ -84,7 +81,7 @@ def changeDataType(posts, profiles, locations, quick_prep: bool):
     locationsPreparation(locations, quick_prep)
     print("done")
 
-    deleteDuplicates(profiles, "profile_id")
+    deleteDuplicates(profiles, "id")
     deleteDuplicates(locations, "id")
     
 
@@ -111,8 +108,8 @@ def dataPreparation(host: str, port: int, database_name: str, collection_name: s
         deleteDuplicates(profiles, "id")
         #TODO ne pas oublié que proifle_id a été changé par id
         deleteDuplicates(locations, "id")
-        createIndex(profiles, "id")
-        createIndex(locations, "id")
+        # createIndex(profiles, "id")
+        # createIndex(locations, "id")
     
     if desac_merge:
         print("\nMerging... Please Wait")
