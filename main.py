@@ -6,6 +6,7 @@ from import_data.import_posts import importPosts
 from utils import parse_arguements, collectSQLQuery
 from mongoDB.mongo_import import formatInstagram, mongoImportLoadData, mongoPythonLoadData, deplacePostsDetailsReduced
 from mongoDB.preparation import dataPreparation
+from elk.utils_elk import elkImport
 import time
 
 DATASET_NAME = "shmalex/instagram-dataset"
@@ -74,6 +75,8 @@ if __name__ == "__main__":
     if demo:
         if init_manually or data_prep:
             dataPreparation("localhost", 27017, "instagram", "posts_details", quick_prep, only_merge, enable_merge, sample)
-        
+    
+    elkImport([HOST, MONGO_PORT, MONGO_DATABASE_NAME], "posts_details_reduced")
+    
     delta_time = time.time() - start_time
     print(f"Execution time: {time.strftime('%H:%M:%S', time.gmtime(delta_time))}")
