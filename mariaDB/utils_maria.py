@@ -158,8 +158,8 @@ def createTable(connexion: Connection, table_name: str, createtable_query: str) 
 def getMariaData(cursor: Cursor, database_name: str, table_name):
     
     useWorkplace(cursor, "point_of_interest")
-    query = "SELECT * FROM allcountries"
+    query = "SELECT name, slug, lat, lng, cd, dem FROM allcountries"
     cursor.execute(query)
-    res = cursor.fetchall()
+    res = cursor.fetchmany(10000)
     
     return res

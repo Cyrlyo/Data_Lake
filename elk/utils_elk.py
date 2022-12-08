@@ -49,5 +49,7 @@ def elkImport(mongo_info: List, collection_name: str, mariadb_db_name: str, mari
     print("\nImporting mariaDB datas into elasticsearch")
     cursor = CONNEXON.cursor(dictionary=True)
     res = getMariaData(cursor, mariadb_db_name, mariadb_table)
+    print(res)
+    print(len(res))
     importToElastich(es, res, mariadb_db_name)
     print("Done")
