@@ -6,10 +6,10 @@ sys.path.append(path)
 from mongoDB.utils_mongo import connectToMongo
 from elasticsearch import Elasticsearch, helpers
 from typing import List
-from mariaDB.utils_maria import gettingCredentials, connectToDatabase
+from mariaDB.utils_maria import gettingCredentials, connectToDatabase, getMariaData
 
 CREDENTIALS = gettingCredentials()
-cursor = connectToDatabase(CREDENTIALS)
+CONNEXON = connectToDatabase(CREDENTIALS)
 
 try:
     es = Elasticsearch(hosts="http://localhost:9200")
@@ -36,7 +36,7 @@ def importToElastich(es: Elasticsearch, actions: list, index: str):
     es.indices.create(index=index)
     helpers.bulk(es, actions, index=index, stats_only=True)
 
-def elkImport(mongo_info: List, collection_name: str):
+def elkImport(mongo_info: List, collection_name: str, mariadb_db_name: str, mariadb_table: str):
     
     print("\nImporting mongo datas")
     client, db = connectToMongo(mongo_info[0], mongo_info[1], mongo_info[2])
@@ -45,3 +45,7 @@ def elkImport(mongo_info: List, collection_name: str):
     
     importToElastich(es, actions, collection_name)
     print("Done")
+    
+    cursor = CONNEXON.cursor(dictionary=True)
+    res = getMariaData(cursor, mariadb_db_name, mariadb_table)
+    importToElastich(es, res, mariadb_db_name)

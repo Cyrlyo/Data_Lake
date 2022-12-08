@@ -154,3 +154,12 @@ def createTable(connexion: Connection, table_name: str, createtable_query: str) 
         print(f"Error: {error}")
 
         cursor.close()
+
+def getMariaData(cursor: Cursor, database_name: str, table_name):
+    
+    useWorkplace(cursor, "point_of_interest")
+    query = "SELECT * FROM allcountries"
+    cursor.execute(query)
+    res = cursor.fetchall()
+    
+    return res
