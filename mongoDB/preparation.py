@@ -1,17 +1,18 @@
 try:
     from mongoDB.utils_mongo import connectToMongo, strToDouble, doubleToInt, deleteEmptyString,\
         countEmptyString, strToInt, strToBool, strToDate,\
-        outCollections, deleteDuplicates, checkExistingCollection, createIndex, changeName
+        outCollections, deleteDuplicates, checkExistingCollection, createIndex, changeName, deleteStringType
 except:
     from utils_mongo import connectToMongo, strToDouble, doubleToInt, deleteEmptyString,\
         countEmptyString, strToInt, strToBool, strToDate,\
-        outCollections, deleteDuplicates, checkExistingCollection, createIndex, changeName
+        outCollections, deleteDuplicates, checkExistingCollection, createIndex, changeName, deleteStringType
 
 
 def postsPreparation(posts, quick_prep:bool):
     #TODO: add $sample in the aggregation query to reduce number of posts! Only for the first and make a condition
     # to take only the good data type of the first data type changed
     # this should reduce time for each query !
+    
     str_to_int_list = ["location_id", "profile_id", "number_comments", "numbr_likes"]
     
     for variable in str_to_int_list:
@@ -20,7 +21,7 @@ def postsPreparation(posts, quick_prep:bool):
         strToDouble(posts, str(variable))
         doubleToInt(posts, str(variable))
         countEmptyString(posts, variable)
-        changeName(posts, "profile_id", "id")
+        
     
     if quick_prep:
         deleteEmptyString(posts, "post_type")
@@ -44,6 +45,7 @@ def profilesPreparation(profiles, quick_prep: bool):
         deleteEmptyString(profiles, str(variable))
         strToInt(profiles, str(variable))
         countEmptyString(profiles, str(variable))
+        changeName(profiles, "profile_id", "id")
 
     if quick_prep:
         deleteEmptyString(profiles, "is_business_account")
@@ -79,12 +81,12 @@ def changeDataType(posts, profiles, locations, quick_prep: bool):
     locationsPreparation(locations, quick_prep)
     print("done")
 
-    deleteDuplicates(profiles, "profile_id")
+    deleteDuplicates(profiles, "id")
     deleteDuplicates(locations, "id")
     
 
 def dataPreparation(host: str, port: int, database_name: str, collection_name: str,\
-    quick_prep: bool, only_merge: bool, desac_merge: bool, sample: int):
+    quick_prep: bool, only_merge: bool, enable_merge: bool, sample: int):
     """_summary_
 
     Args:
@@ -106,10 +108,10 @@ def dataPreparation(host: str, port: int, database_name: str, collection_name: s
         deleteDuplicates(profiles, "id")
         #TODO ne pas oublié que proifle_id a été changé par id
         deleteDuplicates(locations, "id")
-        createIndex(profiles, "id")
-        createIndex(locations, "id")
+        # createIndex(profiles, "id")
+        # createIndex(locations, "id")
     
-    if desac_merge:
+    if enable_merge:
         print("\nMerging... Please Wait")
         checkExistingCollection(db, "posts_details")
         # mergeColl(posts, "profiles", "locations", collection_name, "profile_id", "id", "profile", "location_id", "id", "location", sample)

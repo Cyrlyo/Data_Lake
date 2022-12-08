@@ -154,3 +154,24 @@ def createTable(connexion: Connection, table_name: str, createtable_query: str) 
         print(f"Error: {error}")
 
         cursor.close()
+
+def getMariaData(cursor: Cursor, database_name: str, table_name) -> list:
+    
+    number = countDocuments(cursor, database_name, table_name)
+    
+    useWorkplace(cursor, database_name)
+    query = "SELECT name, slug, lat, lng, cd, dem FROM %s"% table_name
+    cursor.execute(query)
+    print("\nFetching datas...")
+    res = cursor.fetchmany(number["count"])
+    # res = cursor.fetchall()
+    print("Data fetched")
+    
+    return res
+
+def countDocuments(cursor: Cursor, database_name: str, table_name):
+    
+    useWorkplace(cursor, database_name)
+    cursor.execute("SELECT count(*) as count FROM %s"% table_name)
+    res = cursor.fetchall()
+    return res[0]

@@ -6,6 +6,7 @@ from pymongo import errors
 from pymongo import MongoClient
 from pymongo.operations import IndexModel
 from tqdm import tqdm
+import pymongo
 
 def csvToJson(csv_path_file: str, json_path_file: str):
     """_summary_
@@ -104,7 +105,7 @@ def deleteDuplicates(collection, id_field: str):
     [
         {"$group": {"_id": "$%s"%id_field, "unique_ids": {"$addToSet": "$_id"}, "count": {"$sum": 1}}},
         {"$match": {"count": { "$gte": 2 }}}
-    ])
+    ], allowDiskUse=True)
 
     response = []
     for doc in cursor:
@@ -116,8 +117,8 @@ def deleteDuplicates(collection, id_field: str):
 
 def createIndex(collection, field_to_index: str):
     
-    index = IndexModel([(field_to_index, "ASCENDING")], unique=True)
-    collection.create_index(index)
+    index = IndexModel([(field_to_index, pymongo.ASCENDING)], unique=True)
+    collection.create_index([index])
 
 #TODO: change all update_many by aggregation with $convert
 def strToDouble(collection, variable: str):
@@ -140,6 +141,11 @@ def deleteEmptyString(collection, variable: str):
     
     collection.delete_many({variable: {"$type": "string", "$eq":""}})
 
+def deleteStringType(collection, variable: str):
+    
+    collection.delete_many({variable: {"$type": "string"}})
+
+
 def countEmptyString(collection, variable: str):
     
     results = collection.aggregate([{"$match": {variable: {"$eq": ""}}}, {"$group": {"_id": "null", "count": {"$sum": 1}}}])
@@ -147,8 +153,7 @@ def countEmptyString(collection, variable: str):
         print(f"Number of null string in '{variable}': {result[list(result.keys())[-1]]}")
 
 def changeName(collection, old_name: str, new_name: str):
-    
-    collection.update_many({}, {"$rename": {str(old_name), str(new_name)}})
+    collection.update_many({}, {"$rename": {str(old_name): str(new_name)}})
 
 def strToDate(collection, variable: str):
     

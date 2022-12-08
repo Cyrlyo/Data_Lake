@@ -4,19 +4,22 @@ from kaggle.api import KaggleApi
 from mariaDB.maria_import import importToMariaDB
 from import_data.import_posts import importPosts
 from utils import parse_arguements, collectSQLQuery
-from mongoDB.mongo_import import formatInstagram, mongoImportLoadData, mongoPythonLoadData
+from mongoDB.mongo_import import formatInstagram, mongoImportLoadData, mongoPythonLoadData, deplacePostsDetailsReduced
 from mongoDB.preparation import dataPreparation
+from elk.utils_elk import elkImport
 import time
 
 DATASET_NAME = "shmalex/instagram-dataset"
+DATASET_NAME_2 = "http://download.geonames.org/export/dump"
+DATASET_NAME_3 = "http://d3smaster.fr"
+DATASET_NAME_4 = "http://posts-data-storage.online"
 SOURCE_1 = "instagram_locations.csv"
 SOURCE_2 = "instagram_profiles.csv"
-SOURCES = [SOURCE_1, SOURCE_2]
-DATASET_NAME_2 = "http://download.geonames.org/export/dump"
 SOURCE_3 = "allCountries.zip"
-FILES_NAME = ["allCountries.zip", "readme.txt"]
-DATASET_NAME_3 = "http://d3smaster.fr"
 SOURCE_4 = "instagram_posts_reduced.zip"
+SOURCE_5 = "posts_details_reduced.zip"
+SOURCES = [SOURCE_1, SOURCE_2]
+FILES_NAME = ["allCountries.zip", "readme.txt"]
 HOST = "localhost"
 MONGO_PORT = 27017
 MONGO_DATABASE_NAME = "instagram"
@@ -36,7 +39,7 @@ if __name__ == "__main__":
 
     (init_manually, download, maria_import, mongo_import,\
     database_import, format_data, python_loader, data_prep,\
-    quick_prep, only_merge, desac_merge, sample) = parse_arguements()
+    quick_prep, only_merge, enable_merge, sample, demo, elk) = parse_arguements()
     
     query_dict = collectSQLQuery("./query/load_data")
     
@@ -54,22 +57,27 @@ if __name__ == "__main__":
         poiImport(DATASET_NAME_2, SOURCE_3, FILES_NAME)
         apiImport(API, DATASET_NAME, SOURCES)
         importPosts(DATASET_NAME_3, SOURCE_4, [SOURCE_4])
+        importPosts(DATASET_NAME_4, SOURCE_5, [SOURCE_5])
     
     if init_manually or format_data:
         formatInstagram("./Data/Raw", "./Data/Formated")
+        deplacePostsDetailsReduced("./Data/Raw/posts_details_reduced", "./Data/Formated/posts_details_reduced")
 
     if init_manually or maria_import or database_import:
         importToMariaDB("point_of_interest", table_name_3, "./Data/Raw/allCountries/allCountries.txt", query_dict[table_name_3])
     
     if init_manually or mongo_import or database_import:
         if not python_loader:
-            mongoImportLoadData("./Data/Formated", "instagram", "localhost", 27017)
+            mongoImportLoadData("./Data/Formated", MONGO_DATABASE_NAME, HOST, MONGO_PORT)
         else:
-            mongoPythonLoadData("./Data/Formated", "instagram", "localhost", 27017)
+            mongoPythonLoadData("./Data/Formated", MONGO_DATABASE_NAME, HOST, MONGO_PORT)
     
-    if init_manually or data_prep:
-        dataPreparation("localhost", 27017, "instagram", "posts_details", quick_prep, only_merge, desac_merge, sample)
-        
+    if demo:
+        if init_manually or data_prep:
+            dataPreparation(HOST, MONGO_PORT, MONGO_DATABASE_NAME, "posts_details", quick_prep, only_merge, enable_merge, sample)
+    
+    if init_manually or elk:
+        elkImport([HOST, MONGO_PORT, MONGO_DATABASE_NAME], "posts_details_reduced", "point_of_interest", table_name_3.lower())
+    
     delta_time = time.time() - start_time
     print(f"Execution time: {time.strftime('%H:%M:%S', time.gmtime(delta_time))}")
-    

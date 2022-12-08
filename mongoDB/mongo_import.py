@@ -4,7 +4,14 @@ except:
     from utils_mongo import csvToJson, mongoQueryLoad, connectToMongo, mongoPythonLoad
 import os
 from os.path import join
+import shutil
 
+def deplacePostsDetailsReduced(current_data_path: str, target_data_path: str):
+    
+    try:
+        shutil.copytree(current_data_path, target_data_path)
+    except:
+        print("Folder already exists")
 
 def formatInstagram(current_data_path: str, target_data_path: str):
     """_summary_
