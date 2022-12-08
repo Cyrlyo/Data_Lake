@@ -12,7 +12,7 @@ CREDENTIALS = gettingCredentials()
 CONNEXON = connectToDatabase(CREDENTIALS)
 
 try:
-    es = Elasticsearch(hosts="http://localhost:9200")
+    es = Elasticsearch(hosts="http://localhost:9200", timeout=3600)
 except:
     print("Can't connect to ElastichSearch server. Please make sur it's running")
 
