@@ -86,7 +86,7 @@ def changeDataType(posts, profiles, locations, quick_prep: bool):
     
 
 def dataPreparation(host: str, port: int, database_name: str, collection_name: str,\
-    quick_prep: bool, only_merge: bool, enbale_merge: bool, sample: int):
+    quick_prep: bool, only_merge: bool, enable_merge: bool, sample: int):
     """_summary_
 
     Args:
@@ -111,7 +111,7 @@ def dataPreparation(host: str, port: int, database_name: str, collection_name: s
         # createIndex(profiles, "id")
         # createIndex(locations, "id")
     
-    if enbale_merge:
+    if enable_merge:
         print("\nMerging... Please Wait")
         checkExistingCollection(db, "posts_details")
         # mergeColl(posts, "profiles", "locations", collection_name, "profile_id", "id", "profile", "location_id", "id", "location", sample)
