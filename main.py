@@ -77,7 +77,7 @@ if __name__ == "__main__":
             dataPreparation("localhost", 27017, "instagram", "posts_details", quick_prep, only_merge, enable_merge, sample)
     
     if init_manually or elk:
-        elkImport([HOST, MONGO_PORT, MONGO_DATABASE_NAME], "posts_details_reduced")
+        elkImport([HOST, MONGO_PORT, MONGO_DATABASE_NAME], "posts_details_reduced", "point_of_interest", "allcountries")
     
     delta_time = time.time() - start_time
     print(f"Execution time: {time.strftime('%H:%M:%S', time.gmtime(delta_time))}")
