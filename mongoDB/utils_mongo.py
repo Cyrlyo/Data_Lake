@@ -140,6 +140,11 @@ def deleteEmptyString(collection, variable: str):
     
     collection.delete_many({variable: {"$type": "string", "$eq":""}})
 
+def deleteStringType(collection, variable: str):
+    
+    collection.delete_many({variable: {"$type": "string"}})
+
+
 def countEmptyString(collection, variable: str):
     
     results = collection.aggregate([{"$match": {variable: {"$eq": ""}}}, {"$group": {"_id": "null", "count": {"$sum": 1}}}])

@@ -1,17 +1,21 @@
 try:
     from mongoDB.utils_mongo import connectToMongo, strToDouble, doubleToInt, deleteEmptyString,\
         countEmptyString, strToInt, strToBool, strToDate,\
-        outCollections, deleteDuplicates, checkExistingCollection, createIndex, changeName
+        outCollections, deleteDuplicates, checkExistingCollection, createIndex, changeName, deleteStringType
 except:
     from utils_mongo import connectToMongo, strToDouble, doubleToInt, deleteEmptyString,\
         countEmptyString, strToInt, strToBool, strToDate,\
-        outCollections, deleteDuplicates, checkExistingCollection, createIndex, changeName
+        outCollections, deleteDuplicates, checkExistingCollection, createIndex, changeName, deleteStringType
 
 
 def postsPreparation(posts, quick_prep:bool):
     #TODO: add $sample in the aggregation query to reduce number of posts! Only for the first and make a condition
     # to take only the good data type of the first data type changed
     # this should reduce time for each query !
+    
+    posts.aggregate([{"$sample":{"size":5000000}}, {"$project":{"sid":1}}, {"$convert":{"$sid":"int"}}])
+    deleteStringType(posts, "sid")
+    
     str_to_int_list = ["location_id", "profile_id", "number_comments", "numbr_likes"]
     
     for variable in str_to_int_list:
