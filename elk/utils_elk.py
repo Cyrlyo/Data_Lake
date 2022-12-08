@@ -6,11 +6,10 @@ sys.path.append(path)
 from mongoDB.utils_mongo import connectToMongo
 from elasticsearch import Elasticsearch, helpers
 from typing import List
+from mariaDB.utils_maria import gettingCredentials, connectToDatabase
 
-HOST = "localhost"
-MONGO_PORT = 27017
-MONGO_DATABASE_NAME = "instagram"
-
+CREDENTIALS = gettingCredentials()
+cursor = connectToDatabase(CREDENTIALS)
 
 try:
     es = Elasticsearch(hosts="http://localhost:9200")
