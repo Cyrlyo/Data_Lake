@@ -20,12 +20,14 @@ def parse_arguements() -> bool:
     parser.add_argument("--enable_merge", action="store_true", help="Enable merge collections while preparing datas")
     parser.add_argument("--sample", type=int, default=150000, help="Number of document to merge")
     parser.add_argument("--demo", action="store_true", help="Disable demo mode")
+    parser.add_argument("--elk", action="store_true", help="Only import on elk")
     
     args = parser.parse_args()
     
     return args.init_manually, args.download, args.maria_import, args.mongo_import, \
         args.database_import, args.format_data, args.python_loader, args.data_prep, \
-        args.quick_prep, args.only_merge, args.enable_merge, args.sample, args.demo
+        args.quick_prep, args.only_merge, args.enable_merge, args.sample, args.demo, \
+        args.elk
 
 def collectSQLQuery(path: str) -> dict:
     """_summary_
