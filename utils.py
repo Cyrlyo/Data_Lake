@@ -18,7 +18,7 @@ def parse_arguements() -> bool:
     parser.add_argument("--quick_prep", action="store_false", help="Only prepare some data (full takes 1h to run)")
     parser.add_argument("--only_merge", action="store_false", help="Only merge collections as data preparation")
     parser.add_argument("--enable_merge", action="store_true", help="Enable merge collections while preparing datas")
-    parser.add_argument("--sample", type=int, default=150000, help="Number of document to merge")
+    parser.add_argument("--sample", type=int, default=150000, help="Number of document to merge", metavar="")
     parser.add_argument("--demo", action="store_true", help="Disable demo mode")
     parser.add_argument("--elk", action="store_true", help="Only import on elk")
     
