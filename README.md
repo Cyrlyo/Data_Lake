@@ -1,3 +1,4 @@
+## Preface
 Minimum config: 16 Go of RAM
 
 Recommanded config: 32 Go of RAM
@@ -7,7 +8,16 @@ Below 16 Go of RAM script will be very slow but it works.
 For MongoDB imports you need to have installed mongoimport on your device!
 An alternative exists in the script but it takes a huge amount of time.
 
+## Instructions for running the script
+
+Create an 3.9 python virtual environment using `python3.9 - m venv "venv_name"`. <br>
+Activate your virtual environement, for Windows users use `./"venv_name"/Scripts/activate`. <br>
+Download all required packages using *requirements.txt* file and this command `pip3 install -r requirements.txt`<br>
+Make sur that MariaDB, MongoDB, Elastichsearch and Kibana are currently running on your computer.
+
+
 ## Launchs arguments & options
+
 - -h, --help            : show this help message and exit
 - -a, --init_manually   : Download data & import them on databaes
 - -d, --download        : Only download data
@@ -23,3 +33,7 @@ An alternative exists in the script but it takes a huge amount of time.
 - --sample SAMPLE       : Number of document to merge
 - --demo                : Disable demo mode
 - --elk                 : Only import on elk
+
+### Launchs arguments exampes:
+
+- 
