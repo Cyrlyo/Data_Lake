@@ -10,7 +10,7 @@ An alternative exists in the script but it takes a huge amount of time.
 
 ## Instructions for running the script
 
-Create an 3.9 python virtual environment using `python3.9 - m venv "venv_name"`. <br>
+Create an 3.9 python virtual environment using `python3.9 -m venv "venv_name"`. <br>
 Activate your virtual environement, for Windows users use `./"venv_name"/Scripts/activate`. <br>
 Download all required packages using *requirements.txt* file and this command `pip3 install -r requirements.txt`<br>
 Make sur that MariaDB, MongoDB, Elastichsearch and Kibana are currently running on your computer.
