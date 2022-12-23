@@ -40,3 +40,14 @@ Make sur that MariaDB, MongoDB, Elastichsearch and Kibana are currently running 
 - `python main.py --demo`: will execute all the code (it takes about 1h30 in total)
 - `python main.py -a -d -o -f`: will download, format and import the datas on MariaDB & MongoDB
 - `python main.py -a --data_prep --demo`: will format data on MongoDB. This is one of the longest parts. We advise you not to do it if you only want to use the data on elasticsearch. The *posts_details_reduced* collection already has the data in the right format.
+
+
+## Miscellaneous infos
+
+Software: 
+- Ubuntu 18.04 (WLS)
+- Windows 10
+
+Harware: 
+- CPU i7 6500U 2.5GHz, 16 Go RAM
+- CPU i7 7700 3.6GHz, 32 Go RAM, GPU GTX 1050
