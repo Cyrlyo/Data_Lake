@@ -8,7 +8,6 @@ Below 16 Go of RAM script will be very slow but it works.
 For MongoDB imports you need to have installed mongoimport on your device!
 An alternative exists in the script but it takes a huge amount of time.
 
-Python version: 3.9
 
 ## Instructions for running the script
 
@@ -66,6 +65,10 @@ The options `-a`, `-d`, `-i`, `-m`, and `-o` are mutually exclusive and cannot b
 ## Miscellaneous infos
 
 Software: 
+- Python version: 3.9
+- MariaDB version: 10.5
+- Mongo shell version: 5.0
+- Mongo server version: 5.0
 - Ubuntu 18.04 (WLS)
 - Windows 10
 
