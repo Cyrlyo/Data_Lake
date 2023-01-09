@@ -76,7 +76,7 @@ if __name__ == "__main__":
         if init_manually or data_prep:
             dataPreparation(HOST, MONGO_PORT, MONGO_DATABASE_NAME, "posts_details", quick_prep, only_merge, enable_merge, sample)
     
-    if init_manually or elk:
+    if elk:
         elkImport([HOST, MONGO_PORT, MONGO_DATABASE_NAME], "posts_details_reduced", "point_of_interest", table_name_3.lower())
     
     delta_time = time.time() - start_time
