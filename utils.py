@@ -5,7 +5,7 @@ from typing import List
 def parse_arguements() -> bool:
     
     parser = argparse.ArgumentParser()
-    parser.add_argument("-a", "--init_manually", action="store_false", help="Download data & import them on databaes")
+    parser.add_argument("-a", "--init_manually", action="store_false", help="Download data & import them on databases")
     parser.add_argument("-d", "--download", action="store_true", help="Only download data")
     parser.add_argument("-i", "--maria_import", action="store_true", help="Only import datas on MariaDB database")
     parser.add_argument("-m", "--mongo_import", action="store_true", help="Only import data on MongoDB database")
