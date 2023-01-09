@@ -36,11 +36,29 @@ Make sur that MariaDB, MongoDB, Elastichsearch and Kibana are currently running 
 
 ### Launchs arguments exampes:
 
-- `python main.py`: will execute all the code on *demo mode*
+- `python main.py`: will execute all the code on *demo mode* (doesn't import data en elk)
+- `python main.py`: will execute all the code on *demo mode* (import data en elk)
 - `python main.py --demo`: will execute all the code (it takes about 1h30 in total)
 - `python main.py -a -d -o -f`: will download, format and import the datas on MariaDB & MongoDB
 - `python main.py -a --data_prep --demo`: will format data on MongoDB. This is one of the longest parts. We advise you not to do it if you only want to use the data on elasticsearch. The *posts_details_reduced* collection already has the data in the right format.
 - `python main.py -a --enable_merge --sample 1000000 --demo`: Will merge 1,000,000 documents from the 3 collections *posts*, *profile*, *location* of the *Instagram* database. Requires downloading, formatting, importing and preparing the data on MongoDB.
+
+### Launch options detailed:
+
+Here are all the possible launch options and their usage:
+
+- Download data only: `python file.py `-d`
+- Import data into MariaDB database only: `python file.py -a -i`
+- Import data into MongoDB database only: `python file.py -a -m`
+- Import data into both MariaDB and MongoDB databases: `python file.py -a -o`
+- Format data (convert from CSV to JSON): `python file.py -a -f`
+- Use Python loader to import data into MongoDB: `python file.py -a -p`
+- Prepare Instagram data in MongoDB: `python file.py -a --data_prep`
+- Prepare only a part of the data (full runtime: approximately 1 hour): `python file.py -a --quick_prep`
+- Merge only data collections during preparation: `python file.py -a --only_merge`
+- Enable merge of collections during data preparation: `python file.py -a --enable_merge`
+- Prepare a sample of data with a specific number of documents: `python file.py -a --sample NUMBER (replace NUMBER with the desired number of documents)`
+The options `-a`, `-d`, `-i`, `-m`, and `-o` are mutually exclusive and cannot be used together. The options `-f`, `-p`, `--data_prep`, `--quick_prep`, `--only_merge`, `--enable_merge`, and `--sample` can be used with the -a option. The `-a` option is required to use all of these options except for `--elk`.
 
 
 ## Miscellaneous infos
