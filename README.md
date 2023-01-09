@@ -67,6 +67,6 @@ Software:
 - Ubuntu 18.04 (WLS)
 - Windows 10
 
-Harware: 
+Hardware: 
 - CPU i7 6500U 2.5GHz, 16 Go RAM
 - CPU i7 7700 3.6GHz, 32 Go RAM, GPU GTX 1050
