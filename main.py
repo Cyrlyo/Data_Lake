@@ -41,8 +41,6 @@ if __name__ == "__main__":
     database_import, format_data, python_loader, data_prep,\
     quick_prep, only_merge, enable_merge, sample, demo, elk) = parse_arguements()
     
-    query_dict = collectSQLQuery("./query/load_data")
-    
     table_name_3 = SOURCE_3.replace(".zip", "")
 
     start_time = time.time()
@@ -64,6 +62,7 @@ if __name__ == "__main__":
         deplacePostsDetailsReduced("./Data/Raw/posts_details_reduced", "./Data/Formated/posts_details_reduced")
 
     if init_manually or maria_import or database_import:
+        query_dict = collectSQLQuery("./query/load_data")
         importToMariaDB("point_of_interest", table_name_3, "./Data/Raw/allCountries/allCountries.txt", query_dict[table_name_3])
     
     if init_manually or mongo_import or database_import:
