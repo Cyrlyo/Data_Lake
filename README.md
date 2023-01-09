@@ -69,6 +69,8 @@ Software:
 - MariaDB version: 10.5
 - Mongo shell version: 5.0
 - Mongo server version: 5.0
+- elasticsearch version: 8.4
+- kibana: 8.4
 - Ubuntu 18.04 (WLS)
 - Windows 10
 
