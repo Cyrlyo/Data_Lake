@@ -8,6 +8,8 @@ Below 16 Go of RAM script will be very slow but it works.
 For MongoDB imports you need to have installed mongoimport on your device!
 An alternative exists in the script but it takes a huge amount of time.
 
+Python version: 3.9
+
 ## Instructions for running the script
 
 Create an 3.9 python virtual environment using `python3.9 -m venv "venv_name"`. <br>
@@ -47,7 +49,7 @@ Make sur that MariaDB, MongoDB, Elastichsearch and Kibana are currently running 
 
 Here are all the possible launch options and their usage:
 
-- Download data only: `python file.py `-d`
+- Download data only: `python file.py -a -d`
 - Import data into MariaDB database only: `python file.py -a -i`
 - Import data into MongoDB database only: `python file.py -a -m`
 - Import data into both MariaDB and MongoDB databases: `python file.py -a -o`
