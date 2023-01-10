@@ -75,6 +75,8 @@ Software:
 - Mongo server version: 5.0
 - elasticsearch version: 8.4
 - kibana version: 8.4
+
+OS:
 - Ubuntu 18.04 (WLS)
 - Windows 10
 
