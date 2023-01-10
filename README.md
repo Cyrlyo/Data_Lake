@@ -1,6 +1,6 @@
 ## Preface
 
-This is a course project, this repository is not intended to be kept up to date. Problems can be fixed and improvements can be made but it doesn't matter because the moment this project was made public it was made public.
+This is a course project, this repository is not intended to be kept up to date. Problems can be fixed and improvements can be made but it doesn't matter because the moment this project was made public it was finished.
 
 
 Minimum config: 16 Go of RAM
