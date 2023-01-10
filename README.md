@@ -38,7 +38,7 @@ Make sur that MariaDB, MongoDB, Elastichsearch and Kibana are currently running 
 ### Launchs arguments exampes:
 
 - `python main.py`: will execute all the code on *demo mode* (doesn't import data en elk)
-- `python main.py`: will execute all the code on *demo mode* (import data en elk)
+- `python main.py --elk`: will execute all the code on *demo mode* (import data en elk)
 - `python main.py --demo`: will execute all the code (it takes about 1h30 in total)
 - `python main.py -a -d -o -f`: will download, format and import the datas on MariaDB & MongoDB
 - `python main.py -a --data_prep --demo`: will format data on MongoDB. This is one of the longest parts. We advise you not to do it if you only want to use the data on elasticsearch. The *posts_details_reduced* collection already has the data in the right format.

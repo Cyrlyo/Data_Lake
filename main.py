@@ -50,7 +50,7 @@ if __name__ == "__main__":
             API = KaggleApi()
             API.authenticate()
         except:
-            print("\nMake sure that you're kaggle.json file (containing username + api key) is stored in $HOME/.kaggle")
+            print("\nMake sure that your kaggle.json file (containing username + api key) is stored in $HOME/.kaggle")
 
         poiImport(DATASET_NAME_2, SOURCE_3, FILES_NAME)
         apiImport(API, DATASET_NAME, SOURCES)
