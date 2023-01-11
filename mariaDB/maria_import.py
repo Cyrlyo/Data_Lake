@@ -7,13 +7,15 @@ from mariaDB.utils_maria import gettingCredentials, connectToDatabase, listingDa
 
 
 def importData(connexion: Connection, cursor: Cursor, data_path: str, table_name: str) -> None:
-    """_summary_
+    """
+    The function imports data from a file specified by `data_path` and stores it in a MariaDB table specified by `table_name`.
+    The data is imported into the table using a LOAD DATA INFILE query.
 
-    Args:
+    Parameters:
         connexion (Connection): Connection object to the database
         cursor (Cursor): MariaDB Cursor object
-        data_path (str): path to the data to import in MariaDB (here ./Data/Raw/allCountries/allCountries.zip)
-        table_name (str): table's name
+        data_path (str): the path to the data to import in MariaDB (here ./Data/Raw/allCountries/allCountries.zip)
+        table_name (str): the name of the table where the data will be stored
     """
     try:
         path = os.getcwd()
