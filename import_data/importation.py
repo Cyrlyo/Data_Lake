@@ -79,12 +79,18 @@ def importData(url: str) -> DataFrame:
     
 
 def poiImport(dataset_name: str, source: str, files_name: list) -> None:
-    """_summary_
-
-    Args:
-        dataset_name (str): _description_
-        source (str): _description_
-        files_name (_type_): _description_
+    """
+    The function imports a dataset of files, and store it in the "Data/Raw" directory.
+    The function create a "Data" directory, a "Raw" directory, and a "Documentation" directory
+    in the current working directory if they don't exist yet.
+    Download files from dataset name and files list and unzip the files from the source url
+    delete the downloaded zip files from source 
+    and move the 'readme.txt' to the "Documentation" directory.
+    
+    Parameters:
+        dataset_name (str) : name of dataset
+        source (str) : url of zip file containing files
+        files_name (list) : list of files to download
     """
     createFile("Data", os.getcwd())
     createFile("Raw", "Data")
