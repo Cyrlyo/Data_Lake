@@ -4,7 +4,8 @@ from import_data.utils_import import unZipper, deletingFiles
 
 
 def apiDownload(api: KaggleApi, dataset_name: str, source: str, folder: str):
-    """_summary_
+    """
+    Download Kaggle's datasets with the API
 
     Args:
         dataset_name (str): name of the dataset on kaggle
