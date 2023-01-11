@@ -12,13 +12,15 @@ except:
 from os.path import join
 
 def dataDownloader(url: str, file_name: list) -> Tuple[list, Browser]:
-    """_summary_
+    """
+    The function returns a list of links that contains the files specified in file_name, and a browser object.
 
-    Args:
-        url (str): _description_
+    Parameters:
+        url (str) : the url where the files are located
+        file_name (list) : the list of files to download
 
     Returns:
-        Tuple[list, Browser]: _description_
+        Tuple[list, Browser]: a list of links of the files to download, and a browser object
     """
     
     br = mechanize.Browser()
