@@ -34,13 +34,14 @@ def formatInstagram(current_data_path: str, target_data_path: str):
             csvToJson(full_temp_path, full_end_path)
 
 def mongoImportLoadData(data_path: str, database_name: str, host: str, port: int):
-    """_summary_
-
-    Args:
-        data_path (str): _description_
-        database_name (str): _description_
-        host (str): _description_
-        port (int): _description_
+    """
+    A function that loads data from a directory containing JSON files into MongoDB collections.
+    
+    Parameters:
+    - data_path: path to the directory containing JSON files.
+    - database_name: the name of the MongoDB database
+    - host: the hostname or IP address of the MongoDB server
+    - port: the port number of the MongoDB server
     """
     client, db = connectToMongo(host, port, database_name)
     print(f"\nExisting database:\n{client.list_database_names()}")
@@ -60,15 +61,16 @@ def mongoImportLoadData(data_path: str, database_name: str, host: str, port: int
             print("Done")
 
 def mongoPythonLoadData(data_path: str, database_name: str, host: str, port: int):
-    """_summary_
-
-    Args:
-        data_path (str): _description_
-        database_name (str): _description_
-        host (str): _description_
-        port (int): _description_
     """
+    A function that loads data from a directory containing JSON files into MongoDB collections.
     
+    Parameters:
+    - data_path: path to the directory containing JSON files.
+    - database_name: the name of the MongoDB database
+    - host: the hostname or IP address of the MongoDB server
+    - port: the port number of the MongoDB server
+    """
+
     client, db = connectToMongo(host, port, database_name)
     print(f"\nExisting database:\n{client.list_database_names()}")
     
