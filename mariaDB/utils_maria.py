@@ -166,6 +166,16 @@ def createTable(connexion: Connection, table_name: str, createtable_query: str) 
         cursor.close()
 
 def getMariaData(cursor: Cursor, database_name: str, table_name) -> list:
+    """
+    The function fetches all the data from a table specified by `table_name` in a database specified by `database_name` and returns the result as a list of tuples.
+
+    Parameters:
+        cursor (Cursor): MariaDB Cursor object 
+        database_name (str): the name of the database where the table is located
+        table_name (str): the name of the table where the data will be stored
+    Returns:
+        List: a list of tuples, each tuple representing a row in the table with its columns' values.
+    """
     
     number = countDocuments(cursor, database_name, table_name)
     
