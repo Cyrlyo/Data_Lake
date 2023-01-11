@@ -180,6 +180,16 @@ def getMariaData(cursor: Cursor, database_name: str, table_name) -> list:
     return res
 
 def countDocuments(cursor: Cursor, database_name: str, table_name):
+    """
+    The function counts the number of rows in a table specified by `table_name` in a database specified by `database_name` and returns the result.
+
+    Parameters:
+        cursor (Cursor): MariaDB Cursor object 
+        database_name (str): the name of the database where the table is located
+        table_name (str): the name of the table where the data will be stored
+    Returns:
+        Tuple : a single tuple containing the count 
+    """
     
     useWorkplace(cursor, database_name)
     cursor.execute("SELECT count(*) as count FROM %s"% table_name)
