@@ -9,7 +9,13 @@ except:
 
 
 def postsPreparation(posts, quick_prep:bool):
-    
+    """
+    The function prepares the data in the `posts` collection by applying several data cleaning and type conversion steps.
+
+    Parameters:
+        posts: a collection (list, DataFrame, etc) of posts
+        quick_prep (bool): A flag that indicates whether to perform a quick preparation (True) or a full preparation (False)
+    """
     str_to_int_list = ["location_id", "profile_id", "number_comments", "numbr_likes"]
     
     for variable in str_to_int_list:
@@ -83,17 +89,19 @@ def changeDataType(posts, profiles, locations, quick_prep: bool):
 
 def dataPreparation(host: str, port: int, database_name: str, collection_name: str,\
     quick_prep: bool, only_merge: bool, enable_merge: bool, sample: int):
-    """_summary_
-
-    Args:
-        host (str): _description_
-        port (int): _description_
-        database_name (str): _description_
-        collection_name (str): _description_
-        quick_prep (bool): _description_
-        only_merge (bool): _description_
     """
-    
+    The function connects to a MongoDB server and performs data preparation steps. 
+
+    Parameters:
+        host (str): the hostname or IP address of the MongoDB server
+        port (int): the port number of the MongoDB server
+        database_name (str): the name of the MongoDB database
+        collection_name (str): the name of the collection that the final data should be stored in
+        quick_prep (bool): flag that indicates whether to perform a quick data preparation or not
+        only_merge (bool): flag that indicates whether to only perform merge operation or not
+        enable_merge (bool): flag that indicates whether to perform merge operation or not
+        sample (int): the size of the sample that should be used in the merge operation
+    """
     client, db = connectToMongo(host, port, database_name)
     posts = db["posts_reduced"]
     locations = db["locations"]
