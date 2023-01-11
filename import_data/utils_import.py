@@ -48,7 +48,7 @@ def deletingFiles(path: str) -> None:
     Args:
         path (str): path of the file to delete, containing the file
         name & the extension.
-        Exemple: /root/Users/youre_file.zip
+        Exemple: /root/Users/your_file.zip
     """
     os.remove(path)
     
