@@ -14,13 +14,16 @@ def deplacePostsDetailsReduced(current_data_path: str, target_data_path: str):
         print("Folder already exists")
 
 def formatInstagram(current_data_path: str, target_data_path: str):
-    """_summary_
+    """
+    Convert CSV files containing 'instagram' in their name to JSON files and save them in the target_data_path
 
     Args:
-        current_data_path (str): _description_
-        target_data_path (str): _description_
+        current_data_path (str): The path where the current data is located.
+        target_data_path (str): The path where the new format will be saved.
+
+    Returns:
+        None
     """
-    
     listed = os.listdir(current_data_path)
 
     for liste in listed:
