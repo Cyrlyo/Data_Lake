@@ -159,7 +159,27 @@ def strToDate(collection, variable: str):
 
 def mergeColl(collection, profiles: str, locations: str, collection_name: str, localProfiles: str, foreignProfiles: str,
               newProfileName: str, localLocation: str, foreignLocation: str, newLocationName: str, sample: int):
-    
+    """
+    The function performs an aggregate operation on the provided collection and exports the result to a new collection 
+    with the specified name `collection_name`. The operation includes a sample of the collection with size `sample` documents 
+    and join the collection with two other collections `profiles`, and `locations` based on the `localField` and `foreignField`
+    and rename them with `newProfileName` and `newLocationName` respectively. The function also projects some fields and 
+    hides some.
+
+    Parameters:
+        collection: a pymongo Collection object
+        profiles (str): name of the collection that should be joined as profiles
+        locations (str): name of the collection that should be joined as locations
+        collection_name (str): the name of the new collection that should be created
+        localProfiles (str): the field on the collection that is used as the join field with profiles collection
+        foreignProfiles (str): the field on the profiles collection that is used as the join field
+        newProfileName (str): the name of the array that contains the joined profile documents
+        localLocation (str): the field on the collection that is used as the join field with locations collection
+        foreignLocation (str): the field on the location collection that is used as the join field
+        newLocationName (str): the name of the array that contains the joined location documents
+        sample (int): the number of documents to be sampled
+    """
+
     collection.aggregate([{"$sample": {"size":sample}},\
     {'$lookup': {'from': profiles, 'localField': localProfiles, 'foreignField': foreignProfiles, 'as': newProfileName}},\
     {'$lookup': {'from': locations, 'localField': localLocation, 'foreignField': foreignLocation, 'as': newLocationName}},\
@@ -170,7 +190,26 @@ def mergeColl(collection, profiles: str, locations: str, collection_name: str, l
     
 def outCollections(collection, profiles: str, locations: str, collection_name: str, localProfiles: str, foreignProfiles: str,
               newProfileName: str, localLocation: str, foreignLocation: str, newLocationName: str, sample: int):
-    
+    """
+    The function performs an aggregate operation on the provided collection and exports the result to a new collection 
+    with the specified name `collection_name`. The operation includes a sample of the collection with size `sample` documents 
+    and join the collection with two other collections `profiles`, and `locations` based on the `localField` and `foreignField`
+    and rename them with `newProfileName` and `newLocationName` respectively. The function also projects some fields and 
+    hides some.
+
+    Parameters:
+        collection: a pymongo Collection object
+        profiles (str): name of the collection that should be joined as profiles
+        locations (str): name of the collection that should be joined as locations
+        collection_name (str): the name of the new collection that should be created
+        localProfiles (str): the field on the collection that is used as the join field with profiles collection
+        foreignProfiles (str): the field on the profiles collection that is used as the join field
+        newProfileName (str): the name of the array that contains the joined profile documents
+        localLocation (str): the field on the collection that is used as the join field with locations collection
+        foreignLocation (str): the field on the location collection that is used as the join field
+        newLocationName (str): the name of the array that contains the joined location documents
+        sample (int): the number of documents to be sampled
+    """
     collection.aggregate([{"$sample": {"size":sample}},\
     {'$lookup': {'from': profiles, 'localField': localProfiles, 'foreignField': foreignProfiles, 'as': newProfileName}},\
     {'$lookup': {'from': locations, 'localField': localLocation, 'foreignField': foreignLocation, 'as': newLocationName}},\
@@ -180,6 +219,13 @@ def outCollections(collection, profiles: str, locations: str, collection_name: s
     {'$out': collection_name}], allowDiskUse=True)
 
 def checkExistingCollection(database, collection_name: str):
+    """
+    The function check the existence of a collection with the specified name, and if it already exists, it will drop it.
+
+    Parameters:
+        database: a pymongo Database object
+        collection_name (str): the name of the collection to check for existence
+    """
     try:
         database.validate_collection(collection_name)
         print(f"\n{collection_name} collection exists\nDeleting")
