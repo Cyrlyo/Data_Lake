@@ -31,16 +31,18 @@ def importData(connexion: Connection, cursor: Cursor, data_path: str, table_name
     cursor.closed
 
 def importToMariaDB(database_name: str, table_name: str, data_path: str, createtable_query: str) -> None:
-    """_summary_
+    """
+    The function imports data from a file located in data_path and stores it in a MariaDB table.
+    It also creates the database and the table if they do not exist yet.
 
-    Args:
-        database_name (str): name of the database (will be created please enter a valid name or the existing data 
-        will be deleted)
-        table_name (str): name given to the futur created table 
-        data_path (str): path of the data to import
+    Parameters:
+        database_name (str): the name of the database where the data will be stored
+        table_name (str): the name of the table where the data will be stored
+        data_path (str): the path of the file where the data is located
+        createtable_query (str): a SQL query to create the table
     """
     #TODO: Rename this function for allCountriesImportMariaDB or something like this
-    #TODO: deplace the query of createTable here
+
     credentials = gettingCredentials()
     connexion = connectToDatabase(credentials)
     
