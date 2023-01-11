@@ -148,11 +148,14 @@ def collectColumnNames(path: str) -> list[str]:
     return first_line
 
 def createTable(connexion: Connection, table_name: str, createtable_query: str) -> None:
-    """_summary_
-    If the table already exists the current one will be deleted and replace by the new one.
-    Args:
-        connexion (Connection): _description_
-        table_name (str): _description_
+    """
+    The function creates a table specified by `table_name` by executing the `createtable_query` passed as argument
+    If the table already exists the current one will be deleted and replaced by the new one.
+
+    Parameters:
+        connexion (Connection): MariaDB Connection object 
+        table_name (str): the name of the table to create
+        createtable_query (str): a SQL query to create the table
     """
     cursor = connexion.cursor()
     cursor.execute("DROP TABLE IF EXISTS %s" % table_name)
