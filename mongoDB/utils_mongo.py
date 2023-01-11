@@ -2,7 +2,6 @@ import csv
 import json
 import os
 from pathlib import Path
-from pymongo import errors
 from pymongo import MongoClient
 from pymongo.operations import IndexModel
 from tqdm import tqdm
@@ -70,7 +69,7 @@ def connectToMongo(host: str, port: int, database_name: str):
     return client, db
 
 def mongoPythonLoad(data_path: str, collection):
-    """_summary_
+    """
     USE ONLY IF NECESSARY! IT TAKES A LOT OF TIME! MORE THAN 30MIN FOR 
     ONLY ONE DOCUMENT!
     Need using conneToMongo before.
@@ -87,7 +86,7 @@ def mongoPythonLoad(data_path: str, collection):
         collection.insert_one(doc)
 
 def mongoQueryLoad(database_name: str, collection_name: str, host: str, port: int, file_path: str):
-    """_summary_
+    """
     NEED MONGOIMPORT INSTALLED ON YOUR DEVICE!
     If collections already exist they'll be droped and recreated.    
     Args:
@@ -120,7 +119,6 @@ def createIndex(collection, field_to_index: str):
     index = IndexModel([(field_to_index, pymongo.ASCENDING)], unique=True)
     collection.create_index([index])
 
-#TODO: change all update_many by aggregation with $convert
 def strToDouble(collection, variable: str):
     
     collection.update_many({variable: {"$type": "string", "$ne":""}}, [{"$set": {variable: {"$toDouble": "$%s"% variable}}}])

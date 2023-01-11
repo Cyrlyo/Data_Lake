@@ -9,9 +9,6 @@ except:
 
 
 def postsPreparation(posts, quick_prep:bool):
-    #TODO: add $sample in the aggregation query to reduce number of posts! Only for the first and make a condition
-    # to take only the good data type of the first data type changed
-    # this should reduce time for each query !
     
     str_to_int_list = ["location_id", "profile_id", "number_comments", "numbr_likes"]
     
@@ -68,7 +65,6 @@ def locationsPreparation(locations, quick_prep: bool):
 
         strToDate(locations, "cts")
 
-#TODO: add sample to dataprep
 def changeDataType(posts, profiles, locations, quick_prep: bool):
     
     print("\nprofiles preparation... Please wait")
@@ -83,7 +79,7 @@ def changeDataType(posts, profiles, locations, quick_prep: bool):
 
     deleteDuplicates(profiles, "id")
     deleteDuplicates(locations, "id")
-    
+
 
 def dataPreparation(host: str, port: int, database_name: str, collection_name: str,\
     quick_prep: bool, only_merge: bool, enable_merge: bool, sample: int):
@@ -106,7 +102,6 @@ def dataPreparation(host: str, port: int, database_name: str, collection_name: s
     if only_merge:
         changeDataType(posts, profiles, locations, quick_prep)
         deleteDuplicates(profiles, "id")
-        #TODO ne pas oublié que proifle_id a été changé par id
         deleteDuplicates(locations, "id")
         # createIndex(profiles, "id")
         # createIndex(locations, "id")
