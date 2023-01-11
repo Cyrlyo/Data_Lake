@@ -67,13 +67,14 @@ def mainDL(url: str, file_name: list) -> None:
             pass
 
 def importData(url: str) -> DataFrame:
-    """_summary_
+    """
+    The function import data from a given url and return it as a pandas DataFrame.
 
-    Args:
-        url (str): _description_
-
+    Parameters:
+        url (str): the url where the data is located
+    
     Returns:
-        _type_: _description_
+        DataFrame: a pandas DataFrame containing the imported data
     """
     
     data = pd.read_html(url)
