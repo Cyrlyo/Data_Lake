@@ -17,6 +17,16 @@ except:
     print("Can't connect to ElastichSearch server. Please make sur it's running")
 
 def catchDataMongo(collection, index_name: str) -> list:
+    """
+    A function that catches data from a MongoDB collection and creates Elasticsearch bulk format actions.
+    
+    Parameters:
+    - collection: a pymongo collection object
+    - index_name: the name of the Elasticsearch index to which the data will be imported
+    
+    Returns:
+    - a list of Elasticsearch bulk format actions
+    """
     actions = []
     for data in tqdm(collection.find({}, {"cts":0, "profile.cts":0,"location.cts":0, "profile._id":0, "location._id":0}), total=collection.count_documents({})):
         data.pop('_id')
@@ -37,6 +47,19 @@ def importToElastich(es: Elasticsearch, actions: list, index: str):
     helpers.bulk(es, actions, index=index, stats_only=True)
 
 def elkImport(mongo_info: List, collection_name: str, mariadb_db_name: str, mariadb_table: str):
+    """
+    A function that imports data from MongoDB and MariaDB into Elasticsearch.
+    
+    Parameters:
+    - mongo_info: a tuple containing MongoDB's host, port, and database name
+    - es: Elasticsearch client object
+    - collection_name: the name of the MongoDB collection to import
+    - mariadb_db_name: the name of the MariaDB database to import
+    - mariadb_table: the name of the MariaDB table to import
+    
+    Returns:
+    None
+    """
     
     print("\nImporting mongo datas")
     client, db = connectToMongo(mongo_info[0], mongo_info[1], mongo_info[2])
