@@ -34,11 +34,12 @@ def dataDownloader(url: str, file_name: list) -> Tuple[list, Browser]:
     return myfiles, br
 
 def downloadLink(link, br) -> None:
-    """_summary_
+    """
+    The function downloads a file from a given link, and store it in the current working directory.
 
-    Args:
-        link (_type_): _description_
-        br (_type_): _description_
+    Parameters:
+        link : the link of the file
+        br : the browser object that is used to access the link
     """
     
     print(f"\nDownloading {link.text}... Please wait")
