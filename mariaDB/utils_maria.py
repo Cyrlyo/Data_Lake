@@ -127,6 +127,16 @@ def useWorkplace(cursor: Cursor, database_name: str):
         print(f"\nError: {error}")
 
 def collectColumnNames(path: str) -> list[str]:
+    """
+    The function reads the first line of a file specified by the `path` 
+    and returns it as a list after removing quotes, newlines and splitting it by tab.
+    
+    Parameters:
+        path (str): the path to the file to read the first line from
+    
+    Returns:
+        List: the first line of the file as a list 
+    """
     
     with open(path, encoding="utf8", newline="\n") as file:
         first_line = file.readline()
