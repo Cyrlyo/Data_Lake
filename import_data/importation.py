@@ -48,10 +48,13 @@ def downloadLink(link, br) -> None:
     print(link.text," has been downloaded")
 
 def mainDL(url: str, file_name: list) -> None:
-    """_summary_
+    """
+    The function downloads files from a given url, and store them in the current working directory.
+    the function takes a list of files_name to download from the url.
 
-    Args:
-        url (str): _description_
+    Parameters:
+        url (str) : the url where the files are located
+        file_name (list): a list of strings representing the files to download
     """
 
     files, br = dataDownloader(url, file_name)
