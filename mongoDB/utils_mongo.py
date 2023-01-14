@@ -182,7 +182,9 @@ def mergeColl(collection, profiles: str, locations: str, collection_name: str, l
 
     collection.aggregate([{"$sample": {"size":sample}},\
     {'$lookup': {'from': profiles, 'localField': localProfiles, 'foreignField': foreignProfiles, 'as': newProfileName}},\
+    {"$unwind":f"${newProfileName}"},\
     {'$lookup': {'from': locations, 'localField': localLocation, 'foreignField': foreignLocation, 'as': newLocationName}},\
+    {"$unwind":f"${newProfileName}"},\
     {"$match":{newProfileName: {"$exists":True}, newLocationName:{"$exists":True}}},\
     {"$project":{f"{newProfileName}.description":0, "sid_profile":0, f"{newProfileName}.sid":0, f"{newProfileName}.description":0, f"{newLocationName}.zip":0, \
     f"{newLocationName}.phone":0, f"{newLocationName}.blurb":0}},\
@@ -212,7 +214,9 @@ def outCollections(collection, profiles: str, locations: str, collection_name: s
     """
     collection.aggregate([{"$sample": {"size":sample}},\
     {'$lookup': {'from': profiles, 'localField': localProfiles, 'foreignField': foreignProfiles, 'as': newProfileName}},\
+    {"$unwind":f"${newProfileName}"},\
     {'$lookup': {'from': locations, 'localField': localLocation, 'foreignField': foreignLocation, 'as': newLocationName}},\
+    {"$unwind":f"${newProfileName}"},\
     {"$match":{newProfileName: {"$exists":True}, newLocationName:{"$exists":True}}},\
     {"$project":{f"{newProfileName}.description":0, "sid_profile":0, f"{newProfileName}.sid":0, f"{newProfileName}.description":0, f"{newLocationName}.zip":0, \
     f"{newLocationName}.phone":0, f"{newLocationName}.blurb":0}},\
